@@ -107,8 +107,8 @@ class RrhhTables extends Migration
 
         Schema::create('contracts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->date('date_start')->nulable();
-            $table->string('date_end')->nulable(); // 2018-10-10 - Libre nombramiento, comisión ...
+            $table->date('date_start')->nullable();
+            $table->string('date_end')->nullable(); // 2018-10-10 - Libre nombramiento, comisión ...
             $table->timestamps();
         });
         Schema::create('contract_employee', function (Blueprint $table) {
