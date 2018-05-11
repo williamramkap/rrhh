@@ -80,7 +80,7 @@ class RrhhTables extends Migration
         Schema::create('positions', function (Blueprint $table) { //puestos
             $table->bigIncrements('id');
             $table->bigInteger('charge_id')->unsigned()->nullable();
-            $table->string('name')->nulable();
+            $table->string('name')->nullable();
             $table->string('shortened')->nullable();
             $table->foreign('charge_id')->references('id')->on('charges');
             $table->timestamps();
