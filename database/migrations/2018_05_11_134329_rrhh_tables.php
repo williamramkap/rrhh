@@ -111,7 +111,7 @@ class RrhhTables extends Migration
             $table->string('date_end')->nulable(); // 2018-10-10 - Libre nombramiento, comisión ...
             $table->timestamps();
         });
-        Schema::create('contract_employe', function (Blueprint $table) {
+        Schema::create('contract_employee', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('employee_id')->unsigned();
             $table->bigInteger('contract_id')->unsigned();
@@ -179,7 +179,23 @@ class RrhhTables extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('discount_payroll');
+        Schema::dropIfExists('discounts');
+        Schema::dropIfExists('discount_types');
+        Schema::dropIfExists('payrolls');
+        Schema::dropIfExists('management_entities');
+        Schema::dropIfExists('contract_employee');
+        Schema::dropIfExists('contracts');
+        Schema::dropIfExists('employees');
+        Schema::dropIfExists('positions');
+        Schema::dropIfExists('charges');
+        Schema::dropIfExists('units');
+        Schema::dropIfExists('directions');
+        Schema::dropIfExists('employee_types');
+        Schema::dropIfExists('group_jobs');
+        Schema::dropIfExists('cities');
+        Schema::dropIfExists('procedures');
+        Schema::dropIfExists('months');
     }
 }
 
