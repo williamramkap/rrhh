@@ -107,20 +107,13 @@ class RrhhTables extends Migration
 
         Schema::create('contracts', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('employee_id')->unsigned();
             $table->date('date_start')->nullable();
             $table->string('date_end')->nullable(); // 2018-10-10 - Libre nombramiento, comisión ...
-            $table->timestamps();
-        });
-        Schema::create('contract_employee', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('employee_id')->unsigned();
-            $table->bigInteger('contract_id')->unsigned();
             $table->boolean('status')->default(1);
-            $table->foreign('contract_id')->references('id')->on('contracts');
             $table->foreign('employee_id')->references('id')->on('employees');
             $table->timestamps();
         });
-
         Schema::create('management_entities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
