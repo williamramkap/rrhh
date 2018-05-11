@@ -25,3 +25,7 @@ Route::get('/', function () {
         ->stream("temp");
 
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
