@@ -12,5 +12,16 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $data = [];
+    // return view('print.temp');
+    return \PDF::loadView('print.temp',$data)
+        // ->setOption('page-width', '216')
+        // ->setOption('page-height', '356')
+        ->setPaper('letter')
+        ->setOption('margin-bottom', 0)
+        ->setOption('margin-left', 5)
+        ->setOption('margin-right', 5)
+        ->setOption('encoding', 'utf-8')
+        ->stream("temp");
+
 });
