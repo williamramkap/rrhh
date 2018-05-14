@@ -11,8 +11,18 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-6">
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <h2>Se encontraron los siguientes errores. ({{ count($errors->all()) }})</h2>
+                    <ol>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ol>
+                </div>
+                @endif
 
-<form method="POST" action="{{asset('employee')}}">
+<form method="POST" action="{{asset('employee/'.$employee->id)}}">
 <input name="_method" type="hidden" value="PUT">
     {{ csrf_field() }} 
 Tipo de empelado
@@ -24,13 +34,13 @@ Tipo de empelado
 </select>
 <br>
 CI:
-<input type="text" name="identity_card_id" value="{{$employee->identity_card}}" class="form-control">
+<input type="text" name="identity_card" value="{{$employee->identity_card}}" class="form-control">
 <br>
 Expedici&oacute;n
-<select id="" class="form-control">
+<select id="" class="form-control" name="city_identity_card_id">
 <option></option>
 @foreach($cities as $city)
-    <option value="{{$city->id}}" @if($employee->idnetity_card_id == $city->id) selected @endif >{{$city->name}}</option>
+    <option value="{{$city->id}}" @if($employee->city_identity_card_id == $city->id) selected @endif >{{$city->name}}</option>
 @endforeach
 </select>
 <br>
