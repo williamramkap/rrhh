@@ -36,6 +36,7 @@
                             <td> {{ $employee->employee_type_id }} </td>
                             <td> 
                                 <a class="btn btn-primary" type="button" href="{{ asset('employee/'.$employee->id ) }}"><i class="fa fa-check-circle"></i>&nbsp;Ver</a>
+                                <a class="btn btn-primary" type="button" href="{{ asset('employee/'.$employee->id.'/edit' ) }}"><i class="fa fa-check-circle"></i>&nbsp;Editar</a>
                             </td>
                         </tr>
                     @endforeach
