@@ -18,8 +18,7 @@ class EmployeeController extends Controller
         $employees = Employee::get();
         $data = [
             'employees' => $employees,
-        ];
-        return $data;
+        ];        
         return view('employee.index',$data);   
     }
 
@@ -60,7 +59,7 @@ class EmployeeController extends Controller
         $employee->account_number = $request->account_number;
         $employee->gender = $request->gender;
         $employee->save();
-        return $employee;
+        return redirect('employee');
     }
 
     /**
@@ -85,7 +84,14 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        //
+        $cities = City::get();
+        $employee_types = EmployeeType::get();
+        $data = [
+            'employee'  =>  $employee,
+            'cities' =>  $cities,
+            'employee_types'    =>  $employee_types,
+        ];
+        return view('employee.edit', $data);
     }
 
     /**

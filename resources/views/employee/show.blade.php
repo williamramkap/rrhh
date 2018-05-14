@@ -1,3 +1,7 @@
+@extends('layouts.app') 
+@section('title','Crear empleado') 
+@section('content')
+
 <label>Tipo de empleado</label> 
 <p> {{ $employee->employee_type_id }} </p>
 <label> CI: </label>
@@ -19,4 +23,6 @@
 <label> Gender </label>
 <p> {{$employee->gender }} </p>
 <label> Crear Planilla </label>
-<a href="{{ asset('employee/'.{{$employee->id}}.'/payroll') }}" class="button"> Generar </a>
+<a href="{{ asset('employee/'.$employee->id.'/payroll') }}" class="button"> Generar </a>
+
+@endsection

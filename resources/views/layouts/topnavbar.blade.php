@@ -10,7 +10,7 @@
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li>
-                <a href="{{route('changerol')}}">
+                <a href="#">
                     <i class="fa fa-exchange fa-lg" data-toggle="tooltip" data-placement="bottom" title="Cambiar de Rol"></i>
                 </a>
             </li>
