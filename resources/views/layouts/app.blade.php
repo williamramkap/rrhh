@@ -19,22 +19,22 @@
     <div id="wrapper">
 
         <!-- Navigation -->
-        @include('layouts.navigation')
+        {{-- @include('layouts.navigation') --}}
 
         <!-- Page wraper -->
         <div id="page-wrapper" class="gray-bg">
 
             <!-- Page wrapper -->
-            @include('layouts.topnavbar')
+            {{-- @include('layouts.topnavbar') --}}
 
             <!-- Main view  -->
             <div id="app">
                 
             @yield('content')
-            <flash message="{{ session('flash') }}"></flash>
+            {{-- <flash message="{{ session('flash') }}"></flash> --}}
             </div>
             <!-- Footer -->
-            @include('layouts.footer')
+            {{-- @include('layouts.footer') --}}
 
         </div>
         <!-- End page wrapper-->

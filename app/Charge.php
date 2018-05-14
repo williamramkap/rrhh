@@ -11,4 +11,10 @@ class Charge extends Model
     {
         return $this->belongsTo(Unit::class);
     }
+    
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
+    }
+    
 }

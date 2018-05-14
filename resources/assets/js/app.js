@@ -5,7 +5,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-// require('./bootstrap');
+require('./bootstrap');
 require('./inspinia');
 window.Vue = require('vue');
 
@@ -16,6 +16,7 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('payroll', require('./components/payroll/Index.vue'));
 
 const app = new Vue({
     el: '#app'
