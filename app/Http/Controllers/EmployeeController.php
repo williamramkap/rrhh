@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Employee;
 use Illuminate\Http\Request;
-
+use App\City;
+use App\EmployeeType;
 class EmployeeController extends Controller
 {
     /**
@@ -14,7 +15,12 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        $employees = Employee::get();
+        $data = [
+            'employees' => $employees,
+        ];
+        return $data;
+        return view('employee.index',$data);   
     }
 
     /**
@@ -24,7 +30,13 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        $cities = City::get();
+        $employee_types = EmployeeType::get();
+        $data = [
+            'cities'  =>  $cities,
+            'employee_types' =>  $employee_types,
+        ];
+        return view('employee.create',$data);
     }
 
     /**
@@ -35,7 +47,20 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $employee = new Employee();
+        $employee->employee_type_id = $request->employee_type_id;
+        $employee->city_identity_card_id = $request->city_identity_card_id;
+        $employee->city_birth_id = $request->city_birth_id;
+        $employee->first_name = $request->first_name;
+        $employee->second_name = $request->second_name; 
+        $employee->last_name = $request->last_name;
+        $employee->mothers_last_name = $request->mothers_last_name; 
+        $employee->identity_card = $request->identity_card; 
+        $employee->birth_date = $request->birth_date;
+        $employee->account_number = $request->account_number;
+        $employee->gender = $request->gender;
+        $employee->save();
+        return $employee;
     }
 
     /**
@@ -46,7 +71,10 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        //
+        $data = [
+            'employee'  =>  $employee,            
+        ];
+        return view('employee.show',$data);
     }
 
     /**

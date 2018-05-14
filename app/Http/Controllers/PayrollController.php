@@ -82,4 +82,8 @@ class PayrollController extends Controller
     {
         //
     }
+
+    public function employee_payroll(Employee $employee){
+        return $employee;
+    }
 }
