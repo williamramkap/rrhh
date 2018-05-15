@@ -72350,11 +72350,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -72771,81 +72766,105 @@ var render = function() {
       _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "ibox-content zui-wrapper" }, [
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.month,
-                expression: "month"
-              }
-            ],
-            attrs: { name: "month" },
-            on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-sm-2" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "label",
+                { staticClass: "control-label", attrs: { for: "status" } },
+                [_vm._v("Mes")]
+              ),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.month,
+                      expression: "month"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "month" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.month = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                _vm._l(_vm.months, function(m, index) {
+                  return _c("option", {
+                    key: "month-" + m.name,
+                    domProps: {
+                      value: _vm.calculateMonth(m.name),
+                      textContent: _vm._s(m.name)
+                    }
                   })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.month = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
-              }
-            }
-          },
-          _vm._l(_vm.months, function(m, index) {
-            return _c("option", {
-              key: "month-" + m.name,
-              domProps: {
-                value: _vm.calculateMonth(m.name),
-                textContent: _vm._s(m.name)
-              }
-            })
-          })
-        ),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.year,
-                expression: "year"
-              }
-            ],
-            attrs: { name: "year" },
-            on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.year = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
-              }
-            }
-          },
-          [
-            _c("option", { attrs: { value: "2017" } }, [_vm._v("2017")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "2018", selected: "" } }, [
-              _vm._v("2018")
+                })
+              )
             ])
-          ]
-        ),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-2" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "label",
+                { staticClass: "control-label", attrs: { for: "status" } },
+                [_vm._v("Year")]
+              ),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.year,
+                      expression: "year"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "year" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.year = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "2017" } }, [_vm._v("2017")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "2018", selected: "" } }, [
+                    _vm._v("2018")
+                  ])
+                ]
+              )
+            ])
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "table-responsive zui-scroller" }, [
           _c("table", { staticClass: "table table-striped zui-table" }, [
@@ -72931,29 +72950,6 @@ var staticRenderFns = [
       _c("div", { staticClass: "ibox-tools" }, [
         _c("a", { staticClass: "collapse-link" }, [
           _c("i", { staticClass: "fa fa-chevron-up" })
-        ]),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "dropdown-toggle",
-            attrs: { "data-toggle": "dropdown", href: "#" }
-          },
-          [_c("i", { staticClass: "fa fa-wrench" })]
-        ),
-        _vm._v(" "),
-        _c("ul", { staticClass: "dropdown-menu dropdown-user" }, [
-          _c("li", [
-            _c("a", { attrs: { href: "#" } }, [_vm._v("Config option 1")])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { href: "#" } }, [_vm._v("Config option 2")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "close-link" }, [
-          _c("i", { staticClass: "fa fa-times" })
         ])
       ])
     ])

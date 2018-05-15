@@ -8,6 +8,7 @@ use App\Employee;
 use Carbon\Carbon;
 use App\Discount;
 use Prophecy\Promise\ReturnPromise;
+use App\Procedure;
 
 class PayrollController extends Controller
 {
@@ -40,6 +41,8 @@ class PayrollController extends Controller
     public function store(Request $request)
     {
         
+        return $request->all();
+        // Procedure::where('year', $request->year)->where('month', $request)
         foreach ($request->all() as $key => $value) {
             if (strpos($key, 'employee-') !== false) {
                 preg_match('/\d{1,}/', $key, $matches);

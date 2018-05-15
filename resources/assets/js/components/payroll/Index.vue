@@ -7,33 +7,28 @@
           <a class="collapse-link">
             <i class="fa fa-chevron-up"></i>
           </a>
-          <a class="dropdown-toggle"
-             data-toggle="dropdown"
-             href="#">
-            <i class="fa fa-wrench"></i>
-          </a>
-          <ul class="dropdown-menu dropdown-user">
-            <li>
-              <a href="#">Config option 1</a>
-            </li>
-            <li>
-              <a href="#">Config option 2</a>
-            </li>
-          </ul>
-          <a class="close-link">
-            <i class="fa fa-times"></i>
-          </a>
         </div>
       </div>
       <div class="ibox-content zui-wrapper">
-        <!-- <form action="/payroll" method="POST"> -->
-        <select name="month" v-model="month">
-          <option v-for="(m, index) in months" :key="`month-${m.name}`" :value="calculateMonth(m.name)" v-text="m.name"></option>
-        </select>
-        <select name="year" v-model="year">
-          <option value="2017">2017</option>
-          <option value="2018" selected>2018</option>
-        </select>
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label class="control-label" for="status">Mes</label>
+                    <select name="month"  class="form-control" v-model="month">
+                      <option v-for="(m, index) in months" :key="`month-${m.name}`" :value="calculateMonth(m.name)" v-text="m.name"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label class="control-label" for="status">Year</label>
+                    <select name="year" class="form-control" v-model="year">
+                      <option value="2017">2017</option>
+                      <option value="2018" selected>2018</option>
+                    </select>
+                </div>
+            </div>
+        </div>
           <div class="table-responsive zui-scroller">
             <table class="table table-striped zui-table">
               <thead>
