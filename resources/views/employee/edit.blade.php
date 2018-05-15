@@ -1,4 +1,28 @@
-<form method="POST" action="{{asset('employee')}}">
+@extends('layouts.app') 
+@section('title','Crear empleado') 
+@section('content')
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        ruta
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-6">
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <h2>Se encontraron los siguientes errores. ({{ count($errors->all()) }})</h2>
+                    <ol>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ol>
+                </div>
+                @endif
+
+<form method="POST" action="{{asset('employee/'.$employee->id)}}">
 <input name="_method" type="hidden" value="PUT">
     {{ csrf_field() }} 
 Tipo de empelado
@@ -10,30 +34,30 @@ Tipo de empelado
 </select>
 <br>
 CI:
-<input type="text" name="identity_card_id" value="{{$employee->identity_card}}">
+<input type="text" name="identity_card" value="{{$employee->identity_card}}" class="form-control">
 <br>
 Expedici&oacute;n
-<select id="" class="form-control">
+<select id="" class="form-control" name="city_identity_card_id">
 <option></option>
 @foreach($cities as $city)
-    <option value="{{$city->id}}" @if($employee->idnetity_card_id == $city->id) selected @endif >{{$city->name}}</option>
+    <option value="{{$city->id}}" @if($employee->city_identity_card_id == $city->id) selected @endif >{{$city->name}}</option>
 @endforeach
 </select>
 <br>
 Primer Nombre
-<input type="text" name="first_name" value="{{$employee->first_name}}">
+<input type="text" name="first_name" value="{{$employee->first_name}}" class="form-control">
 <br>
 Segundo Nombre
-<input type="text" name="second_name" value="{{$employee->second_name}}">
+<input type="text" name="second_name" value="{{$employee->second_name}}" class="form-control">
 <br>
 Primer Apellido
-<input type="text" name="last_name" value="{{$employee->last_name}}">
+<input type="text" name="last_name" value="{{$employee->last_name}}" class="form-control">
 <br>
 Segundo Apellido
-<input type="text" name="mothers_last_name" value="{{$employee->mothers_last_name}}">
+<input type="text" name="mothers_last_name" value="{{$employee->mothers_last_name}}" class="form-control">
 <br>
 Fecha de nacimiento
-<input type="text" name="birth_date" value="{{$employee->birth_date}}">
+<input type="text" name="birth_date" value="{{$employee->birth_date}}" class="form-control">
 <br>
 Lugar de nacimiento
 <select id="" class="form-control" name="city_birth_id">
@@ -44,10 +68,14 @@ Lugar de nacimiento
 </select>
 <br>
 Sexo
-<input type="text" name="gender" value="{{$employee->gender}}">
+<input type="text" name="gender" value="{{$employee->gender}}" class="form-control">
 <br>
 N&uacute;mero de cuenta
-<input type="text" name="account_number" value="{{$employee->account_number}}">
+<input type="text" name="account_number" value="{{$employee->account_number}}" class="form-control">
 <br>
 <button type="submit"> guardar</button>
 </form>
+        </div>
+    </div>
+</div>
+@endsection

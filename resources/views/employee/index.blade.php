@@ -33,9 +33,10 @@
                             <td> {{ $employee->second_name }} </td>
                             <td> {{ $employee->last_name }} </td>
                             <td> {{ $employee->mothers_last_name }} </td>
-                            <td> {{ $employee->employee_type_id }} </td>
+                            <td> {{ $employee->employee_type->name }} </td>
                             <td> 
                                 <a class="btn btn-primary" type="button" href="{{ asset('employee/'.$employee->id ) }}"><i class="fa fa-check-circle"></i>&nbsp;Ver</a>
+                                <a class="btn btn-primary" type="button" href="{{ asset('employee/'.$employee->id.'/edit' ) }}"><i class="fa fa-check-circle"></i>&nbsp;Editar</a>
                             </td>
                         </tr>
                     @endforeach
