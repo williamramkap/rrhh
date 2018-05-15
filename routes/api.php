@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Discount;
+use App\Month;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +17,14 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::apiResource('employees' , 'API\EmployeeController');
+Route::get('discounts', function ()
+{
+    return Discount::orderBy('id')->get();
+});
+Route::get('months', function ()
+{
+    return Month::orderBy('id')->get();
 });

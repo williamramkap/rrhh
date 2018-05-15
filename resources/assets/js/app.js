@@ -5,9 +5,22 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-// require('./bootstrap');
+require('./bootstrap');
 require('./inspinia');
 window.Vue = require('vue');
+
+
+import VueCurrencyFilter from "vue-currency-filter";
+Vue.use(VueCurrencyFilter,
+{
+  symbol : 'Bs',
+  thousandsSeparator: ',',
+  fractionCount: 2,
+  fractionSeparator: '.',
+  symbolPosition: 'front',
+  symbolSpacing: true
+})
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -16,6 +29,7 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('payroll', require('./components/payroll/Index.vue'));
 
 const app = new Vue({
     el: '#app'
