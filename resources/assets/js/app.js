@@ -9,6 +9,19 @@ require('./bootstrap');
 require('./inspinia');
 window.Vue = require('vue');
 
+
+import VueCurrencyFilter from "vue-currency-filter";
+Vue.use(VueCurrencyFilter,
+{
+  symbol : 'Bs',
+  thousandsSeparator: ',',
+  fractionCount: 2,
+  fractionSeparator: '.',
+  symbolPosition: 'front',
+  symbolSpacing: true
+})
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

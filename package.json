@@ -20,7 +20,9 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
+        "fixed-table-js": "^1.5.3",
         "moment": "^2.22.1",
+        "vue-currency-filter": "^2.2.0",
         "vue2-datatable-component": "^2.3.0"
     }
 }

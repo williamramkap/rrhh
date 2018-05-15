@@ -37,15 +37,23 @@ class EmployeeController extends Controller
         $employees = Employee::select(
             'employees.id',
             'identity_card',
+            'cities.first_shortened as city_identity_card',
             'first_name',
             'second_name',
             // 'surname_husband',
             'last_name',
             'mothers_last_name',
-            'birth_date'
+            'birth_date',
+            'account_number',
+            'management_entities.name as management_entity',
+            'positions.name as position'
         )   ->skip($offset)
             ->take($limit)
             ->orderBy($sort, $order)
+            ->leftJoin('management_entities', 'management_entities.id', '=', 'employees.management_entity_id')
+            ->leftJoin('charges', 'charges.employee_id', '=', 'employees.id')
+            ->leftJoin('positions', 'charges.id', '=', 'positions.charge_id')
+            ->leftJoin('cities', 'cities.id', '=', 'employees.city_identity_card_id')
             ->whereRaw("coalesce(employees.first_name,'' ) LIKE '$first_name%'")
             ->whereRaw("coalesce(employees.second_name,'' ) LIKE '$second_name%'")
             ->whereRaw("coalesce(employees.last_name,'') LIKE '$last_name%'")
@@ -53,7 +61,6 @@ class EmployeeController extends Controller
             // ->whereRaw("coalesce(employees.surname_husband,'') LIKE '$surname_husband%'")
             ->whereRaw("coalesce(employees.identity_card, '') LIKE '$identity_card%'")
             ->with('charge')
-            ->with('management_entity')
             ->get();
         return response()->json(['employees' => $employees->toArray(), 'total' => $total]);
     }
