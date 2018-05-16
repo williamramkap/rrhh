@@ -29,5 +29,8 @@ class Employee extends Model
     {
         return $this->belongsTo(ManagerEntity::class, 'management_entity_id', 'id');
     }
-
+    public function group_job()
+    {
+        return $this->belongsTo(GroupJob::class,'group_job_id','id');
+    }
 }

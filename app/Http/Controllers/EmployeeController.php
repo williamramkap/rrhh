@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 use App\City;
 use App\EmployeeType;
 use Validator;
+use App\Exports\PayrollExport;
+use Excel;
+use App\Payroll;
+use PHPExcel_Worksheet_Drawing;
+use PHPExcel_Style_Alignment;
+use PHPExcel_Style_Fill;
+use App\Contract;
 class EmployeeController extends Controller
 {
     /**
@@ -16,6 +23,131 @@ class EmployeeController extends Controller
      */
     public function index()
     {
+        
+        Excel::create('Filename', function($excel) {
+            // Set the title
+            $excel->setTitle('Our new awesome title');
+
+            // Chain the setters
+            $excel->setCreator('Maatwebsite')
+                    ->setCompany('Maatwebsite');
+
+            // Call them separately
+            $excel->setDescription('A demonstration to change the file properties');
+            
+            $excel->sheet('Sheetname', function($sheet) {
+                $center_style = array(
+                    'alignment' => array(
+                        'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                    )
+                );
+
+
+                $name = "MUTUAL DE SERVICIOS AL POLICIA";
+                $nit = "NIT 234578021";
+                $address = "Av. 6 De Agosto No. 2354 - Zona Sopocachi";
+                $title = "PLANILLA PATRONAL";
+                $subtitle = "PERSONAL EVENTUAL - MES  ABRIL DE 2018";
+                $exchange = "(EXPRESADO EN BOLIVIANOS)";
+                $sheet->mergeCells('A1:C1');
+                $sheet->mergeCells('A2:C2');
+                $sheet->mergeCells('A3:C3');
+
+                $sheet->row(1, array(
+                    $name
+                ));
+                $sheet->row(2, array(
+                    $nit
+                ));
+                $sheet->row(3, array(
+                    $address
+                ));
+                
+                $objDrawing = new PHPExcel_Worksheet_Drawing;
+                $objDrawing->setPath(public_path('images/logo.jpg')); //your image path
+                $objDrawing->setCoordinates('E1');                
+                $objDrawing->setHeight(74);                
+                $objDrawing->setWorksheet($sheet);
+
+                $sheet->mergeCells('A5:N5');
+                $sheet->getStyle("A5:N5")->applyFromArray($center_style);
+                $sheet->mergeCells('A6:N6');
+                $sheet->getStyle("A6:N6")->applyFromArray($center_style);
+                $sheet->mergeCells('A7:N7');
+                $sheet->getStyle("A7:N7")->applyFromArray($center_style);
+
+
+
+                $sheet->row(5, array(
+                    $title
+                ));
+                $sheet->row(6, array(
+                    $subtitle
+                ));
+                $sheet->row(7, array(
+                    $exchange
+                ));
+
+                $row = 10;
+                $sheet->getStyle($row)->getFill()
+                ->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('FF808080');
+                $sheet->row($row++, array(
+                    'Nº',
+                    'C.I.',
+                    'TRABAJADOR',
+                    'SUCURSAL',
+                    'SUELDO NETO',          
+                    'Minimo No imponible',
+                    'Diferencia sujeto a impuestos',
+                    'Impuesto 13% Debito Fisca',
+                    'Computo IVA según D.J. Form. 110',
+                    '13% Sobre 2 Min. Nal.',
+                    'Fisco',
+                    'Dependiente',
+                    'Mes anterior',
+                    'Actualizacion',
+                    'Total',
+                    'Saldo a favor del dependiente',
+                    'Saldo Utilizado',
+                    'Impuesto determinado a pagar',
+                    'Saldo para mes siguiente',                    
+               ));               
+               $payrolls = Payroll::get();
+               $number = 1;
+               $basic_salary = 4000;
+               $basic_salary_tax = $basic_salary*0.13;
+               foreach($payrolls as $payroll){
+
+                $employee = $payroll->employee;
+                $contract = Contract::where('employee_id',$employee->id)->where('status',true)->first();
+                $tax = $payroll->payable_liquid-40000>0?$payroll->payable_liquid-40000:0;
+                $sheet->row($row++, array(
+                    $number++,
+                    $employee->identity_card,
+                    $employee->last_name.' '.$employee->mothers_last_name.' '.$employee->first_name.' '.$employee->mothers_last_name,
+                    $employee->group_job->name??'Central',                                                                                
+                    $payroll->payable_liquid,
+                    $basic_salary,
+                    $tax,
+                    '0',
+                    $basic_salary_tax,
+                    '0f',
+                    '0D',
+                    '0m',
+                    '0A',
+                    '0T',
+                    '0S',
+                    '0u',
+                    '0I',
+                    '0sig',                    
+                ));
+               }
+            });
+        })->download('xls');
+
+        return ;
         $employees = Employee::get();
         $data = [
             'employees' => $employees,
