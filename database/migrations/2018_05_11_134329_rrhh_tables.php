@@ -24,7 +24,7 @@ class RrhhTables extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('month_id')->unsigned();
             $table->string('name')->nullable();
-            $table->integer('year')->nullabele();
+            $table->integer('year')->nullable();
             $table->foreign('month_id')->references('id')->on('months');
             $table->timestamps();
         });
@@ -32,8 +32,8 @@ class RrhhTables extends Migration
         Schema::create('cities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('first_shortened');
-            $table->string('second_shortened');
+            $table->string('first_shortened')->nullable();
+            $table->string('second_shortened')->nullable();
             $table->timestamps();
         });
 
@@ -50,6 +50,47 @@ class RrhhTables extends Migration
             $table->timestamps();
         });
 
+        Schema::create('employees', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('employee_type_id')->unsigned()->nullable();
+            $table->bigInteger('city_identity_card_id')->unsigned()->nullable();
+            $table->bigInteger('city_birth_id')->unsigned()->nullable();
+            $table->bigInteger('management_entity_id')->unsigned()->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('second_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('mothers_last_name')->nullable();
+            $table->string('surname_husband')->nullable();
+            $table->string('identity_card')->nullable();
+            $table->date('birth_date')->nullable();
+            $table->string('account_number')->nullable();
+            $table->enum('gender', ['M', 'F'])->nullable();
+            $table->foreign('employee_type_id')->references('id')->on('employee_types');
+            $table->foreign('city_identity_card_id')->references('id')->on('cities');
+            $table->foreign('city_birth_id')->references('id')->on('cities');
+            $table->foreign('management_entity_id')->references('id')->on('management_entities');
+            $table->timestamps();
+        });
+
+        Schema::create('charges', function (Blueprint $table) { //cargos
+            $table->bigIncrements('id');
+            $table->string('name')->nullable();
+            $table->decimal('base_wage', 8, 2)->nullable();
+            $table->string('shortened')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('positions', function (Blueprint $table) { //puestos
+            $table->bigIncrements('id');
+            $table->bigInteger('charge_id')->unsigned()->nullable();
+            $table->bigInteger('employee_id')->unsigned()->nullable();
+            $table->string('name')->nullable();
+            $table->string('item')->nullable();
+            $table->string('shortened')->nullable();
+            $table->foreign('charge_id')->references('id')->on('charges');
+            $table->foreign('employee_id')->references('id')->on('employees');
+            $table->timestamps();
+        });
         Schema::create('directions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
@@ -60,51 +101,14 @@ class RrhhTables extends Migration
         Schema::create('units', function (Blueprint $table) { //unidades
             $table->bigIncrements('id');
             $table->bigInteger('direction_id')->unsigned()->nullable();
+            $table->bigInteger('position_id')->unsigned()->nullable();
+            $table->bigInteger('')->unsigned()->nullable();
             $table->string('name')->nullable();
             $table->string('shortened')->nullable();
-            $table->foreign('direction_id')->references('id')->on('directions');
+            $table->foreign('position_id')->references('id')->on('positions');
+            $table->foreign('directions')->references('id')->on('directions');
             $table->timestamps();
         });
-
-        Schema::create('charges', function (Blueprint $table) { //cargos
-            $table->bigIncrements('id');
-            $table->bigInteger('unit_id')->unsigned()->nullable();
-            $table->string('name')->nullable();
-            $table->string('item')->nullable();
-            $table->decimal('base_wage', 8, 2)->nullable();
-            $table->string('shortened')->nullable();
-            $table->foreign('unit_id')->references('id')->on('units');
-            $table->timestamps();
-        });
-
-        Schema::create('positions', function (Blueprint $table) { //puestos
-            $table->bigIncrements('id');
-            $table->bigInteger('charge_id')->unsigned()->nullable();
-            $table->string('name')->nullable();
-            $table->string('shortened')->nullable();
-            $table->foreign('charge_id')->references('id')->on('charges');
-            $table->timestamps();
-        });
-
-        Schema::create('employees', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('employee_type_id')->unsigned()->nullable();
-            $table->bigInteger('city_identity_card_id')->unsigned()->nullable();
-            $table->bigInteger('city_birth_id')->unsigned()->nullable();
-            $table->string('first_name')->nullable();
-            $table->string('second_name')->nullable();
-            $table->string('last_name')->nullable();
-            $table->string('mothers_last_name')->nullable();
-            $table->string('identity_card')->nullable();
-            $table->date('birth_date')->nullable();
-            $table->string('account_number')->nullable();
-            $table->enum('gender', ['M', 'F'])->nullable();
-
-            $table->foreign('employee_type_id')->references('id')->on('employee_types');
-            $table->foreign('city_identity_card_id')->references('id')->on('cities');
-            $table->timestamps();
-        });
-
         Schema::create('contracts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('employee_id')->unsigned();
@@ -122,20 +126,16 @@ class RrhhTables extends Migration
         Schema::create('payrolls', function (Blueprint $table) { //planilla de haberes
             $table->bigIncrements('id');
             $table->bigInteger('employee_id')->unsigned();
-            $table->bigInteger('management_entity_id')->unsigned();
             $table->bigInteger('procedure_id')->unsigned();
-
             $table->string('name')->nullable();
             $table->bigInteger('worked_days');
-
             $table->decimal('quotable', 8, 2)->nullable();
             $table->decimal('total_amount_discount_law', 8, 2)->nullable();
+            $table->decimal('net_salary', 8, 2)->nullable();
             $table->decimal('total_amount_discount_institution', 8, 2)->nullable();
             $table->decimal('total_discounts', 8, 2)->nullable();
             $table->decimal('payable_liquid', 8, 2)->nullable();
-
             $table->foreign('procedure_id')->references('id')->on('procedures');
-            $table->foreign('management_entity_id')->references('id')->on('management_entities');
             $table->foreign('employee_id')->references('id')->on('employees');
             $table->timestamps();
         });
@@ -149,11 +149,9 @@ class RrhhTables extends Migration
             $table->bigInteger('discount_type_id')->unsigned();
             $table->string('name')->nullable();
             $table->decimal('percentage', 8, 2)->nullable();
-            $table->foreign('discount_type_id')->references('id')->on('discounts');
+            $table->foreign('discount_type_id')->references('id')->on('discount_types');
             $table->timestamps();
         });
-
-
         Schema::create('discount_payroll', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('payroll_id')->unsigned();
@@ -163,7 +161,6 @@ class RrhhTables extends Migration
             $table->foreign('payroll_id')->references('id')->on('payrolls');
             $table->timestamps();
         });
-
     }
     /**
      * Reverse the migrations.

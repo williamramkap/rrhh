@@ -11,5 +11,9 @@ class Unit extends Model
     {
         return $this->belongsTo(Direction::class);
     }
+    public function position()
+    {
+        return $this->belongsTo(Position::class);
+    }
 
 }

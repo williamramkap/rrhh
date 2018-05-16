@@ -11,4 +11,8 @@ class Position extends Model
     {
         return $this->belongsTo(Charge::class);
     }
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
+    }
 }

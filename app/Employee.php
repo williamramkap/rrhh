@@ -21,9 +21,9 @@ class Employee extends Model
     {
         return $this->belongsTo(City::class, 'city_birth_id', 'id');
     }
-    public function charge()
+    public function positions()
     {
-        return $this->hasMany(Charge::class, 'employee_id', 'id');
+        return $this->hasMany(Position::class);
     }
     public function management_entity()
     {
