@@ -50,9 +50,6 @@ class RrhhTables extends Migration
             $table->timestamps();
         });
 
-     
-
-        
         Schema::create('employees', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('employee_type_id')->unsigned()->nullable();
@@ -77,11 +74,9 @@ class RrhhTables extends Migration
 
         Schema::create('charges', function (Blueprint $table) { //cargos
             $table->bigIncrements('id');
-            $table->bigInteger('unit_id')->unsigned()->nullable();
             $table->string('name')->nullable();
             $table->decimal('base_wage', 8, 2)->nullable();
             $table->string('shortened')->nullable();
-            $table->foreign('unit_id')->references('id')->on('units');
             $table->timestamps();
         });
 
