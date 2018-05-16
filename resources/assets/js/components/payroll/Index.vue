@@ -9,32 +9,13 @@
           </a>
         </div>
       </div>
-      <div class="ibox-content zui-wrapper">
-        <div class="row">
-            <div class="col-sm-2">
-                <div class="form-group">
-                    <label class="control-label" for="status">Mes</label>
-                    <select name="month"  class="form-control" v-model="month">
-                      <option v-for="(m, index) in months" :key="`month-${m.name}`" :value="calculateMonth(m.name)" v-text="m.name"></option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-2">
-                <div class="form-group">
-                    <label class="control-label" for="status">Year</label>
-                    <select name="year" class="form-control" v-model="year">
-                      <option value="2017">2017</option>
-                      <option value="2018" selected>2018</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-          <div class="table-responsive zui-scroller">
-            <table class="table table-striped zui-table">
+      <div class="ibox-content">
+          <div class="table-responsive" style="max-height:600px;">
+            <table class="table table-striped">
               <thead>
                 <tr>
-                  <th class="zui-sticky-col">Ci</th>
-                  <th class="zui-sticky-col-1">Trabajador</th>
+                  <th>Ci</th>
+                  <th>Trabajador</th>
                   <th>Cuenta Bancaria</th>
                   <th>Fecha de Nacimiento</th>
                   <th>Cargo</th>
@@ -53,11 +34,20 @@
                 </tr>
               </thead>
               <tbody>
+
                 <row v-for="(value, index) in employees"
                     :key="`employee-${index}`"
                     :employee="value"
-                    :month="month"
-                    :year="year"
+                    :discounts-law="discountsLaw"
+                    :discounts-institution="discountsInstitution"
+                    v-if="!edit"
+                    ></row>
+                <row v-for="(value, index) in employees"
+                    :key="`employee-${index}`"
+                    :employee="value"
+                    :discounts-law="discountsLaw"
+                    :discounts-institution="discountsInstitution"
+                    v-else
                     ></row>
               </tbody>
             </table>
@@ -65,11 +55,8 @@
           <div class="row">
             <div class="text-center">
               <br>
-              <!-- <button class="btn btn-primary" type="submit"> <i class="fa fa-save"></i> Guardar</button> -->
-              <!-- <button class="btn btn-primary" type="button" @click="save()"> <i class="fa fa-save"></i> Guardar</button> -->
             </div>
           </div>
-        <!-- </form> -->
        </div>
       </div>
     </div>
@@ -81,63 +68,18 @@
 import row from "./row.vue";
 
 export default {
+    props:['edit', 'year', 'month'],
     components: {
         row
     },
     data() {
         return {
-            year:2018,
-            month:moment().month()+1,
-            months:[],
             employees: [],
             discountsLaw: [],
             discountsInstitution: []
         };
     },
-    methods:{
-      save(){
-        axios.post('/payroll',{
-        }).then(response => {
-          console.log(response.data);
-        }).catch(error=>{
-          console.log(error);
-        });
-      },
-      calculateMonth(month){
-        switch (month) {
-          case 'Enero':
-            return 1;
-            break;
-          case 'Febrero':
-            return 2;
-            break;
-          case 'Marzo':
-            return 3;
-            break;
-          case 'Abril':
-            return 4;
-            break;
-          case 'Mayo':
-            return 5;
-            break;
-          case 'Junio':
-            return 6;
-            break;
-          case 'Julio':
-            return 7;
-            break;
-          default:
-            break;
-        }
-      },
-    },
     created() {
-      axios.get("/api/months")
-      .then(response=>{
-        this.months = response.data;
-      }).catch(error=>{
-        console.log(error);
-      });
         axios
             .get("/api/discounts")
             .then(response => {
@@ -151,14 +93,32 @@ export default {
             .catch(error => {
                 console.log(error);
             });
-        axios
-            .get("/api/employees")
+        if (this.edit) {
+          axios.get("/api/payrolls",{
+            params:{
+              year: this.year,
+              month: this.month
+            }
+          })
             .then(response => {
-                this.employees = response.data.employees;
+              console.log(response);
+              
+              // this.employees = response.data.employees;
             })
             .catch(error => {
-                console.log(error);
+              console.log(error);
             });
+        }else{
+
+          axios
+            .get("/api/employees")
+            .then(response => {
+              this.employees = response.data.employees;
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        }
     }
 };
 </script>
@@ -188,11 +148,13 @@ export default {
 }
 .zui-wrapper {
     position: relative;
+    margin-bottom: 50px
 }
 .zui-scroller {
+    height:400px;
     margin-left: 460px;
     overflow-x: scroll;
-    overflow-y: visible;
+    overflow-y: auto;
     padding-bottom: 5px;
 }
 .zui-table .zui-sticky-col {

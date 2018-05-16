@@ -19,5 +19,9 @@ class Payroll extends Model
     {
         return $this->belongsTo(Procedure::class);
     }
+    public function discounts()
+    {
+        return $this->belongsToMany(Discount::class);
+    }
 
 }

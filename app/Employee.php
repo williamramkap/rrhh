@@ -29,5 +29,9 @@ class Employee extends Model
     {
         return $this->belongsTo(ManagerEntity::class, 'management_entity_id', 'id');
     }
+    public function payrolls()
+    {
+        return $this->hasMany(Payroll::class);
+    }
 
 }

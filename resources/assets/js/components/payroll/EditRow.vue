@@ -35,18 +35,6 @@ export default {
         delay: 0,
     }
   },
-  created(){
-    // axios.get('/api/discounts').then(response => {
-    //       this.discountsLaw = response.data.filter(item => {
-    //           return item.discount_type_id == 1;
-    //       });
-    //       this.discountsInstitution = response.data.filter(item => {
-    //           return item.discount_type_id == 2 ;
-    //       });
-    // }).catch(error=>{
-    //       console.log(error);
-    // });
-  },
   methods:{
       fullName(employee){
           let name = `${employee.first_name || ''} ${employee.second_name || ''} ${employee.last_name || ''} ${employee.mothers_last_name || ''} ${employee.surname_husband || ''}`
@@ -87,21 +75,3 @@ export default {
   },
 }
 </script>
-<style scoped>
-.zui-table .zui-sticky-col {
-    left: 0;
-    position: absolute;
-    top: auto;
-    height:51px;
-    width: 160px;
-    text-align: right;
-}
-.zui-table .zui-sticky-col-1 {
-    left: 160px;
-    position: absolute;
-    top: auto;
-    height:51px;
-    width: 320px;
-    text-align:left;
-}
-</style>
