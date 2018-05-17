@@ -118,7 +118,10 @@ class RrhhTables extends Migration
             $table->bigInteger('contract_id')->unsigned();
             $table->bigInteger('procedure_id')->unsigned();
             $table->string('name')->nullable();
+            $table->string('date_start')->nullable();
+            $table->string('date_end')->nullable();
             $table->bigInteger('worked_days');
+            $table->decimal('base_wage', 8, 2)->nullable();
             $table->decimal('quotable', 8, 2)->nullable();
             $table->decimal('discount_old', 8, 2)->default(0);
             $table->decimal('discount_common_risk', 8, 2)->default(0);

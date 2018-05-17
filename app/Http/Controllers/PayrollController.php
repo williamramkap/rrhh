@@ -95,6 +95,7 @@ class PayrollController extends Controller
                 $payroll->name = "Personal Eventual - Mes ".$request->month ." de ".$request->year;
                 $payroll->worked_days = $value[0];
                 $base_wage = $contract->position->charge->base_wage ?? 1000;
+                $payroll->base_wage = $base_wage;
                 $quotable = ($base_wage/30)* $value[0];
                 $payroll->quotable = $quotable;
                 $payroll->discount_old = ($quotable * $procedure->discount_old)/100;
