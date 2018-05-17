@@ -35,20 +35,20 @@
               </thead>
               <tbody>
 
-                <row v-for="(value, index) in employees"
-                    :key="`employee-${index}`"
-                    :employee="value"
+                <row v-for="(value, index) in contracts"
+                    :key="`contact-${index}`"
+                    :contract="value"
                     :discounts-law="discountsLaw"
                     :discounts-institution="discountsInstitution"
                     v-if="!edit"
                     ></row>
-                <row v-for="(value, index) in employees"
-                    :key="`employee-${index}`"
-                    :employee="value"
+                <edit-row v-for="(value, index) in payrolls"
+                    :key="`payroll-${index}`"
+                    :payroll="value"
                     :discounts-law="discountsLaw"
                     :discounts-institution="discountsInstitution"
-                    v-else
-                    ></row>
+                    v-if="edit"
+                    ></edit-row>
               </tbody>
             </table>
           </div>
@@ -66,15 +66,18 @@
 
 <script>
 import row from "./row.vue";
+import EditRow from "./EditRow.vue";
 
 export default {
     props:['edit', 'year', 'month'],
     components: {
-        row
+        row,
+        EditRow
     },
     data() {
         return {
-            employees: [],
+            contracts: [],
+            payrolls: [],
             discountsLaw: [],
             discountsInstitution: []
         };
@@ -101,19 +104,16 @@ export default {
             }
           })
             .then(response => {
-              console.log(response);
-              
-              // this.employees = response.data.employees;
+              this.payrolls = response.data;
             })
             .catch(error => {
               console.log(error);
             });
         }else{
-
           axios
-            .get("/api/employees")
+            .get("/api/contracts")
             .then(response => {
-              this.employees = response.data.employees;
+              this.contracts = response.data.contracts;
             })
             .catch(error => {
               console.log(error);
