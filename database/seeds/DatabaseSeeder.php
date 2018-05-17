@@ -15,11 +15,12 @@ class DatabaseSeeder extends Seeder
         $this->call(CitiesTableSeeder::class);
         $this->call(EmployeesTypeTableSeeder::class);
         $this->call(ManagementEntityTableSeeder::class);
-        $this->call(EmployeesTableSeeder::class);
+        // $this->call(EmployeesTableSeeder::class);
         $this->call(ChargesTableSeeder::class);
         $this->call(PositionGroupTableSeeder::class);
         $this->call(PositionTableSeeder::class);
-        $this->call(ContractTableSeeder::class);
-        $this->call(DiscountTypesAndDiscountTableSeeder::class);
+        // $this->call(ContractTableSeeder::class);
+        // $this->call(DiscountTypesAndDiscountTableSeeder::class);
+        $this->call(ProcedureTableSeeder::class);
     }
 }

@@ -6,17 +6,19 @@
         <td>{{ payroll.birth_date}}</td>
         <td>{{ payroll.charge}}</td>
         <td>{{ payroll.position }}</td>
-        <td><input type="number" v-model="days" :name="`payroll-${payroll.id}[]`" class="form-control" placeholder="dias trabajados" min="1" max="30"></td>
+        <td><input type="number" v-model="days" :name="`contract-${payroll.contract_id}[]`" class="form-control" placeholder="dias trabajados" min="1" max="30"></td>
         <td>{{ baseWage | currency }}</td>
         <td>{{ quotable | currency }}</td>
         <td>{{ payroll.management_entity}}</td>
-        <td v-for="(discount, index) in discountsLaw" :key="`d-l-${index}`">{{ calculateDiscount(discount) | currency }}</td>
-        <td>{{ calculateTotalDiscount(discountsLaw) | currency }}</td>
+        <td>{{ calculateDiscount(procedure.discount_old) | currency }}</td>
+        <td>{{ calculateDiscount(procedure.discount_common_risk) | currency }}</td>
+        <td>{{ calculateDiscount(procedure.discount_commission) | currency }}</td>
+        <td>{{ calculateDiscount(procedure.discount_solidary) | currency }}</td>
+        <td>{{ calculateDiscount(procedure.discount_national) | currency }}</td>
+        <td>{{ calculateTotalDiscountLaw() | currency }}</td>
         <td>{{ salary | currency}}</td>
         <td>0</td>
-        <td v-for="(discount, index) in discountsInstitution" :key="`d-i-${index}`">
-            <input type="text" class="form-control" :name="`payroll-${payroll.id}[]`" v-model="di">
-        </td>
+        <td><input type="text" class="form-control" :name="`contract-${payroll.contract_id}[]`" v-model="delay"></td>
         <td> {{ totalDiscounts | currency }} </t>
         <td> {{ total | currency}} </td>
     </tr>
@@ -24,20 +26,17 @@
 
 <script>
 export default {
-  props:['payroll', 'year', 'month', 'discountsLaw', 'discountsInstitution'],
+  props:['payroll', 'procedure'],
   data(){
     return{
         days: this.payroll.worked_days,
         di: null,
         baseWage: this.payroll.base_wage,
-        // discountsLaw: [],
-        // discountsInstitution: [],
-        delay: 0,
+        delay: this.payroll.discount_faults,
     }
   },
   created(){
-      console.log(this.payroll);
-      
+    //   console.log(this.payroll);
   },
   methods:{
       fullName(payroll){
@@ -45,21 +44,11 @@ export default {
           name = name.replace(/\s+/gi, ' ').trim().toUpperCase();
           return name;
       },
-    //   maxDay(){
-    //       return moment(`${this.year}-${this.month}-01`).daysInMonth();
-    //   },
       calculateDiscount(discount){
-          return (this.quotable * discount.percentage)/100;
+          return (this.quotable * discount)/100;
       },
-      calculateTotalDiscount(discounts){
-          return discounts.reduce((prev, curr)=>{
-              return prev+this.calculateDiscount(curr);
-          }, 0)
-      },
-      calculateTotalDiscountInstitution(){
-          return this.discountsInstitution.reduce((prev, curr)=>{
-              return prev + this.di;
-          }, 0);
+      calculateTotalDiscountLaw(){
+        return this.calculateDiscount(this.procedure.discount_old)+this.calculateDiscount(this.procedure.discount_common_risk)+this.calculateDiscount(this.procedure.discount_commission)+this.calculateDiscount(this.procedure.discount_solidary)+this.calculateDiscount(this.procedure.discount_national);
       },
 
   },
@@ -68,13 +57,13 @@ export default {
           return this.quotable - this.totalDiscounts;
       },
       totalDiscounts(){
-          return parseFloat(this.calculateTotalDiscount(this.discountsLaw)) + parseFloat(this.calculateTotalDiscountInstitution());
+          return this.calculateTotalDiscountLaw() + parseFloat(this.delay || 0 );
       },
       quotable()  {
           return (this.baseWage/30)*this.days;
       },
       salary(){
-          return this.quotable - this.calculateTotalDiscount(this.discountsLaw);
+          return this.quotable - this.calculateTotalDiscountLaw();
       }
   },
 }

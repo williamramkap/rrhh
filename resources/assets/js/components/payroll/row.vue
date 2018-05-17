@@ -6,7 +6,7 @@
         <td>{{ contract.birth_date}}</td>
         <td>{{ contract.charge}}</td>
         <td>{{ contract.position }}</td>
-        <td><input type="number" v-model="days" :name="`contract-${contract.id}[]`" class="form-control" placeholder="dias trabajados" min="1" max="30"></td>
+        <td><input type="number" v-model="days" :name="`contract-${contract.id}[]`" class="form-control" placeholder="dias trabajados" min="0" max="30"></td>
         <td>{{ baseWage | currency }}</td>
         <td>{{ quotable | currency }}</td>
         <td>{{ contract.management_entity}}</td>
@@ -26,7 +26,7 @@
 
 <script>
 export default {
-  props:['contract', 'procedure', 'discountsLaw', 'discountsInstitution'],
+  props:['contract', 'procedure'],
   data(){
     return{
         days: 30,
@@ -36,17 +36,6 @@ export default {
   },
   created(){
       console.log(this.contract);
-      
-    // axios.get('/api/discounts').then(response => {
-    //       this.discountsLaw = response.data.filter(item => {
-    //           return item.discount_type_id == 1;
-    //       });
-    //       this.discountsInstitution = response.data.filter(item => {
-    //           return item.discount_type_id == 2 ;
-    //       });
-    // }).catch(error=>{
-    //       console.log(error);
-    // });
   },
   methods:{
       fullName(contract){

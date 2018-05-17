@@ -16,7 +16,7 @@ class ChargesTableSeeder extends Seeder
             ['name' => "DIRECTOR DE AREA", 'base_wage' => '10600'],
             ['name' => "JEFE DE UNIDAD I", 'base_wage' => '7600'],
             ['name' => "JEFE DE UNIDAD II", 'base_wage' => '6900'],
-            ['name' => "RESPONSABLE ", 'base_wage' => '6200'],          
+            ['name' => "RESPONSABLE ", 'base_wage' => '6200'],
             ['name' => "ASESOR", 'base_wage' => '6200'],
             ['name' => "PROFESIONAL I", 'base_wage' => '5000'],
             ['name' => "PROFESIONAL II", 'base_wage' => '4500'],

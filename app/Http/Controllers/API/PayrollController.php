@@ -33,6 +33,7 @@ class PayrollController extends Controller
             $position = $contract->position;
             $charge = $position->charge;
             $employee = $contract->employee;
+            $payroll->contract_id = $contract->id;
             $payroll->identity_card = $employee->identity_card;
             $payroll->employee_id = $employee->id;
             $payroll->city_identity_card = $employee->city_identity_card->shortened;
@@ -45,7 +46,6 @@ class PayrollController extends Controller
             $payroll->account_number = $employee->account_number;
             $payroll->charge = $charge->name;
             $payroll->position = $position->name;
-            $payroll->base_wage = $charge->base_wage;
             $payroll->base_wage = $charge->base_wage;
             $payroll->management_entity = $employee->management_entity->name;
         }
