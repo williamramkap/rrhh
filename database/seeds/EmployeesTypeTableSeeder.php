@@ -12,6 +12,7 @@ class EmployeesTypeTableSeeder extends Seeder
     public function run()
     {
         $statuses = [
+            ['name' => 'Libre Nombramiento'],
             ['name' => 'Eventual'],
             ['name' => 'Consultor'],
         ];
