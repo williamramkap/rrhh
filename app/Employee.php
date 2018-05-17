@@ -21,7 +21,7 @@ class Employee extends Model
     }
     public function management_entity()
     {
-        return $this->belongsTo(ManagerEntity::class, 'management_entity_id', 'id');
+        return $this->belongsTo(ManagementEntity::class, 'management_entity_id', 'id');
     }
     public function contracts()
     {

@@ -1,21 +1,21 @@
 <template>
     <tr>
-        <td class="zui-sticky-col">{{ employee.identity_card}} {{ employee.city_identity_card }}</td>
-        <td class="zui-sticky-col-1">{{ fullName(employee) }}</td>
-        <td>{{ employee.account_number}}</td>
-        <td>{{ employee.birth_date}}</td>
-        <td>{{ employee.charge}}</td>
-        <td>{{ employee.position }}</td>
-        <td><input type="number" v-model="days" :name="`employee-${employee.id}[]`" class="form-control" placeholder="dias trabajados" min="1" max="30"></td>
+        <td class="zui-sticky-col">{{ contract.identity_card}} {{ contract.city_identity_card }}</td>
+        <td class="zui-sticky-col-1">{{ fullName(contract) }}</td>
+        <td>{{ contract.account_number}}</td>
+        <td>{{ contract.birth_date}}</td>
+        <td>{{ contract.charge}}</td>
+        <td>{{ contract.position }}</td>
+        <td><input type="number" v-model="days" :name="`contract-${contract.id}[]`" class="form-control" placeholder="dias trabajados" min="1" max="30"></td>
         <td>{{ baseWage | currency }}</td>
         <td>{{ quotable | currency }}</td>
-        <td>{{ employee.management_entity}}</td>
+        <td>{{ contract.management_entity}}</td>
         <td v-for="(discount, index) in discountsLaw" :key="`d-l-${index}`">{{ calculateDiscount(discount) | currency }}</td>
         <td>{{ calculateTotalDiscount(discountsLaw) | currency }}</td>
         <td>{{ salary | currency}}</td>
         <td>0</td>
         <td v-for="(discount, index) in discountsInstitution" :key="`d-i-${index}`">
-            <input type="text" class="form-control" :name="`employee-${employee.id}[]`" v-model="di">
+            <input type="text" class="form-control" :name="`contract-${contract.id}[]`" v-model="di">
         </td>
         <td> {{ totalDiscounts | currency }} </t>
         <td> {{ total | currency}} </td>
@@ -24,11 +24,11 @@
 
 <script>
 export default {
-  props:['employee', 'year', 'month', 'discountsLaw', 'discountsInstitution'],
+  props:['contract', 'year', 'month', 'discountsLaw', 'discountsInstitution'],
   data(){
     return{
         days: 30,
-        baseWage: this.employee.base_wage,
+        baseWage: this.contract.base_wage,
         // discountsLaw: [],
         // discountsInstitution: [],
         di:null,
@@ -36,6 +36,8 @@ export default {
     }
   },
   created(){
+      console.log(this.contract);
+      
     // axios.get('/api/discounts').then(response => {
     //       this.discountsLaw = response.data.filter(item => {
     //           return item.discount_type_id == 1;
@@ -48,8 +50,8 @@ export default {
     // });
   },
   methods:{
-      fullName(employee){
-          let name = `${employee.first_name || ''} ${employee.second_name || ''} ${employee.last_name || ''} ${employee.mothers_last_name || ''} ${employee.surname_husband || ''}`
+      fullName(contract){
+          let name = `${contract.first_name || ''} ${contract.second_name || ''} ${contract.last_name || ''} ${contract.mothers_last_name || ''} ${contract.surname_husband || ''}`
           name = name.replace(/\s+/gi, ' ').trim().toUpperCase();
           return name;
       },

@@ -108,41 +108,25 @@ class RrhhTables extends Migration
         });
         Schema::create('payrolls', function (Blueprint $table) { //planilla de haberes
             $table->bigIncrements('id');
-            $table->bigInteger('charge_id')->unsigned();
+            $table->bigInteger('contract_id')->unsigned();
             $table->bigInteger('procedure_id')->unsigned();
             $table->string('name')->nullable();
             $table->bigInteger('worked_days');
             $table->decimal('quotable', 8, 2)->nullable();
+            $table->decimal('discount_old', 8, 2)->nullable();
+            $table->decimal('discount_common_risk', 8, 2)->nullable();
+            $table->decimal('discount_commission', 8, 2)->nullable();
+            $table->decimal('discount_solidary', 8, 2)->nullable();
+            $table->decimal('discount_national', 8, 2)->nullable();
             $table->decimal('total_amount_discount_law', 8, 2)->nullable();
+            $table->decimal('discount_rc_iva', 8, 2)->nullable();
+            $table->decimal('discount_faults', 8, 2)->nullable();
             $table->decimal('net_salary', 8, 2)->nullable();
             $table->decimal('total_amount_discount_institution', 8, 2)->nullable();
             $table->decimal('total_discounts', 8, 2)->nullable();
             $table->decimal('payable_liquid', 8, 2)->nullable();
+            $table->foreign('contract_id')->references('id')->on('contract');
             $table->foreign('procedure_id')->references('id')->on('procedures');
-            $table->foreign('charge_id')->references('id')->on('charges');
-            $table->timestamps();
-        });
-        Schema::create('discount_types', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->timestamps();
-        });
-        Schema::create('discounts', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('discount_type_id')->unsigned();
-            $table->string('name')->nullable();
-            $table->decimal('percentage', 8, 2)->nullable();
-            $table->boolean('active')->default(1);
-            $table->foreign('discount_type_id')->references('id')->on('discount_types');
-            $table->timestamps();
-        });
-        Schema::create('discount_payroll', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('payroll_id')->unsigned();
-            $table->bigInteger('discount_id')->unsigned();
-            $table->decimal('amount', 8, 2)->nullable();
-            $table->foreign('discount_id')->references('id')->on('discounts');
-            $table->foreign('payroll_id')->references('id')->on('payrolls');
             $table->timestamps();
         });
     }
@@ -153,9 +137,6 @@ class RrhhTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('discount_payroll');
-        Schema::dropIfExists('discounts');
-        Schema::dropIfExists('discount_types');
         Schema::dropIfExists('payrolls');
         Schema::dropIfExists('procedures');
         Schema::dropIfExists('months');
