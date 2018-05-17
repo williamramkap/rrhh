@@ -6,13 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Position extends Model
 {
-    //
     public function charge()
     {
         return $this->belongsTo(Charge::class);
     }
-    public function employee()
+    public function position_group()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(PositionGroup::class);
+    }
+    public function contracts()
+    {
+        return $this->hasMany(Contract::class);
     }
 }
