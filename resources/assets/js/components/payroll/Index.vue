@@ -24,11 +24,17 @@
                   <th>Haber basico</th>
                   <th>Total Ganado</th>
                   <th>AFP</th>
-                  <th v-for="(discount, index) in discountsLaw" v-text="discount.name" :key="`discount-law-${index}`"></th>
+                  <!-- <th v-for="(discount, index) in discountsLaw" v-text="discount.name" :key="`discount-law-${index}`"></th> -->
+                  <th>Descuento Renta vejez 10 %</th>
+                  <th>Descuento Riesgo común 1,71 %</th>
+                  <th>Descuento Comisión 0 ,5 %</th>
+                  <th>Descuento Aporte solidario del asegurado 0 ,5 %</th>
+                  <th>Descuento Aporte Nacional solidario 1 %</th>
                   <th>Total descuentos de ley</th>
                   <th>Sueldo Neto</th>
                   <th>RC-IVA 13%</th>
-                  <th v-for="(discount1, index) in discountsInstitution" v-text="discount1.name" :key="`discount-institution-${index}`"></th>
+                  <!-- <th v-for="(discount1, index) in discountsInstitution" v-text="discount1.name" :key="`discount-institution-${index}`"></th> -->
+                  <th>Descuentos por Atrasos, Abandonos, Faltas y Licencia S/G Haberes</th>
                   <th>Total descuentos</th>
                   <th>Liquido Pagable</th>
                 </tr>
@@ -40,6 +46,7 @@
                     :contract="value"
                     :discounts-law="discountsLaw"
                     :discounts-institution="discountsInstitution"
+                    :procedure="procedure"
                     v-if="!edit"
                     ></row>
                 <edit-row v-for="(value, index) in payrolls"
@@ -47,6 +54,7 @@
                     :payroll="value"
                     :discounts-law="discountsLaw"
                     :discounts-institution="discountsInstitution"
+                    :procedure="procedure"
                     v-if="edit"
                     ></edit-row>
               </tbody>
@@ -69,7 +77,7 @@ import row from "./row.vue";
 import EditRow from "./EditRow.vue";
 
 export default {
-    props:['edit', 'year', 'month'],
+    props:['edit', 'procedure'],
     components: {
         row,
         EditRow
@@ -83,19 +91,19 @@ export default {
         };
     },
     created() {
-        axios
-            .get("/api/discounts")
-            .then(response => {
-                this.discountsLaw = response.data.filter(item => {
-                    return item.discount_type_id == 1;
-                });
-                this.discountsInstitution = response.data.filter(item => {
-                    return item.discount_type_id == 2;
-                });
-            })
-            .catch(error => {
-                console.log(error);
-            });
+        // axios
+        //     .get("/api/discounts")
+        //     .then(response => {
+        //         this.discountsLaw = response.data.filter(item => {
+        //             return item.discount_type_id == 1;
+        //         });
+        //         this.discountsInstitution = response.data.filter(item => {
+        //             return item.discount_type_id == 2;
+        //         });
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //     });
         if (this.edit) {
           axios.get("/api/payrolls",{
             params:{
