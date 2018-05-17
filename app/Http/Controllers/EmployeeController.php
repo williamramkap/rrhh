@@ -14,6 +14,8 @@ use PHPExcel_Worksheet_Drawing;
 use PHPExcel_Style_Alignment;
 use PHPExcel_Style_Fill;
 use App\Contract;
+use App\Position;
+use App\DiscountPayroll;
 class EmployeeController extends Controller
 {
     /**
@@ -24,6 +26,10 @@ class EmployeeController extends Controller
     public function index()
     {
         
+        //$discount = DiscountPayroll::where('payroll_id','1203')->select('id','discount_id')->orderBy('discount_id','asc')->get()->pluck('discount_id','id');
+        //return $discount[0]->discoun
+        //return $discount;
+
         Excel::create('Filename', function($excel) {
             // Set the title
             $excel->setTitle('Our new awesome title');
@@ -46,7 +52,7 @@ class EmployeeController extends Controller
                 $name = "MUTUAL DE SERVICIOS AL POLICIA";
                 $nit = "NIT 234578021";
                 $address = "Av. 6 De Agosto No. 2354 - Zona Sopocachi";
-                $title = "PLANILLA PATRONAL";
+                $title = "PLANILLA DE HABERES";
                 $subtitle = "PERSONAL EVENTUAL - MES  ABRIL DE 2018";
                 $exchange = "(EXPRESADO EN BOLIVIANOS)";
                 $sheet->mergeCells('A1:C1');
@@ -69,12 +75,12 @@ class EmployeeController extends Controller
                 $objDrawing->setHeight(74);                
                 $objDrawing->setWorksheet($sheet);
 
-                $sheet->mergeCells('A5:N5');
-                $sheet->getStyle("A5:N5")->applyFromArray($center_style);
-                $sheet->mergeCells('A6:N6');
-                $sheet->getStyle("A6:N6")->applyFromArray($center_style);
-                $sheet->mergeCells('A7:N7');
-                $sheet->getStyle("A7:N7")->applyFromArray($center_style);
+                $sheet->mergeCells('A5:Z5');
+                $sheet->getStyle("A5:Z5")->applyFromArray($center_style);
+                $sheet->mergeCells('A6:Z6');
+                $sheet->getStyle("A6:Z6")->applyFromArray($center_style);
+                $sheet->mergeCells('A7:Z7');
+                $sheet->getStyle("A7:Z7")->applyFromArray($center_style);
 
 
 
@@ -93,55 +99,78 @@ class EmployeeController extends Controller
                 ->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
                 ->getStartColor()
                 ->setARGB('FF808080');
+                $da = [
+                    'Renta vejez 10%',
+                    'Riesgo común 1,71%',
+                    'Comisión 0,5%',
+                    'Aporte solidario del asegurado 0,5%',
+                    'Aporte Nacional solidario 1%, 5%, 10%',
+                ];
                 $sheet->row($row++, array(
                     'Nº',
                     'C.I.',
                     'TRABAJADOR',
                     'SUCURSAL',
-                    'SUELDO NETO',          
-                    'Minimo No imponible',
-                    'Diferencia sujeto a impuestos',
-                    'Impuesto 13% Debito Fisca',
-                    'Computo IVA según D.J. Form. 110',
-                    '13% Sobre 2 Min. Nal.',
-                    'Fisco',
-                    'Dependiente',
-                    'Mes anterior',
-                    'Actualizacion',
-                    'Total',
-                    'Saldo a favor del dependiente',
-                    'Saldo Utilizado',
-                    'Impuesto determinado a pagar',
-                    'Saldo para mes siguiente',                    
+                    'CUENTA BANCO UNION',          
+                    'FECHA NACIMIENTO',
+                    'SEXO',
+                    'CARGO',
+                    'PUESTO',
+                    'FECHA DE INGRESO',
+                    'FECHA VENCIMIENTO CONTRATO',
+                    'DIAS TRABAJADOS',
+                    'HABER BASICO',
+                    'TOTAL GANADO',
+                    'AFP',                    
+                    'Renta vejez 10%',
+                    'Riesgo común 1,71%',
+                    'Comisión 0,5%',
+                    'Aporte solidario del asegurado 0,5%',
+                    'Aporte Nacional solidario 1%, 5%, 10%',
+                    'TOTAL DESCUENTOS DE LEY',
+                    'SUELDO NETO',
+                    'RC-IVA 13%',
+                    'Desc. Atrasos, Abandonos, Faltas y Licencia S/G Haberes',
+                    'TOTAL DESCUENTOS',
+                    'LIQUIDO PAGABLE',
                ));               
                $payrolls = Payroll::get();
                $number = 1;
-               $basic_salary = 4000;
-               $basic_salary_tax = $basic_salary*0.13;
                foreach($payrolls as $payroll){
 
                 $employee = $payroll->employee;
                 $contract = Contract::where('employee_id',$employee->id)->where('status',true)->first();
-                $tax = $payroll->payable_liquid-40000>0?$payroll->payable_liquid-40000:0;
+                $position = Position::where('employee_id',$employee->id)->first();
+                $discount = DiscountPayroll::where('payroll_id',$payroll->id)->get();
+                //$i
+                $discount = DiscountPayroll::where('payroll_id',$payroll->id)->select('id','amount')->orderBy('discount_id','asc')->get()->pluck('amount','id');
                 $sheet->row($row++, array(
                     $number++,
                     $employee->identity_card,
                     $employee->last_name.' '.$employee->mothers_last_name.' '.$employee->first_name.' '.$employee->mothers_last_name,
-                    $employee->group_job->name??'Central',                                                                                
+                    $employee->group_job->name??'Central',
+                    $employee->account_number,
+                    date("d/m/Y", strtotime($employee->birth_date)),
+                    $employee->gender,                    
+                    $position->charge->name??'',
+                    $position->name??'',
+                    date("d/m/Y", strtotime($contract->date_start)),
+                    date("d/m/Y", strtotime($contract->date_end)),                    
+                    $payroll->worked_days,
+                    $position->charge->base_wage ?? '0',
+                    $payroll->quotable,
+                    $employee->management_entity->name,
+                    $discount[1] ?? '',
+                    $discount[2] ?? '',
+                    $discount[3] ?? '',
+                    $discount[4] ?? '',
+                    $discount[5] ?? '',
+                    $payroll->total_amount_discount_institution,
                     $payroll->payable_liquid,
-                    $basic_salary,
-                    $tax,
-                    '0',
-                    $basic_salary_tax,
-                    '0f',
-                    '0D',
-                    '0m',
-                    '0A',
-                    '0T',
-                    '0S',
-                    '0u',
-                    '0I',
-                    '0sig',                    
+                    0,
+                    $payroll->total_discounts,
+                    $payroll->total_discounts,
+                    $payroll->payable_liquid
                 ));
                }
             });
