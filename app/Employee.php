@@ -11,27 +11,21 @@ class Employee extends Model
     {
         return $this->belongsTo(EmployeeType::class,'employee_type_id','id');
     }
-
     public function city_identity_card()
     {
         return $this->belongsTo(City::class, 'city_identity_card_id', 'id');
     }
-
     public function city_birth()
     {
         return $this->belongsTo(City::class, 'city_birth_id', 'id');
-    }
-    public function positions()
-    {
-        return $this->hasMany(Position::class);
     }
     public function management_entity()
     {
         return $this->belongsTo(ManagerEntity::class, 'management_entity_id', 'id');
     }
-    public function payrolls()
+    public function contracts()
     {
-        return $this->hasMany(Payroll::class);
+        return $this->hasMany(Contract::class);
     }
 
 }
