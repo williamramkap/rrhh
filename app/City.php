@@ -14,5 +14,5 @@ class City extends Model
 	public function employees_with_births()
 	{
 		return $this->hasMany(Employee::class,'city_birth_id','id');
-	} 
+	}
 }
