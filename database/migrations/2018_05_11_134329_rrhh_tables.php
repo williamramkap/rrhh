@@ -66,7 +66,7 @@ class RrhhTables extends Migration
             $table->string('name')->nullable();
             $table->decimal('base_wage', 8, 2)->nullable();
             $table->string('shortened')->nullable();
-            $table->timestamps(
+            $table->timestamps();
         });
 
         Schema::create('position_groups', function (Blueprint $table) { //unidades
