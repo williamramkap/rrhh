@@ -11,4 +11,8 @@ class Discount extends Model
     {
         return $this->belongsTo(DiscountType::class);
     }
+    public function payrolls()
+    {
+        return $this->belongsToMany(Payroll::class);
+    }
 }

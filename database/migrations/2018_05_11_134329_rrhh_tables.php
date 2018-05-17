@@ -43,6 +43,11 @@ class RrhhTables extends Migration
             $table->string('first_shortened');
             $table->timestamps();
         });
+        Schema::create('management_entities', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name')->nullable();
+            $table->timestamps();
+        });
 
         Schema::create('employee_types', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -102,11 +107,10 @@ class RrhhTables extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('direction_id')->unsigned()->nullable();
             $table->bigInteger('position_id')->unsigned()->nullable();
-            $table->bigInteger('')->unsigned()->nullable();
             $table->string('name')->nullable();
             $table->string('shortened')->nullable();
+            $table->foreign('direction_id')->references('id')->on('directions');
             $table->foreign('position_id')->references('id')->on('positions');
-            $table->foreign('directions')->references('id')->on('directions');
             $table->timestamps();
         });
         Schema::create('contracts', function (Blueprint $table) {
@@ -118,11 +122,7 @@ class RrhhTables extends Migration
             $table->foreign('employee_id')->references('id')->on('employees');
             $table->timestamps();
         });
-        Schema::create('management_entities', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name')->nullable();
-            $table->timestamps();
-        });
+        
         Schema::create('payrolls', function (Blueprint $table) { //planilla de haberes
             $table->bigIncrements('id');
             $table->bigInteger('employee_id')->unsigned();

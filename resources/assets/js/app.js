@@ -29,7 +29,7 @@ Vue.use(VueCurrencyFilter,
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('payroll', require('./components/payroll/Index.vue'));
+Vue.component('payroll-index', require('./components/payroll/Index.vue'));
 
 const app = new Vue({
     el: '#app'
