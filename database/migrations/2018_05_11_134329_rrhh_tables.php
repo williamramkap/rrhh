@@ -13,37 +13,39 @@ class RrhhTables extends Migration
      */
     public function up()
     {
-
+        // SEED
         Schema::create('months', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('shortened');
             $table->timestamps();
         });
 
         Schema::create('procedures', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('month_id')->unsigned();
-            $table->string('name')->nullable();
             $table->integer('year')->nullable();
+            $table->string('name')->nullable();
             $table->foreign('month_id')->references('id')->on('months');
             $table->timestamps();
         });
 
+        // SEED
         Schema::create('cities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('first_shortened')->nullable();
-            $table->string('second_shortened')->nullable();
+            $table->string('shortened')->nullable();
             $table->timestamps();
         });
 
-        Schema::create('group_jobs', function (Blueprint $table) {
+        // SEED
+        Schema::create('management_entities', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('first_shortened');
+            $table->string('name')->nullable();
             $table->timestamps();
         });
 
+        // SEED
         Schema::create('employee_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
@@ -74,6 +76,7 @@ class RrhhTables extends Migration
             $table->timestamps();
         });
 
+        // SEED
         Schema::create('charges', function (Blueprint $table) { //cargos
             $table->bigIncrements('id');
             $table->string('name')->nullable();
@@ -82,35 +85,27 @@ class RrhhTables extends Migration
             $table->timestamps();
         });
 
-        Schema::create('positions', function (Blueprint $table) { //puestos
-            $table->bigIncrements('id');
-            $table->bigInteger('charge_id')->unsigned()->nullable();
-            $table->bigInteger('employee_id')->unsigned()->nullable();
-            $table->string('name')->nullable();
-            $table->string('item')->nullable();
-            $table->string('shortened')->nullable();
-            $table->foreign('charge_id')->references('id')->on('charges');
-            $table->foreign('employee_id')->references('id')->on('employees');
-            $table->timestamps();
-        });
-        Schema::create('directions', function (Blueprint $table) {
+        Schema::create('position_groups', function (Blueprint $table) { //unidades
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('shortened')->nullable();
             $table->timestamps();
         });
 
-        Schema::create('units', function (Blueprint $table) { //unidades
+        Schema::create('positions', function (Blueprint $table) { //puestos
             $table->bigIncrements('id');
-            $table->bigInteger('direction_id')->unsigned()->nullable();
-            $table->bigInteger('position_id')->unsigned()->nullable();
-            $table->bigInteger('')->unsigned()->nullable();
+            $table->bigInteger('charge_id')->unsigned()->nullable();
+            $table->bigInteger('position_group_id')->unsigned()->nullable();
+            $table->bigInteger('employee_id')->unsigned()->nullable();
+            $table->string('item')->nullable();
             $table->string('name')->nullable();
             $table->string('shortened')->nullable();
-            $table->foreign('position_id')->references('id')->on('positions');
-            $table->foreign('directions')->references('id')->on('directions');
+            $table->foreign('charge_id')->references('id')->on('charges');
+            $table->foreign('position_group_id')->references('id')->on('position_groups');
+            $table->foreign('employee_id')->references('id')->on('employees');
             $table->timestamps();
         });
+
         Schema::create('contracts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('employee_id')->unsigned();
@@ -120,11 +115,7 @@ class RrhhTables extends Migration
             $table->foreign('employee_id')->references('id')->on('employees');
             $table->timestamps();
         });
-        Schema::create('management_entities', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name')->nullable();
-            $table->timestamps();
-        });
+        
         Schema::create('payrolls', function (Blueprint $table) { //planilla de haberes
             $table->bigIncrements('id');
             $table->bigInteger('employee_id')->unsigned();
@@ -181,10 +172,8 @@ class RrhhTables extends Migration
         Schema::dropIfExists('employees');
         Schema::dropIfExists('positions');
         Schema::dropIfExists('charges');
-        Schema::dropIfExists('units');
-        Schema::dropIfExists('directions');
+        Schema::dropIfExists('position_groups');
         Schema::dropIfExists('employee_types');
-        Schema::dropIfExists('group_jobs');
         Schema::dropIfExists('cities');
         Schema::dropIfExists('procedures');
         Schema::dropIfExists('months');

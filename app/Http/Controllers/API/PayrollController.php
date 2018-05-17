@@ -4,9 +4,11 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Employee;
+use App\Payroll;
+use App\Month;
+use App\Procedure;
 
-class EmployeeController extends Controller
+class PayrollController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,6 +17,35 @@ class EmployeeController extends Controller
      */
     public function index(Request $request)
     {
+        $month = Month::whereRaw("lower(name) like '" . strtolower($request->month) . "'")->first();
+        if (!$month) {
+            return "month not found";
+        }
+        $procedure = Procedure::select('procedures.id')
+            ->leftJoin("months", 'months.id', '=', 'procedures.month_id')
+            ->whereRaw("lower(months.name) like '" . strtolower($request->month) . "'")
+            ->where('year', '=', $request->year)
+            ->first();
+        $payroll = Payroll::where('procedure_id', '=', $procedure->id)->get();
+
+        foreach ($payroll as $key => $value) {
+            $payroll->employee_id;
+            'employees.id'
+            'identity_card',
+            'cities.first_shortened as city_identity_card',
+            'first_name',
+            'second_name',
+            'surname_husband',
+            'last_name',
+            'mothers_last_name',
+            'birth_date',
+            'account_number',
+            'management_entities.name as management_entity',
+            'positions.name as position',
+            'charges.base_wage',
+            'charges.name as charge'
+        }
+        return $request->all();
         $offset = $request->offset ?? 0;
         $limit = $request->limit ?? 10;
         $sort = $request->sort ?? 'id';
@@ -25,7 +56,7 @@ class EmployeeController extends Controller
         $mothers_last_name = strtoupper($request->mothers_last_name) ?? '';
         $surname_husband = strtoupper($request->surname_husband) ?? '';
         $identity_card = strtoupper($request->identity_card) ?? '';
-        $total = Employee::select('employees.id')//,'identity_card','registration','degrees.name as degree','first_name','second_name','last_name','mothers_last_name','civil_status')->
+        $total = Payroll::select('employees.id')//,'identity_card','registration','degrees.name as degree','first_name','second_name','last_name','mothers_last_name','civil_status')->
             ->whereRaw("coalesce(employees.first_name,'' ) LIKE '$first_name%'")
             ->whereRaw("coalesce(employees.second_name,'' ) LIKE '$second_name%'")
             ->whereRaw("coalesce(employees.last_name,'') LIKE '$last_name%'")
@@ -34,7 +65,7 @@ class EmployeeController extends Controller
             ->whereRaw("coalesce(employees.identity_card, '') LIKE '$identity_card%'")
             ->count();
 
-        $employees = Employee::select(
+        $employees = Payroll::select(
             'employees.id',
             'identity_card',
             'cities.first_shortened as city_identity_card',
@@ -49,7 +80,7 @@ class EmployeeController extends Controller
             'positions.name as position',
             'charges.base_wage',
             'charges.name as charge'
-        )   
+        )
         // ->skip($offset)
             // ->take($limit)
             ->orderBy($sort, $order)
