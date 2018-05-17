@@ -92,14 +92,11 @@ class PayrollController extends Controller
                 $base_wage = $contract->position->charge->base_wage ?? 1000;
                 $quotable = ($base_wage/30)* $value[0];
                 $payroll->quotable = $quotable;
-                $payroll->discount_old = ($quotable * $procedure->discount_old)/100;
-                $payroll->discount_common_risk = ($quotable * $procedure->discount_common_risk)/100;
-                $payroll->discount_commission = ($quotable * $procedure->discount_commission)/100;
-                $payroll->discount_solidary = ($quotable * $procedure->discount_solidary)/100;
-                $payroll->discount_national = ($quotable * $procedure->discount_national)/100;
-                // foreach (Discount::where('discount_type_id', 1)->orderBy('id')->get() as $d) {
-                    //     $total_discount_law = $total_discount_law + ( ($quotable * $d->percentage )/100);
-                    // }
+                // $payroll->discount_old = ($quotable * $procedure->discount_old)/100;
+                // $payroll->discount_common_risk = ($quotable * $procedure->discount_common_risk)/100;
+                // $payroll->discount_commission = ($quotable * $procedure->discount_commission)/100;
+                // $payroll->discount_solidary = ($quotable * $procedure->discount_solidary)/100;
+                // $payroll->discount_national = ($quotable * $procedure->discount_national)/100;
                 $total_discount_law = (($quotable * $procedure->discount_common_risk)/100)+(($quotable * $procedure->discount_commission)/100)+(($quotable * $procedure->discount_solidary)/100)+(($quotable * $procedure->discount_national)/100);
                 $payroll->total_amount_discount_law = $total_discount_law;
                 $payroll->net_salary = $quotable - $total_discount_law;
