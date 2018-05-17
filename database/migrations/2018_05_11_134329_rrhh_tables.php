@@ -13,22 +13,6 @@ class RrhhTables extends Migration
      */
     public function up()
     {
-        // SEED
-        Schema::create('months', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('shortened');
-            $table->timestamps();
-        });
-
-        Schema::create('procedures', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('month_id')->unsigned();
-            $table->integer('year')->nullable();
-            $table->string('name')->nullable();
-            $table->foreign('month_id')->references('id')->on('months');
-            $table->timestamps();
-        });
 
         // SEED
         Schema::create('cities', function (Blueprint $table) {
@@ -82,7 +66,7 @@ class RrhhTables extends Migration
             $table->string('name')->nullable();
             $table->decimal('base_wage', 8, 2)->nullable();
             $table->string('shortened')->nullable();
-            $table->timestamps();
+            $table->timestamps(
         });
 
         Schema::create('position_groups', function (Blueprint $table) { //unidades
@@ -113,6 +97,23 @@ class RrhhTables extends Migration
             $table->string('date_end')->nullable(); // 2018-10-10 - Libre nombramiento, comisión ...
             $table->boolean('status')->default(1);
             $table->foreign('employee_id')->references('id')->on('employees');
+            $table->timestamps();
+        });
+
+        // SEED
+        Schema::create('months', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('shortened');
+            $table->timestamps();
+        });
+
+        Schema::create('procedures', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('month_id')->unsigned();
+            $table->integer('year')->nullable();
+            $table->string('name')->nullable();
+            $table->foreign('month_id')->references('id')->on('months');
             $table->timestamps();
         });
         
