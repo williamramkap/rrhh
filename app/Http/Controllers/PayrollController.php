@@ -28,7 +28,13 @@ class PayrollController extends Controller
 
         //add more validations
         if ($year <= Carbon::now()->year && in_array(strtolower($month), $months)) {
-            return view('payroll.index', compact('year', 'month'));
+            $procedure = Procedure::select('procedures.id')
+                ->leftJoin("months", 'months.id', '=', 'procedures.month_id')
+                ->whereRaw("lower(months.name) like '" . strtolower($month) . "'")
+                ->where('year', '=', $year)
+                ->first();
+            $procedure = Procedure::find($procedure->id)->with('month')->first();
+            return view('payroll.index', compact('year', 'month', 'procedure'));
         }else {
             return 'error';
         }
@@ -85,25 +91,31 @@ class PayrollController extends Controller
                 $payroll->worked_days = $value[0];
                 $base_wage = $contract->position->charge->base_wage ?? 1000;
                 $quotable = ($base_wage/30)* $value[0];
-                $total_discount_law = 0;
                 $payroll->quotable = $quotable;
-                foreach (Discount::where('discount_type_id', 1)->orderBy('id')->get() as $d) {
-                    $total_discount_law = $total_discount_law + ( ($quotable * $d->percentage )/100);
-                }
+                $payroll->discount_old = ($quotable * $procedure->discount_old)/100;
+                $payroll->discount_common_risk = ($quotable * $procedure->discount_common_risk)/100;
+                $payroll->discount_commission = ($quotable * $procedure->discount_commission)/100;
+                $payroll->discount_solidary = ($quotable * $procedure->discount_solidary)/100;
+                $payroll->discount_national = ($quotable * $procedure->discount_national)/100;
+                // foreach (Discount::where('discount_type_id', 1)->orderBy('id')->get() as $d) {
+                    //     $total_discount_law = $total_discount_law + ( ($quotable * $d->percentage )/100);
+                    // }
+                $total_discount_law = (($quotable * $procedure->discount_common_risk)/100)+(($quotable * $procedure->discount_commission)/100)+(($quotable * $procedure->discount_solidary)/100)+(($quotable * $procedure->discount_national)/100);
                 $payroll->total_amount_discount_law = $total_discount_law;
                 $payroll->net_salary = $quotable - $total_discount_law;
+                $total_discount_law = (($quotable * $procedure->discount_common_risk)/100)+(($quotable * $procedure->discount_commission)/100)+(($quotable * $procedure->discount_solidary)/100)+(($quotable * $procedure->discount_national)/100);
                 $payroll->total_amount_discount_institution = floatval($value[1]);
                 $total_discounts = $total_discount_law + floatval($value[1]);
                 $payroll->total_discounts = $total_discounts;
                 $payroll->payable_liquid = $quotable - $total_discounts;
                 $payroll->save();
-                foreach (Discount::where('discount_type_id', 1)->orderBy('id')->get() as $d) {
-                    if ($payroll->discounts->contains($d->id)) {
-                        $payroll->discounts()->updateExistingPivot($d->id, ['amount' => (($quotable * $d->percentage) / 100)]);
-                    } else {
-                        $payroll->discounts()->save($d, ['amount' => (($quotable * $d->percentage) / 100)]);
-                    }
-                }
+                // foreach (Discount::where('discount_type_id', 1)->orderBy('id')->get() as $d) {
+                //     if ($payroll->discounts->contains($d->id)) {
+                //         $payroll->discounts()->updateExistingPivot($d->id, ['amount' => (($quotable * $d->percentage) / 100)]);
+                //     } else {
+                //         $payroll->discounts()->save($d, ['amount' => (($quotable * $d->percentage) / 100)]);
+                //     }
+                // }
             }
         }
         return Payroll::all();
