@@ -16,7 +16,7 @@ class ManagementEntityTableSeeder extends Seeder
             ['name' => 'PREVISION']
         ];
         foreach ($statuses as $status) {
-            App\ManagerEntity::create($status);
+            App\ManagementEntity::create($status);
         }
     }
 }

@@ -10,8 +10,8 @@
         <div class="col-lg-12">
             <div class="text-center m-t-lg">
                 <form action="/payroll" method="POST">
-                    <input type="text" value="{{ $procedure->month->name}}" name="month">
-                    <input type="text" value="{{ $procedure->year }}" name="year">
+                    <input type="hidden" value="{{ $procedure->month->name}}" name="month">
+                    <input type="hidden" value="{{ $procedure->year }}" name="year">
                     {{ csrf_field() }}
                 <payroll-index :edit="false" :procedure="{{ $procedure }}"></payroll-index>
                 <button class="btn btn-primary" type="submit"> <i class="fa fa-save"></i> Guardar</button>

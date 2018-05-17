@@ -120,6 +120,7 @@ class RrhhTables extends Migration
             $table->string('name')->nullable();
             $table->bigInteger('worked_days');
             $table->decimal('quotable', 8, 2)->nullable();
+            $table->decimal('discount_old', 8, 2)->default(0);
             $table->decimal('discount_common_risk', 8, 2)->default(0);
             $table->decimal('discount_commission', 8, 2)->default(0);
             $table->decimal('discount_solidary', 8, 2)->default(0);
@@ -131,7 +132,7 @@ class RrhhTables extends Migration
             $table->decimal('total_amount_discount_institution', 8, 2)->nullable();
             $table->decimal('total_discounts', 8, 2)->nullable();
             $table->decimal('payable_liquid', 8, 2)->nullable();
-            $table->foreign('contract_id')->references('id')->on('contract');
+            $table->foreign('contract_id')->references('id')->on('contracts');
             $table->foreign('procedure_id')->references('id')->on('procedures');
             $table->timestamps();
         });
