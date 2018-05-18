@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Payroll;
 use App\Month;
 use App\Procedure;
+use App\Employee;
 
 class PayrollController extends Controller
 {
@@ -26,25 +27,29 @@ class PayrollController extends Controller
             ->whereRaw("lower(months.name) like '" . strtolower($request->month) . "'")
             ->where('year', '=', $request->year)
             ->first();
-        $payroll = Payroll::where('procedure_id', '=', $procedure->id)->get();
-
-        foreach ($payroll as $key => $value) {
-            $payroll->employee_id;
-            'employees.id'
-            'identity_card',
-            'cities.first_shortened as city_identity_card',
-            'first_name',
-            'second_name',
-            'surname_husband',
-            'last_name',
-            'mothers_last_name',
-            'birth_date',
-            'account_number',
-            'management_entities.name as management_entity',
-            'positions.name as position',
-            'charges.base_wage',
-            'charges.name as charge'
+        $payrolls = Payroll::where('procedure_id', '=', $procedure->id)->get();
+        foreach ($payrolls as $key => $payroll) {
+            $contract = $payroll->contract;
+            $position = $contract->position;
+            $charge = $position->charge;
+            $employee = $contract->employee;
+            $payroll->contract_id = $contract->id;
+            $payroll->identity_card = $employee->identity_card;
+            $payroll->employee_id = $employee->id;
+            $payroll->city_identity_card = $employee->city_identity_card->shortened;
+            $payroll->first_name = $employee->first_name;
+            $payroll->second_name = $employee->second_name;
+            $payroll->surname_husband = $employee->surname_husband;
+            $payroll->last_name = $employee->last_name;
+            $payroll->mothers_last_name = $employee->mothers_last_name;
+            $payroll->birth_date = $employee->birth_date;
+            $payroll->account_number = $employee->account_number;
+            $payroll->charge = $charge->name;
+            $payroll->position = $position->name;
+            $payroll->base_wage = $charge->base_wage;
+            $payroll->management_entity = $employee->management_entity->name;
         }
+        return $payrolls;
         return $request->all();
         $offset = $request->offset ?? 0;
         $limit = $request->limit ?? 10;

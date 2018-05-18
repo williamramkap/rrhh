@@ -1,22 +1,24 @@
 <template>
     <tr>
-        <td class="zui-sticky-col">{{ employee.identity_card}} {{ employee.city_identity_card }}</td>
-        <td class="zui-sticky-col-1">{{ fullName(employee) }}</td>
-        <td>{{ employee.account_number}}</td>
-        <td>{{ employee.birth_date}}</td>
-        <td>{{ employee.charge}}</td>
-        <td>{{ employee.position }}</td>
-        <td><input type="number" v-model="days" :name="`employee-${employee.id}[]`" class="form-control" placeholder="dias trabajados" min="1" max="30"></td>
+        <td class="zui-sticky-col">{{ payroll.identity_card}} {{ payroll.city_identity_card }}</td>
+        <td class="zui-sticky-col-1">{{ fullName(payroll) }}</td>
+        <td>{{ payroll.account_number}}</td>
+        <td>{{ payroll.birth_date}}</td>
+        <td>{{ payroll.charge}}</td>
+        <td>{{ payroll.position }}</td>
+        <td><input type="number" v-model="days" :name="`contract-${payroll.contract_id}[]`" class="form-control" placeholder="dias trabajados" min="1" max="30"></td>
         <td>{{ baseWage | currency }}</td>
         <td>{{ quotable | currency }}</td>
-        <td>{{ employee.management_entity}}</td>
-        <td v-for="(discount, index) in discountsLaw" :key="`d-l-${index}`">{{ calculateDiscount(discount) | currency }}</td>
-        <td>{{ calculateTotalDiscount(discountsLaw) | currency }}</td>
+        <td>{{ payroll.management_entity}}</td>
+        <td>{{ calculateDiscount(procedure.discount_old) | currency }}</td>
+        <td>{{ calculateDiscount(procedure.discount_common_risk) | currency }}</td>
+        <td>{{ calculateDiscount(procedure.discount_commission) | currency }}</td>
+        <td>{{ calculateDiscount(procedure.discount_solidary) | currency }}</td>
+        <td>{{ calculateDiscount(procedure.discount_national) | currency }}</td>
+        <td>{{ calculateTotalDiscountLaw() | currency }}</td>
         <td>{{ salary | currency}}</td>
         <td>0</td>
-        <td v-for="(discount, index) in discountsInstitution" :key="`d-i-${index}`">
-            <input type="text" class="form-control" :name="`employee-${employee.id}[]`" v-model="di">
-        </td>
+        <td><input type="text" class="form-control" :name="`contract-${payroll.contract_id}[]`" v-model="delay"></td>
         <td> {{ totalDiscounts | currency }} </t>
         <td> {{ total | currency}} </td>
     </tr>
@@ -24,38 +26,29 @@
 
 <script>
 export default {
-  props:['employee', 'year', 'month', 'discountsLaw', 'discountsInstitution'],
+  props:['payroll', 'procedure'],
   data(){
     return{
-        days: 30,
-        baseWage: this.employee.base_wage,
-        // discountsLaw: [],
-        // discountsInstitution: [],
-        di:null,
-        delay: 0,
+        days: this.payroll.worked_days,
+        di: null,
+        baseWage: this.payroll.base_wage,
+        delay: this.payroll.discount_faults,
     }
   },
+  created(){
+    //   console.log(this.payroll);
+  },
   methods:{
-      fullName(employee){
-          let name = `${employee.first_name || ''} ${employee.second_name || ''} ${employee.last_name || ''} ${employee.mothers_last_name || ''} ${employee.surname_husband || ''}`
+      fullName(payroll){
+          let name = `${payroll.first_name || ''} ${payroll.second_name || ''} ${payroll.last_name || ''} ${payroll.mothers_last_name || ''} ${payroll.surname_husband || ''}`
           name = name.replace(/\s+/gi, ' ').trim().toUpperCase();
           return name;
       },
-    //   maxDay(){
-    //       return moment(`${this.year}-${this.month}-01`).daysInMonth();
-    //   },
       calculateDiscount(discount){
-          return (this.quotable * discount.percentage)/100;
+          return (this.quotable * discount)/100;
       },
-      calculateTotalDiscount(discounts){
-          return discounts.reduce((prev, curr)=>{
-              return prev+this.calculateDiscount(curr);
-          }, 0)
-      },
-      calculateTotalDiscountInstitution(){
-          return this.discountsInstitution.reduce((prev, curr)=>{
-              return prev + this.di;
-          }, 0);
+      calculateTotalDiscountLaw(){
+        return this.calculateDiscount(this.procedure.discount_old)+this.calculateDiscount(this.procedure.discount_common_risk)+this.calculateDiscount(this.procedure.discount_commission)+this.calculateDiscount(this.procedure.discount_solidary)+this.calculateDiscount(this.procedure.discount_national);
       },
 
   },
@@ -64,13 +57,13 @@ export default {
           return this.quotable - this.totalDiscounts;
       },
       totalDiscounts(){
-          return parseFloat(this.calculateTotalDiscount(this.discountsLaw)) + parseFloat(this.calculateTotalDiscountInstitution());
+          return this.calculateTotalDiscountLaw() + parseFloat(this.delay || 0 );
       },
       quotable()  {
           return (this.baseWage/30)*this.days;
       },
       salary(){
-          return this.quotable - this.calculateTotalDiscount(this.discountsLaw);
+          return this.quotable - this.calculateTotalDiscountLaw();
       }
   },
 }

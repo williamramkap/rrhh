@@ -24,31 +24,33 @@
                   <th>Haber basico</th>
                   <th>Total Ganado</th>
                   <th>AFP</th>
-                  <th v-for="(discount, index) in discountsLaw" v-text="discount.name" :key="`discount-law-${index}`"></th>
+                  <th>Descuento Renta vejez 10 %</th>
+                  <th>Descuento Riesgo común 1,71 %</th>
+                  <th>Descuento Comisión 0 ,5 %</th>
+                  <th>Descuento Aporte solidario del asegurado 0 ,5 %</th>
+                  <th>Descuento Aporte Nacional solidario 1 %</th>
                   <th>Total descuentos de ley</th>
                   <th>Sueldo Neto</th>
                   <th>RC-IVA 13%</th>
-                  <th v-for="(discount1, index) in discountsInstitution" v-text="discount1.name" :key="`discount-institution-${index}`"></th>
+                  <th>Descuentos por Atrasos, Abandonos, Faltas y Licencia S/G Haberes</th>
                   <th>Total descuentos</th>
                   <th>Liquido Pagable</th>
                 </tr>
               </thead>
               <tbody>
 
-                <row v-for="(value, index) in employees"
-                    :key="`employee-${index}`"
-                    :employee="value"
-                    :discounts-law="discountsLaw"
-                    :discounts-institution="discountsInstitution"
+                <row v-for="(value, index) in contracts"
+                    :key="`contract-${index}`"
+                    :contract="value"
+                    :procedure="procedure"
                     v-if="!edit"
                     ></row>
-                <row v-for="(value, index) in employees"
-                    :key="`employee-${index}`"
-                    :employee="value"
-                    :discounts-law="discountsLaw"
-                    :discounts-institution="discountsInstitution"
-                    v-else
-                    ></row>
+                <edit-row v-for="(value, index) in payrolls"
+                    :key="`payroll-${index}`"
+                    :payroll="value"
+                    :procedure="procedure"
+                    v-if="edit"
+                    ></edit-row>
               </tbody>
             </table>
           </div>
@@ -66,54 +68,43 @@
 
 <script>
 import row from "./row.vue";
+import EditRow from "./EditRow.vue";
 
 export default {
-    props:['edit', 'year', 'month'],
+    props:['edit', 'procedure'],
     components: {
-        row
+        row,
+        EditRow
     },
     data() {
         return {
-            employees: [],
-            discountsLaw: [],
-            discountsInstitution: []
+            contracts: [],
+            payrolls: [],
         };
     },
     created() {
-        axios
-            .get("/api/discounts")
-            .then(response => {
-                this.discountsLaw = response.data.filter(item => {
-                    return item.discount_type_id == 1;
-                });
-                this.discountsInstitution = response.data.filter(item => {
-                    return item.discount_type_id == 2;
-                });
-            })
-            .catch(error => {
-                console.log(error);
-            });
+      console.log(this.procedure);
+      
         if (this.edit) {
           axios.get("/api/payrolls",{
             params:{
-              year: this.year,
-              month: this.month
-            }
+              year: 2018,
+              month: 'abril'
+              // year: this.procedure.year,
+              // month: this.procedure.month.name
+              }
           })
             .then(response => {
-              console.log(response);
-              
-              // this.employees = response.data.employees;
+              this.payrolls = response.data;
             })
             .catch(error => {
               console.log(error);
             });
         }else{
-
           axios
-            .get("/api/employees")
+            .get("/api/contracts")
             .then(response => {
-              this.employees = response.data.employees;
+              this.contracts = response.data.contracts;
             })
             .catch(error => {
               console.log(error);
