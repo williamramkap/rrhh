@@ -211,7 +211,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
-	'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+	      'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Util' => App\Helpers\Util::class,
 
     ],
 
