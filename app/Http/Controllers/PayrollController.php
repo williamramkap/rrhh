@@ -21,6 +21,7 @@ class PayrollController extends Controller
      */
     public function index($year, $month)
     {
+        
         $months = array_map(function ($v)
         {
             return strtolower($v);
@@ -33,17 +34,17 @@ class PayrollController extends Controller
                 ->whereRaw("lower(months.name) like '" . strtolower($month) . "'")
                 ->where('year', '=', $year)
                 ->first();
-            if (!$procedure) {
-                return "procedure not found";
-            }
-            $procedure = Procedure::find($procedure->id)->with('month')->first();
+                if (!$procedure) {
+                    return "procedure not found";
+                }
+                $procedure =  Procedure::with('month')->find($procedure->id);
             return view('payroll.index', compact('year', 'month', 'procedure'));
         }else {
             return 'error';
         }
 
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -70,7 +71,7 @@ class PayrollController extends Controller
                                 ->leftJoin("months", 'months.id', '=', 'procedures.month_id')
                                 ->whereRaw("lower(months.name) like '" . strtolower($request->month)."'")
                                 ->where('year', '=', $request->year)
-                                ->first();
+                                ->first();                                
         if(!$procedure){
             $procedure = new Procedure();
             $procedure->month_id = $month->id;
@@ -79,7 +80,7 @@ class PayrollController extends Controller
             $procedure->save();
         }else{
             $procedure = Procedure::find($procedure->id);
-        }
+        }        
         // Procedure::where('year', $request->year)->where('month', $request)
         foreach ($request->all() as $key => $value) {
             if (strpos($key, 'contract-') !== false) {
@@ -89,6 +90,19 @@ class PayrollController extends Controller
                 $payroll = $contract->payrolls()->where('procedure_id', $procedure->id)->first();
                 if (!$payroll) {
                     $payroll = new Payroll();
+                    
+                    $last_payrol = Payroll::orderBy('id','DESC')->first();    
+                    $year =  date('y');
+                    if($last_payrol->code == "")
+                        $payroll->code = "1-".$year;  
+                    else{
+                        $data = explode('-', $last_payrol->code);
+                        if(!isset($data[1]))
+                            $payroll->code = "1-".$year;                
+                        else 
+                            $payroll->code = ($year!=$data[1]?"1":($data[0]+1))."-".$year;
+                    }
+
                 }
                 $payroll->contract_id = $id;
                 $payroll->procedure_id = $procedure->id;
@@ -111,7 +125,8 @@ class PayrollController extends Controller
                 $payroll->total_amount_discount_institution = floatval($value[1]);
                 $total_discounts = $total_discount_law + floatval($value[1]);
                 $payroll->total_discounts = $total_discounts;
-                $payroll->payable_liquid = $quotable - $total_discounts;
+                $payroll->payable_liquid = $quotable - $total_discounts;                                                                            
+
                 $payroll->save();
             }
         }
