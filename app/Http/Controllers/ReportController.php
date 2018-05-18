@@ -62,6 +62,7 @@ class ReportController extends Controller
             // Call them separately
             $excel->setDescription('description');
             
+            
             $excel->sheet('Laboral', function($sheet) use ($request) {
                 $center_style = array(
                     'alignment' => array(
@@ -69,6 +70,10 @@ class ReportController extends Controller
                     )
                 );
 
+                $sheet->setShowGridlines(true);
+                $sheet
+                    ->getPageSetup()
+                    ->setPrintArea('A1:E5,G4:M20');
 
                 $name = "MUTUAL DE SERVICIOS AL POLICIA".$request->type;
                 $nit = "NIT 234578021";

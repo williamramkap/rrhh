@@ -1,5 +1,5 @@
 @extends('layouts.app') 
-@section('title','Crear contrato') 
+@section('title','Editar contrato') 
 @section('content')
 
 <div class="row wrapper border-bottom white-bg page-heading">
@@ -21,14 +21,14 @@
                     </ol>
                 </div>
                 @endif
-            <h3>Crear Contrato</h3>
+            <h3>Editar Contrato</h3>
             <form method="POST" action="{{asset('contract')}}">
                 {{ csrf_field() }}
                 Empleado
                 <select id="" name="employee_id" class="form-control">
                     <option></option>
                     @foreach($employees as $employee)
-                    <option value="{{$employee->id}}">{{$employee->identity_card.' '.$employee->last_name.' '.$employee->first_name.' '.$employee->second_name}}</option>
+                    <option value="{{$employee->id}}" @if($employee->id == $contract->employee_id) SELECTED @endif>{{$employee->identity_card.' '.$employee->last_name.' '.$employee->first_name.' '.$employee->second_name}}</option>
                     @endforeach
                 </select>
                 <br>
@@ -37,17 +37,17 @@
                     @foreach($position_groups as $p)
                         <optgroup label="{{ $p->name}}">
                             @foreach($p->positions as $position)
-                                <option value="{{$position->id}}">{{ $position->name }}</option>
+                                <option value="{{$position->id}}" @if($position->id == $contract->position_id) @endif >{{ $position->name }}</option>
                             @endforeach
                         </optgroup>
                     @endforeach
                 </select>
                 <br>
                 Fecha de inicio
-                <input type="date" name="date_start" class="form-control">
+                <input type="date" name="date_start" value="{{ $contract->date_start }}" class="form-control">
                 <br>
                 Fecha de fin
-                <input type="date" name="date_end" class="form-control">
+                <input type="date" name="date_end" value="{{ $contract->date_end }}" class="form-control">
                 <br>
 
                 <button type="submit">
