@@ -66,8 +66,12 @@
                     @endforeach
                 </select>
                 <br>
-                Sexo
-                <input type="text" name="gender" class="form-control">
+                Sexo                
+                <select class="form-control" name="gender">
+                    <option></option>
+                    <option value="M">Masulino</option>
+                    <option value="F">Femenino</option>                    
+                </select>
                 <br>
                 N&uacute;mero de cuenta
                 <input type="text" name="account_number" class="form-control">
