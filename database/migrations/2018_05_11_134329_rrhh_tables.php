@@ -64,7 +64,8 @@ class RrhhTables extends Migration
             $table->foreign('insurance_company_id')->references('id')->on('insurance_companies');
             $table->foreign('city_identity_card_id')->references('id')->on('cities');
             $table->foreign('city_birth_id')->references('id')->on('cities');
-            $table->foreign('management_entity_id')->references('id')->on('management_entities');
+            $table->foreign('management_entity_id')->references('id')->on('management_entities');            
+            $table->foreign('group_job_id')->references('id')->on('group_id');
             $table->timestamps();
         });
         // SEED
