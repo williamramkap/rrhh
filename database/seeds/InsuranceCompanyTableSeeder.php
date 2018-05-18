@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ManagementEntityTableSeeder extends Seeder
+class InsuranceCompanyTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,11 +12,12 @@ class ManagementEntityTableSeeder extends Seeder
     public function run()
     {
         $statuses = [
-            ['name' => 'AFP FUTURO'],
-            ['name' => 'AFP PREVISION']
+            ['name' => 'Caja Nacional de Salud (C.N.S.)'],
+            ['name' => 'Seguro Social Universitario (S.I.S.S.U.B.)']
         ];
         foreach ($statuses as $status) {
-            App\ManagementEntity::create($status);
+            App\InsuranceCompany::create($status);
         }
+
     }
 }
