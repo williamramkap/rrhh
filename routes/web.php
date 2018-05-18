@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     $data = [];
-    // return view('print.temp');
+    return view('print.temp');
     return \PDF::loadView('print.temp',$data)
         // ->setOption('page-width', '216')
         // ->setOption('page-height', '356')
@@ -38,5 +38,10 @@ Route::get('payroll/{year}/{month}','PayrollController@index');
 Route::get('payroll/{year}/{month}/edit','PayrollController@edit');
 Route::post('payroll','PayrollController@store');
 
+
 Route::resource('report','ReportController');
 Route::resource('contract','ContractController');
+
+/*  tickets */
+Route::get('ticket/print/{year}/{month}', 'TicketController@print');
+
