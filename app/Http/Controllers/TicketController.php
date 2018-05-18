@@ -57,7 +57,7 @@ class TicketController extends Controller
             ->setOption('margin-top',0.5)
             ->setOption('margin-bottom', 0)
             ->setOption('margin-left', 4)
-            ->setOption('margin-right', 5)
+            ->setOption('margin-right', 4)
             ->setOption('encoding', 'utf-8')
             ->stream("temp");
 

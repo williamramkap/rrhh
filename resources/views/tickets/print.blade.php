@@ -20,7 +20,8 @@
             vertical-align: top;
             height: 33%;
             width: 100%;
-            background: rgba(255,255,255,.4);
+            /* background:#3b5998; */
+
             margin: 0;padding: 0;
         }
 
@@ -39,7 +40,7 @@
             vertical-align: top;
             height: 100%;
             margin:0;
-            width: 330px;
+            width: 340px;
             display: inline-block;
             /* background:green; */
         }
@@ -364,7 +365,7 @@
                 <tr>
                     <td class="text-xxs w-95-px">Concepto de Pago:</td>
                     <td class="uppercase courier text-xs w-235-px">PAGO DE HABERES {{ $procedure->month->shortened}} {{ $procedure->year }}</td>
-                    <td class="text-xxs w-95-px">Nro Días Trab.:</td>
+                    <td class="text-xxs w-95-px">Nº Días Trab.:</td>
                     <td class="uppercase courier text-xs">{{ $payroll->worked_days }}</td>
                 </tr>
             </table>
@@ -540,83 +541,125 @@
             {{-- /amounts --}}
 
         </div>
-        <div class="main-right">
+        <div class="main-right" >
             <table>
                 <tr>
-                    <th class="w-20 text-left no-padding no-margins align-middle">
+                    <td class="w-50" rowspan="2">
                         <div class="text-center">
                             <img src="{{ asset('images/logo.jpg') }}" class="w-100">
                         </div>
-                    </th>
-                    <th class="w-50 align-top leading-none text-uppercase text-xs align-middle">
-                        {{ $institution ?? 'MUTUAL DE SERVICIOS AL POLICÍA "MUSERPOL"' }} <br> {{ $direction ?? 'DIRECCIÓN DE BENEFICIOS ECONÓMICOS'
-                        }} <br>
-                    </th>
+                    </td>
+                    <td class="w-50 align-top leading-none text-uppercase text-lg courier text-center align-middle">
+                        {{-- {{ $payroll->id }} --}} 8915564189
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center text-sm font-bold">
+                        TALÓN DE EFECTIVIZACIÓN
+                    </td>
                 </tr>
             </table>
+            <div class="w-100">
+                <table>
+                    <tr>
+                        <td class="no-border text-xxs w-60-px">
+                            Entidad:
+                        </td>
+                        <td class="no-border uppercase courier text-xs" colspan="3">
+                            MUTUAL DE SERVICIOS AL POLÍCIA
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="no-border text-xxs w-60-px">
+                            Dirección:
+                        </td>
+                        <td class="no-border courier text-xxs" colspan="3">
+                            Av. 6 de Agosto #2354 Z. Sopocachi
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="no-border text-xxs w-60-px">
+                            Nº Patronal:
+                        </td>
+                        <td class="no-border uppercase courier text-xxs w-110-px">
+                            001-720-0025
+                        </td>
+                        <td class="no-border text-xxs w-30-px">
+                            NIT:
+                        </td>
+                        <td class="no-border uppercase courier text-xxs">
+                            234578021
+                        </td>
+                    </tr>
+                </table>
+                
+                <table class="table-dticket-1 m-b-5">
+                                <tr>
+                                    <td class="text-xxs w-95-px">Nº de Boleta:</td>
+                                    <td class="uppercase courier text-xs w-235-px">98416541</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-xxs w-95-px">Modalidad de Pago:</td>
+                                    <td class="uppercase courier text-xs">ABONO EN CUENTA</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-xxs w-95-px">Concepto de Pago:</td>
+                                    <td class="uppercase courier text-xs w-235-px">PAGO DE HABERES {{ $procedure->month->shortened}} {{ $procedure->year }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-xxs w-95-px">Nº Días Trab.:</td>
+                                    <td class="uppercase courier text-xs">{{ $payroll->worked_days }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="no-border text-xxs w-95-px">Carnet de Identidad:</td>
+                                    <td class="uppercase courier text-xs w-120-px">{{ $payroll->ci_ext }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="no-border text-xxs w-55-px">Nombre:</td>
+                                    <td colspan="6" class="uppercase courier text-xs">{{ $payroll->full_name }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="no-border text-xxs w-95-px">Nº de Cuenta:</td>
+                                    <td class="no-border uppercase courier text-xs w-120-px">{{ $payroll->account_number }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="no-border text-xxs w-55-px">Fecha Nac.:</td>
+                                    <td class="no-border uppercase courier text-xs w-110-px">{{ $payroll->birth_date }}</td>
+                                </tr>
+                                {{-- <tr>
+                                    <td class="no-border text-xxs">Nº Item:</td>
+                                    <td class="uppercase courier text-xs">1871</td>
+                                </tr> --}}
+                                <tr>
+                                    <td class="no-border text-xxs w-95-px">A.F.P.:</td>
+                                    <td class="no-border uppercase courier text-xs w-130-px">{{ $payroll->management_entity }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="no-border text-xxs w-45-px">N.U.A.:</td>
+                                    <td class="uppercase courier text-xs" colspan="6">47213218</td>
+                                </tr>
+                            </table>
+                            <div style="min-height: 21px;max-height: 21px; height: 21px;padding:0;margin:0; line-height:0">
+                                <div class="text-xxs inline leading-none">Cargo: </div>
+                                <div class="uppercase courier text-xs inline leading-none">{{ $payroll->position }}</div>
+                            </div>
+                            <table class="border rounded">
+                                <tr>
+                                    <td colspan="3" class="text-sm text-left courier">
+                                        Liquido Pagable:
+                                    </td>
+                                    <td class="text-lg text-right courier" colspan="3">
+                                        {{ Util::formatMoney($payroll->payable_liquid) }}
+                                    </td>
+                                </tr>
+                            </table>
+                                
+            </div>
         </div>
     </div>
     <hr>
     @endforeach
-    {{-- <div class="m-b-10 ticket" >
-        <div class="main-left">
-            <table>
-
-                <tr>
-                    <th class="w-20 text-left no-padding no-margins align-middle">
-                        <div class="text-center">
-                            <img src="{{ asset('images/logo.jpg') }}" class="w-100">
-                        </div>
-                    </th>
-                    <th class="w-50 align-top">
-                        <span class="font-semibold uppercase leading-tight text-xs">
-                            {{ $institution ?? 'MUTUAL DE SERVICIOS AL POLICÍA "MUSERPOL"' }} <br>
-                            {{ $direction ?? 'DIRECCIÓN DE BENEFICIOS ECONÓMICOS' }} <br>
-                            {{ $unit ?? 'UNIDAD DE OTORGACIÓN DE FONDO DE RETIRO POLICIAL, CUOTA MORTUORIA Y AUXILIO MORTUORIO' }}
-                        </span>
-                    </th>
-                    <th class="w-20 no-padding no-margins align-top">
-                        <table class="table-code no-padding no-margins">
-                            <tbody>
-                                <tr>
-                                    <td class="text-center bg-grey-darker text-white">Nº de Trámite</td>
-                                    <td class="text-bold ">{!! $number ?? 'ERROR' !!}</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center bg-grey-darker text-white">Fecha de Emisión</td>
-                                    <td class="">{!! $date ?? 'dsfsd' !!}</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center bg-grey-darker text-white">Usuario</td>
-                                    <td class="">{!! $username ?? 'nuddf' !!}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </th>
-                </tr>
-            </table>
-
-        </div>
-        <div class="main-right">
-            <table>
-                <tr>
-                    <th class="w-20 text-left no-padding no-margins align-middle">
-                        <div class="text-center">
-                            <img src="{{ asset('images/logo.jpg') }}" class="w-100">
-                        </div>
-                    </th>
-                    <th class="w-50 align-top">
-                        <span class="font-semibold uppercase leading-tight text-xs">
-                            {{ $institution ?? 'MUTUAL DE SERVICIOS AL POLICÍA "MUSERPOL"' }} <br>
-                            {{ $direction ?? 'DIRECCIÓN DE BENEFICIOS ECONÓMICOS' }} <br>
-                            {{ $unit ?? 'UNIDAD DE OTORGACIÓN DE FONDO DE RETIRO POLICIAL, CUOTA MORTUORIA Y AUXILIO MORTUORIO' }}
-                        </span>
-                    </th>
-                </tr>
-            </table>
-        </div>
-    </div> --}}
-
 </body>
 
 </html>
