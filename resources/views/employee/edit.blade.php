@@ -77,10 +77,10 @@
                 <input type="text" name="nua_cua" class="form-control" value="{{$employee->nua_cua}}">
                 <br>
                 AFP
-                <select name="managment_entity_id" class="form-control">
+                <select name="management_entity_id" class="form-control">
                     <option></option>
-                    @foreach($managments as $managment) 
-                        <option value="{{ $managment->id }}" @if($managment->id == $employee->managment_entity_id) selected @endif>{{ $managment->name }}</option>
+                    @foreach($managements as $management) 
+                        <option value="{{ $management->id }}" @if($management->id == $employee->management_entity_id) selected @endif>{{ $management->name }}</option>
                     @endforeach                    
                 </select>
                 <br>

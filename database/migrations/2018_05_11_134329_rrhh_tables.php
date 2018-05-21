@@ -48,8 +48,7 @@ class RrhhTables extends Migration
             $table->bigInteger('insurance_company_id')->unsigned()->nullable();
             $table->bigInteger('city_identity_card_id')->unsigned()->nullable();
             $table->bigInteger('city_birth_id')->unsigned()->nullable();
-            $table->bigInteger('management_entity_id')->unsigned()->nullable();
-            $table->bigInteger('group_job_id')->unsigned()->nullable();
+            $table->bigInteger('management_entity_id')->unsigned()->nullable();            
             $table->string('identity_card')->nullable();//
             $table->string('first_name')->nullable();//
             $table->string('second_name')->nullable();//
@@ -65,8 +64,7 @@ class RrhhTables extends Migration
             $table->foreign('insurance_company_id')->references('id')->on('insurance_companies');
             $table->foreign('city_identity_card_id')->references('id')->on('cities');
             $table->foreign('city_birth_id')->references('id')->on('cities');
-            $table->foreign('management_entity_id')->references('id')->on('management_entities');            
-            $table->foreign('group_job_id')->references('id')->on('group_id');           
+            $table->foreign('management_entity_id')->references('id')->on('management_entities');                        
             $table->timestamps();
         });
         // SEED
@@ -143,6 +141,7 @@ class RrhhTables extends Migration
             $table->string('name')->nullable();
             $table->string('date_start')->nullable();
             $table->string('date_end')->nullable();
+            $table->string('code')->nullable();
             $table->bigInteger('worked_days');
             $table->decimal('base_wage', 8, 2)->nullable();
             $table->decimal('quotable', 8, 2)->nullable();

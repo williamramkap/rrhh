@@ -93,8 +93,8 @@ class PayrollController extends Controller
                     
                     $last_payrol = Payroll::orderBy('id','DESC')->first();    
                     $year =  date('y');
-                    if($last_payrol->code == "")
-                        $payroll->code = "1-".$year;  
+                    if(!isset($last_payrol->code) || $last_payrol->code == "")
+                        $payroll->code = "1-".$year;
                     else{
                         $data = explode('-', $last_payrol->code);
                         if(!isset($data[1]))

@@ -17,7 +17,7 @@ use App\Contract;
 use App\Position;
 use App\DiscountPayroll;
 use App\InsuranceCompany;
-use App\ManagmentEntity;
+use App\ManagementEntity;
 class EmployeeController extends Controller
 {
     /**
@@ -105,12 +105,12 @@ class EmployeeController extends Controller
         $cities = City::get();
         $employee_types = EmployeeType::get();
         $insurance_company = InsuranceCompany::get();
-        $managment_entity = ManagmentEntity::get();
+        $management_entity = ManagementEntity::get();
         $data = [
             'cities'  =>  $cities,
             'employee_types' =>  $employee_types,
             'insurances' =>  $insurance_company,
-            'managments'    =>  $managment_entity,
+            'managements'    =>  $management_entity,
         ];
         return view('employee.create',$data);
     }
@@ -161,7 +161,7 @@ class EmployeeController extends Controller
         $employee->birth_date = $request->birth_date;
         $employee->account_number = $request->account_number;
         $employee->gender = $request->gender;
-        $employee->managment_entity_id = $request->managment_entity_id;
+        $employee->management_entity_id = $request->management_entity_id;
         $employee->insurance_company_id = $request->insurance_company_id;
         $employee->nua_cua = $request->nua_cua;
         $employee->save();
@@ -192,11 +192,15 @@ class EmployeeController extends Controller
     {
         $cities = City::get();
         $employee_types = EmployeeType::get();
+        $insurance_company = InsuranceCompany::get();
+        $management_entity = ManagementEntity::get();
         $data = [
             'employee'  =>  $employee,
-            'cities' =>  $cities,
-            'employee_types'    =>  $employee_types,
-        ];
+            'cities'  =>  $cities,
+            'employee_types' =>  $employee_types,
+            'insurances' =>  $insurance_company,
+            'managements'    =>  $management_entity,
+        ];        
         return view('employee.edit', $data);
     }
 
@@ -247,7 +251,7 @@ class EmployeeController extends Controller
         $employee->birth_date = $request->birth_date;
         $employee->account_number = $request->account_number;
         $employee->gender = $request->gender;
-        $employee->managment_entity_id = $request->managment_entity_id;
+        $employee->management_entity_id = $request->management_entity_id;
         $employee->insurance_company_id = $request->insurance_company_id;
         $employee->nua_cua = $request->nua_cua;
         $employee->save();
