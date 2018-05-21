@@ -187,7 +187,7 @@ class ReportController extends Controller
                             date("d/m/Y", strtotime($contract->date_start)),
                             date("d/m/Y", strtotime($contract->date_end)),                    
                             $payroll->worked_days,
-                            $position->base_wage ?? '0',
+                            $payroll->base_wage ?? '0',
                             $payroll->quotable,
                             $employee->management_entity->name,
                             $payroll->discount_old,
@@ -195,10 +195,10 @@ class ReportController extends Controller
                             $payroll->discount_commission,
                             $payroll->discount_solidary,
                             $payroll->discount_national,
-                            $payroll->total_amount_discount_institution,
-                            $payroll->payable_liquid,
+                            $payroll->total_amount_discount_law,
+                            $payroll->net_salary,
                             0,
-                            $payroll->total_discounts,
+                            $payroll->total_amount_discount_institution,                            
                             $payroll->total_discounts,
                             $payroll->payable_liquid
                         ));
@@ -409,10 +409,10 @@ class ReportController extends Controller
                     $payroll->discount_commission,
                     $payroll->discount_solidary,
                     $payroll->discount_national,
-                    $payroll->total_amount_discount_institution,
+                    $payroll->total_amount_discount_law,
                     $payroll->payable_liquid,
                     0,
-                    $payroll->total_discounts,
+                    $payroll->total_amount_discount_institution,
                     $payroll->total_discounts,
                     $payroll->payable_liquid
                 ));
