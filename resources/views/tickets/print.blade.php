@@ -14,13 +14,13 @@
             /* background: #3b5998; */
             margin: 0;
             padding: 5px 0px;
-            font-family: sans-serif;
+            font-family: 'Arial', sans-serif;
         }
         .ticket{
             vertical-align: top;
             height: 33%;
             width: 100%;
-            background: rgba(255,255,255,.4);
+            /* background:#3b5998; */
             margin: 0;padding: 0;
         }
 
@@ -31,48 +31,61 @@
             /* background:red; */
             border-right: 2px dashed #3c3c3c;
             display: inline-block;
-            margin-right: 5px;
+            margin-right: 0;
             padding: 2px;
+            padding-right: 20px;
         }
         .main-right{
             vertical-align: top;
             height: 100%;
             margin:0;
-            width: 355px;
+            width: 354px;
             display: inline-block;
+            box-sizing: border-box;
+            padding:0 0 0 20px;
+            margin: 0;
             /* background:green; */
         }
-
+        
+        .courier{
+            padding-top: 3px;
+            font-family: 'Courier New';
+            font-weight: 500 !important;
+        }
+        
+        .border-bottom{border-bottom: 1px solid #5D6975;}
+        .border-top{border-top: 1px solid #5D6975;}
          table { width: 100%; }
          .table-striped tr:nth-child(even){background:#F1F5F8}
 
         .table-info{ border-radius:.75em; overflow: hidden; border-spacing: 0;}
 
-        .table-info thead tr td:first-child { border-radius:1em
-            0 0 0; border-left: 1px solid #5D6975; }
+        .table-info thead tr td:first-child {
+            border-radius:1em 0 0 0;
+            border-left: 1px solid #5D6975;
+        }
 
-        .table-info thead tr td{ border-left: 1px solid #5D6975; border-top: 1px solid #5D6975;
-            border-bottom: 1px solid #5D6975; }
+        .table-info thead tr td{
+            border-left: 1px solid #5D6975;
+            border-top: 1px solid #5D6975;
+            border-bottom: 1px solid #5D6975;
+        }
 
-        .table-info thead tr td:last-child { border-radius:0 0.75em 0 0 ; border-right: 1px solid
-            #5D6975; }
+        .table-info thead tr td:last-child {
+            border-radius:0 1em 0 0 ;
+            border-right: 1px solid #5D6975;
+        }
 
-        .table-info thead tr td:only-child { border-radius:0.75em 0.75em 0 0 ; }
+        .table-info thead tr td:only-child { border-radius:1em 1em 0 0 ; }
 
-        .table-info table thead tr td:last-child
-            { border-left: none; }
-
-            .table-info tbody tr td {
-                 border-left: 1px solid #5D6975;
-                  
-                   
+        .table-info table thead tr td:last-child{
+            border-left: none;
+        }
+        .table-info tbody tr td {
+            border-left: 1px solid #5D6975;
             padding: 1px 10px;
-            }
-        .courier{
-            font-family: 'Courier New'}
-        
-        .border-bottom{border-bottom: 1px solid #5D6975;}
-        .border-top{border-top: 1px solid #5D6975;}
+        }
+
         .table-info tbody tr:last-child td {
             border-bottom: 1px solid #5D6975;
             border-top: 1px solid #5D6975;
@@ -83,26 +96,19 @@
         .table-info tbody tr:last-child td:last-child {
             border-right: 1px solid #5D6975;
             border-bottom:1px solid #5D6975;
-            }
+        }
         .table-info tbody tr:last-child td:first-child {
-            border-radius: 0 0 0 0.75em;
+            border-radius: 0 0 0 1em;
             border-bottom:1px solid #5D6975;
-             }
-        .table-info tbody tr:last-child
-        td:last-child { border-radius: 0 0 0.75em 0;
-        border-bottom:1px solid #5D6975; }
-        .table-info tbody tr:last-child td:only-child {border-bottom:1px solid #5D6975;
+        }
+        .table-info tbody tr:last-child td:last-child {
+            border-radius: 0 0 1em 0;
+            border-bottom:1px solid #5D6975;
+            }
+        .table-info tbody tr:last-child td:only-child {
+            border-bottom:1px solid #5D6975;
             border-radius: 0 0 1em 1em;
         } 
-        /* .table-code{ border-radius: .75em; border-spacing: 0;  } .table-code tbody tr:first-child td:last-child{ border-top-right-radius: .75em; border-top:
-        1px solid #5D6975; border-right: 1px solid #5D6975; } .table-code tbody tr td:last-child{ border-right: 1px solid #5D6975;
-        } .table-code tbody tr td:only-child{ border-right: 1px solid #5D6975; border-left: 1px solid #5D6975; } .table-code tbody
-        tr:first-child td:first-child{ border-top-left-radius: .75em; } .table-code tbody tr:last-child td:first-child{ border-bottom-left-radius:
-        .75em; } .table-code tbody tr td:first-child{ border-bottom:1px solid #fff; } .table-code tbody tr:last-child td:first-child{
-        border-bottom:none; } .table-code tbody tr td:last-child{ border-bottom:1px solid #5D6975; } .table-code tbody tr:last-child
-        td:last-child{ border-bottom-right-radius: .75em; border-right: 1px solid #5D6975; } .table-code tbody tr:last-child td:only-child{
-        border-bottom-right-radius: .75em; border-bottom-left-radius: .75em; border-right: 1px solid #5D6975; border-left: 1px solid
-        #5D6975; border-bottom: 1px solid #5D6975; }  */
         .table-collapse{ border-collapse: collapse; } .border-grey-darker{ border-color:
         #5D6975; border-style: solid; border-width: 1px; } .border{ border-color: #5D6975; border-style: solid; border-width: 1px;
         } .border-b{ border-bottom: 1px solid #fff; } .border-b{ border-color: #22292f; border-style: solid; border-bottom-width:
@@ -114,18 +120,98 @@
             text-align: left;
             }
          .text-center {text-align: center;} .text-right {text-align:
-        right;} .text-justify {text-align: justify;} .w-10{ width: 10%; } .w-15{ width: 15%; } .w-20{ width: 20%; } .w-25{ width:
-        25%; } .w-30{ width: 30%; } .w-33{ width: 33%; } .w-35{ width: 35%; } .w-38{ width: 38%; } .w-39{ width: 39.5%; } .w-40{
-        width: 40%; } .w-45{ width: 45%; } .w-50{ width: 50%; } .w-60{ width: 60%; } .w-75{ width: 75%; } .w-100{ width: 100%; }
-        .mw-100{ max-width: 100%; } .p-10{ padding: 10px; } .p-5{ padding: 5px; } .py-4 { padding-top: 4px; padding-bottom: 4px;
-        } .py-3 { padding-top: 3px; padding-bottom: 3px; } .py-2 { padding-top: 2px; padding-bottom: 2px; } .px-15 { padding-left:
-        15px; padding-right: 15px; } .px-10 { padding-left: 10px; padding-right: 10px; } .px-5 { padding-left: 5px; padding-right:
-        5px; } .px-4 { padding-left: 4px; padding-right: 4px; } .px-3 { padding-left: 3px; padding-right: 3px; } .px-2 { padding-left:
-        2px; padding-right: 2px; } .mx-10{ margin-top: 10px; margin-bottom: 10px; } .mx-5{ margin-top: 5px; margin-bottom: 5px; }
-        .m-b-5{ margin-bottom: 5px; }
-        .m-b-6{
-            margin-bottom: 10px;
+        right;} .text-justify {text-align: justify;}
+         .w-10{ width: 10%; }
+         .w-15{ width: 15%; }
+        .w-20{ width: 20%; }
+        .w-25{ width:25%; }
+        .w-30{ width: 30%; }
+        .w-33{ width: 33%; }
+        .w-35{ width: 35%; }
+        .w-38{ width: 38%; }
+        .w-39{ width: 39.5%; }
+        .w-40{ width: 40%; }
+        .w-45{ width: 45%; }
+        .w-50{ width: 50%; }
+        .w-60{ width: 60%; }
+        .w-75{ width: 75%; }
+        .w-100{ width: 100%; }
+
+
+        .w-30-px{
+            min-width:30px;
+            width:30px;
+            max-width:30px;
         }
+        .w-45-px{
+            min-width:45px;
+            width:45px;
+            max-width:45px;
+        }
+        .w-55-px{
+            min-width:55px;
+            width:55px;
+            max-width:55px;
+        }
+        .w-60-px{
+            min-width:60px;
+            width:60px;
+            max-width:60px;
+        }
+        .w-95-px{
+            min-width:95px;
+            width:95px;
+            max-width:95px;
+        }
+        .w-110-px{
+            min-width:110px;
+            width:110px;
+            max-width:110px;
+        }
+        .w-120-px{
+            min-width:120px;
+            width:120px;
+            max-width:120px;
+        }
+        .w-130-px{
+            min-width:130px;
+            width:130px;
+            max-width:130px;
+        }
+        .w-140-px{
+            min-width:140px;
+            width:140px;
+            max-width:140px;
+        }
+        .w-150-px{
+            min-width:150px;
+            width:150px;
+            max-width:150px;
+        }
+        .w-235-px{
+            min-width:235px;
+            width:235px;
+            max-width:235px;
+        }
+        .mw-100{ max-width: 100%; }
+        .p-10{ padding: 10px; }
+        .p-5{ padding: 5px; }
+        .py-15 { padding-top: 15px; padding-bottom: 15px;}
+        .py-10 { padding-top: 10px; padding-bottom: 10px;}
+        .py-5 { padding-top: 5px; padding-bottom: 5px;}
+        .py-4 { padding-top: 4px; padding-bottom: 4px;}
+        .py-3 { padding-top: 3px; padding-bottom: 3px; }
+        .py-2 { padding-top: 2px; padding-bottom: 2px; }
+        .px-15 { padding-left: 15px; padding-right: 15px; }
+        .px-10 { padding-left: 10px; padding-right: 10px; }
+        .px-5 { padding-left: 5px; padding-right: 5px; }
+        .px-4 { padding-left: 4px; padding-right: 4px; }
+        .px-3 { padding-left: 3px; padding-right: 3px; }
+        .px-2 { padding-left: 2px; padding-right: 2px; }
+        .mx-10{ margin-top: 10px; margin-bottom: 10px; }
+        .mx-5{ margin-top: 5px; margin-bottom: 5px; }
+        .m-b-5{ margin-bottom: 5px; }
+        .m-b-6{ margin-bottom: 10px; }
         .m-b-10{ margin-bottom: 10px; } 
         .m-b-15{ margin-bottom: 15px; }
         .m-b-20{ margin-bottom: 20px; }
@@ -147,7 +233,6 @@
         .m-l-30{ margin-left: 30px; }
         .m-l-35{ margin-left: 35px; }
         .m-l-50{ margin-left: 50px; }
-        
         .m-r-5{ margin-right: 5px; }
         .m-r-10{ margin-right: 10px; }
         .m-r-15{ margin-right: 15px; }
@@ -168,6 +253,7 @@
         #22292f;} .text-white{color: #ffffff;}
         .text-xxxs {font-size: 8px;}
         .text-xxs {font-size: 10px;}
+        .text-xxms {font-size: 11px;}
         .text-xs {font-size: 12px;}
         .text-sm {font-size: 14px;}
         .text-smm {font-size: 15px;}
@@ -211,7 +297,13 @@
         }
         .table-ticket-1 tr, .table-ticket-1 tr td{
             margin:0;padding: 0
-        } 
+        }
+        .table-background{
+               /* background-image: url("{{ asset('images/logo.jpg') }}"); */
+            background-repeat:no-repeat;
+            background-position: center center;
+            background-size: auto
+        }
     </style>
 
 </head>
@@ -226,116 +318,141 @@
         <div class="main-left">
             <table>
                 <tr>
-                    <th class="w-20 text-left no-padding no-margins align-top">
-                        <div class="text-center">
-                            <img src="{{ asset('images/logo.jpg') }}" class="w-100">
-                        </div>
-                    </th>
-                    <th class="w-50 align-top leading-none text-uppercase text-xs align-middle">
-                                    {{ $institution ?? 'MUTUAL DE SERVICIOS AL POLICÍA "MUSERPOL"' }} <br>
-                                    {{ $direction ?? 'DIRECCIÓN DE BENEFICIOS ECONÓMICOS' }} <br>
-
-                    </th>
-                    <th class="w-20 no-padding no-margins align-top">
-                        {{-- <table class="table-code no-padding no-margins">
-                            <tbody>
-                                <tr>
-                                    <td class="text-center bg-grey-darker text-white">Nº de Trámite</td>
-                                    <td class="text-bold ">{!! $number ?? 'ERROR' !!}</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center bg-grey-darker text-white">Fecha de Emisión</td>
-                                    <td class="">{!! $date ?? 'dsfsd' !!}</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center bg-grey-darker text-white">Usuario</td>
-                                    <td class="">{!! $username ?? 'nuddf' !!}</td>
-                                </tr>
-                            </tbody>
-                        </table> --}}
-                    </th>
+                    <td class="w-50 text-left no-padding no-margins align-top">
+                        <table style="border-spacing: 0;border-collapse: collapse;">
+                            <tr>
+                                <td class="w-150-px" rowspan="2">
+                                    <div class="text-center">
+                                        {{-- <img src="{{ asset('images/logo.jpg') }}" class="w-100" style="opacity:0"> --}}
+                                        <img src="{{ asset('images/logo.jpg') }}" class="w-100">
+                                    </div>
+                                </td>
+                                <td class="w-50 align-top leading-none text-uppercase text-lg courier text-center align-middle" style="min-height: 18px;height: 18px;max-height: 18px">
+                                    {{-- {{ $payroll->id }} --}}
+                                    8915564189
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center text-sm font-bold" >
+                                    TALÓN DEL BENEFICIARIO
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="w-50 align-top leading-none">
+                        <table>
+                            <tr>
+                                <td class="no-border text-xxs w-60-px">
+                                    Entidad:
+                                </td>
+                                <td class="no-border uppercase courier text-xs" colspan="3">
+                                    MUTUAL DE SERVICIOS AL POLÍCIA
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="no-border text-xxs w-60-px">
+                                    Dirección:
+                                </td>
+                                <td class="no-border courier text-xxs" colspan="3">
+                                    Av. 6 de Agosto #2354 Z. Sopocachi
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="no-border text-xxs w-60-px">
+                                    Nº Patronal:
+                                </td>
+                                <td class="no-border uppercase courier text-xxs w-110-px">
+                                    001-720-0025
+                                </td>
+                                <td class="no-border text-xxs w-30-px">
+                                    NIT:
+                                </td>
+                                <td class="no-border uppercase courier text-xxs">
+                                    234578021
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
                 </tr>
             </table>
             {{-- /header --}}
-            {{-- personal-info --}}
-            <table class="table-dticket-1">
+            <table class="table-dticket-1 m-b-5">
                 <tr>
-                    <td>
-                        <span class="text-xxs">Año/mes: </span>
-                    </td>
-                    <td>
-                        <span class="uppercase courier text-xs"> {{ $procedure->year }}/{{ $procedure->month->name }} </span>
-                    </td>
+                    <td class="text-xxs w-95-px">Nº de Boleta:</td>
+                    <td class="uppercase courier text-xs w-235-px">98416541</td>
+                    <td class="text-xxs w-95-px">Modalidad de Pago:</td>
+                    <td class="uppercase courier text-xs">ABONO EN CUENTA</td>
                 </tr>
                 <tr>
-                    <td>
-                        <span class="text-xxs">Nro Días Trab.: </span>
-                    </td>
-                    <td>
-                        <span class="uppercase courier text-xs">{{ $payroll->worked_days }}</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="text-xxs">Concepto de Pago: </span>
-                    </td>
-                    <td colspan="2">
-                        <span class="uppercase courier text-xs">PAGO DE HABERES {{ $procedure->month->shortened}} {{ $procedure->year }}</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td  class="no-border">
-                        <span class="text-xxs">Carnet de Identidad: </span>
-                    </td>
-                    <td class="w-25">
-                        <span class="uppercase courier text-xs">{{ $payroll->ci_ext }}</span>
-                    </td>
-                    <td  class="no-border" colspan="2">
-                        <span class="text-xxs">Nombre: </span>
-                    </td>
-                    <td colspan="2">
-                    <span class="uppercase courier text-xs">{{ $payroll->full_name }}</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="no-border text-xxs">
-                        A.F.P.:
-                    </td>
-                    <td class="no-border uppercase courier text-xs">
-                        {{ $payroll->management_entity }}
-                    </td>
-                    <td colspan="4" class="no-border text-xxs">
-                        <div class="float-left">
-                            <span class="m-r-10">N.U.A.:</span>
-                            <span class="uppercase courier text-xs">
-                                {{-- {{ $payroll->nua }} --}}
-                                8465181568
-                            </span>
-                        </div>
-                        <div class="float-right m-r-10">
-                            <span class="m-r-10">Nro. de Item:</span>
-                            <span class="uppercase courier text-xs">
-                                8465181568
-                                {{-- {{ $payroll->nua }} --}}
-                            </span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class="text-xxs w-95-px">Concepto de Pago:</td>
+                    <td class="uppercase courier text-xs w-235-px">PAGO DE HABERES {{ $procedure->month->shortened}} {{ $procedure->year }}</td>
+                    <td class="text-xxs w-95-px">Nº Días Trab.:</td>
+                    <td class="uppercase courier text-xs">{{ $payroll->worked_days }}</td>
                 </tr>
             </table>
+
+            {{-- personal-info --}}
+            <table>
+                <tr>
+                    <td class="no-border text-xxs w-95-px">
+                        Carnet de Identidad:
+                    </td>
+                    <td class="uppercase courier text-xs w-120-px">
+                        {{ $payroll->ci_ext }}
+                    </td>
+                    <td  class="no-border text-xxs w-55-px">
+                        Nombre:
+                    </td>
+                    <td colspan="6" class="uppercase courier text-xs">
+                        {{ $payroll->full_name }}
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="no-border text-xxs w-95-px">
+                        Nº de Cuenta:
+                    </td>
+                    <td class="no-border uppercase courier text-xs w-120-px">
+                        {{ $payroll->account_number }}
+                    </td>
+                    <td class="no-border text-xxs w-55-px">
+                        Fecha Nac.:
+                    </td>
+                    <td class="no-border uppercase courier text-xs w-110-px">
+                        {{ $payroll->birth_date }}
+                    </td>
+                    <td class="no-border text-xxs">
+                        {{-- Nº Item: --}}
+                    </td>
+                    <td class="uppercase courier text-xs">
+                        {{-- 1871 --}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="no-border text-xxs w-95-px">
+                        A.F.P.:
+                    </td>
+                    <td class="no-border uppercase courier text-xs w-130-px">
+                        {{ $payroll->management_entity }}
+                    </td>
+                    <td class="no-border text-xxs w-45-px">
+                        N.U.A.:
+                    </td>
+                    <td class="uppercase courier text-xs" colspan="6">
+                        47213218
+                    </td>
+                </tr>
+            </table>
+            <div style="min-height: 21px;max-height: 21px; height: 21px;padding:0 0 0 2px;margin:0; line-height:0">
+                <div class="text-xxs inline leading-none">Cargo: </div><div class="uppercase courier text-xs inline leading-none">{{ $payroll->position }}</div>
+            </div>
             {{-- /personal-info --}}
 
             {{-- amounts --}}
-            <table class="table-info">
+            <table class="table-info table-background">
+
                 <thead>
-                    <tr class="text-xs text-center">
+                    <tr class="text-xs text-center font-bold">
                         <td colspan="2">
                             INGRESOS
                         </td>
@@ -351,153 +468,231 @@
                         <td class="border-bottom">Acreedor</td>
                         <td class="border-bottom">Importe Bs.</td>
                     </tr>
+                    <tr><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td></tr>
                     <tr class="courier">
                         <td class="text-left">SUELDOS</td>
-                        <td class="text-right">{{ $payroll->quotable }}</td>
-                        <td></td>
-                        <td></td>
+                        <td class="text-right"> {{ Util::formatMoney($payroll->quotable) }}</td>
+                        <td class="text-left">AFP.RV.10%</td>
+                        <td class="text-right"> {{ Util::formatMoney($payroll->discount_old) }} </td>
                     </tr>
                     {{-- discounts --}}
-                    
                     <tr class="courier">
                         <td></td>
                         <td></td>
-                        {{-- <td class="text-left">Renta vejez 10%</td> --}}
-                        <td class="text-left">AFP.RV.10%</td>
-                        <td class="text-right"> {{ $payroll->discount_old }} </td>
-                    </tr>
-                    <tr class="courier">
-                        <td></td>
-                        <td></td>
-                        <td class="text-left">AFP..RC.1,71%</td>
-                        <td class="text-right"> {{ $payroll->discount_common_risk }} </td>
+                        <td class="text-left">AFP.RC.1,71%</td>
+                        <td class="text-right"> {{ Util::formatMoney($payroll->discount_common_risk) }} </td>
                     </tr>
                     <tr class="courier">
                         <td></td>
                         <td></td>
                         <td class="text-left">AFP.CM.0,5%</td>
-                        <td class="text-right"> {{ $payroll->discount_commission }} </td>
+                        <td class="text-right"> {{ Util::formatMoney($payroll->discount_commission) }} </td>
                     </tr>
                     <tr class="courier">
                         <td></td>
                         <td></td>
                         <td class="text-left">AFP.SOL.ASE.0,5%</td>
-                        <td class="text-right"> {{ $payroll->discount_solidary }} </td>
+                        <td class="text-right"> {{ Util::formatMoney($payroll->discount_solidary) }} </td>
                     </tr>
                     <tr class="courier">
                         <td></td>
                         <td></td>
-                        <td class="text-left">AFP.APS.1%, 5%, 10%</td>
-                        <td class="text-right"> {{ $payroll->discount_national }} </td>
+                        <td class="text-left">RC-IVA</td>
+                        <td class="text-right"> {{ Util::formatMoney($payroll->discount_rc_iva) }} </td>
                     </tr>
                     <tr class="courier">
                         <td></td>
                         <td></td>
-                        <td class="text-left">Atrasos</td>
-                        <td class="text-right"> {{ $payroll->discount_faults }} </td>
+                        <td class="text-left">OTROS DESCUENTOS</td>
+                        <td class="text-right"> {{ Util::formatMoney($payroll->discount_faults) }} </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
                     </tr>
                     {{-- /discounts --}}
                     <tr>
                         <td class="text-xs text-left border-top">
                             Total Ingresos:
                         </td>
-                        <td class="text-right courier border-top">{{ $payroll->quotable }}</td>
+                        <td class="text-right courier border-top">{{ Util::formatMoney($payroll->quotable) }}</td>
                         <td class="text-xs text-left border-top">
                             Total Descuentos:
                         </td>
-                        <td class="text-right courier border-top">{{ $payroll->total_discounts}}</td>
+                        <td class="text-right courier border-top">{{ Util::formatMoney($payroll->total_discounts) }}</td>
                     </tr>
                     <tr>
-                        <td colspan="2" class="text-sm text-left courier">
+                        <td colspan="3" class="text-sm text-left courier">
                             Liquido Pagable:
                         </td>
                         <td class="text-lg text-right courier" colspan="3">
-                            {{ $payroll->payable_liquid }}
+                            {{ Util::formatMoney($payroll->payable_liquid) }}
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <div class="border rounded m-t-5 p-5 text-center" style="text-align:center; height:33px">
+                <img src="data:image/png;base64, {{ $payroll->code_image }}" alt="Red dot" style="height: 33px; width: 30%;" />
+            </div>
             {{-- /amounts --}}
-
-
         </div>
-        <div class="main-right">
+        <div class="main-right" >
             <table>
                 <tr>
-                    <th class="w-20 text-left no-padding no-margins align-middle">
+                    <td class="w-50" rowspan="2">
                         <div class="text-center">
+                            {{-- <img src="{{ asset('images/logo.jpg') }}" class="w-100" style="opacity:0"> --}}
                             <img src="{{ asset('images/logo.jpg') }}" class="w-100">
                         </div>
-                    </th>
-                    <th class="w-50 align-top leading-none text-uppercase text-xs align-middle">
-                        {{ $institution ?? 'MUTUAL DE SERVICIOS AL POLICÍA "MUSERPOL"' }} <br> {{ $direction ?? 'DIRECCIÓN DE BENEFICIOS ECONÓMICOS'
-                        }} <br>
-                    </th>
+                    </td>
+                    <td class="w-50 align-top leading-none text-uppercase text-lg courier text-center align-middle" style="min-height: 18px;height: 18px;max-height: 18px">
+                        {{-- {{ $payroll->id }} --}}
+                        8915564189
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center text-sm font-bold">
+                        TALÓN DE EFECTIVIZACIÓN
+                    </td>
                 </tr>
             </table>
+            <div class="w-100">
+                <table>
+                    <tr>
+                        <td class="no-border text-xxs w-60-px">
+                            Entidad:
+                        </td>
+                        <td class="no-border uppercase courier text-xs" colspan="3">
+                            MUTUAL DE SERVICIOS AL POLÍCIA
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="no-border text-xxs w-60-px">
+                            Dirección:
+                        </td>
+                        <td class="no-border courier text-xs" colspan="3">
+                            Av. 6 de Agosto #2354 Z. Sopocachi
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="no-border text-xxs w-60-px">
+                            Nº Patronal:
+                        </td>
+                        <td class="no-border uppercase courier text-xs w-110-px">
+                            001-720-0025
+                        </td>
+                        <td class="no-border text-xxs w-30-px">
+                            NIT:
+                        </td>
+                        <td class="no-border uppercase courier text-xs">
+                            234578021
+                        </td>
+                    </tr>
+                </table>
+                
+                <table class="table-dticket-1" >
+                    <tr>
+                        <td class="text-xxs w-95-px">
+                            Nº de Boleta:
+                        </td>
+                        <td class="uppercase courier text-xs w-235-px">
+                            98416541
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-xxs w-95-px">
+                            Modalidad de Pago:
+                        </td>
+                        <td class="uppercase courier text-xs">
+                            ABONO EN CUENTA
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-xxs w-95-px">
+                            Concepto de Pago:
+                        </td>
+                        <td class="uppercase courier text-xs w-235-px">
+                            PAGO DE HABERES {{ $procedure->month->shortened}} {{ $procedure->year }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-xxs w-95-px">
+                            Nº Días Trab.:
+                        </td>
+                        <td class="uppercase courier text-xs">
+                            {{ $payroll->worked_days }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="no-border text-xxs w-95-px">Carnet de Identidad:</td>
+                        <td class="uppercase courier text-xs w-120-px">{{ $payroll->ci_ext }}</td>
+                    </tr>
+                    <tr>
+                        <td class="no-border text-xxs w-55-px" style="min-height:30px; max-height:30px; height:30px;" >Nombre:</td>
+                        <td colspan="6" class="uppercase courier text-xs">{{ $payroll->full_name }}</td>
+                    </tr>
+                    <tr>
+                        <td class="no-border text-xxs w-95-px">Nº de Cuenta:</td>
+                        <td class="no-border uppercase courier text-xs w-120-px">{{ $payroll->account_number }}</td>
+                    </tr>
+                    <tr>
+                        <td class="no-border text-xxs w-55-px">Fecha Nac.:</td>
+                        <td class="no-border uppercase courier text-xs w-110-px">{{ $payroll->birth_date }}</td>
+                    </tr>
+                    {{-- <tr>
+                        <td class="no-border text-xxs">Nº Item:</td>
+                        <td class="uppercase courier text-xs">1871</td>
+                    </tr> --}}
+                    <tr>
+                        <td class="no-border text-xxs w-95-px">A.F.P.:</td>
+                        <td class="no-border uppercase courier text-xs w-130-px">{{ $payroll->management_entity }}</td>
+                    </tr>
+                    <tr>
+                        <td class="no-border text-xxs w-45-px">N.U.A.:</td>
+                        <td class="uppercase courier text-xs" colspan="6">47213218</td>
+                    </tr>
+                    {{-- <tr>
+                        <td class="no-border text-xxs w-45-px align-top" style="min-height:50px; max-height:50px; height:50px;">Cargo:</td>
+                        <td class="uppercase courier text-xs leading-none align-top" colspan="6">{{ $payroll->position }}</td>
+                    </tr> --}}
+                </table>
+                <div style="min-height: 21px;max-height: 21px; height: 21px;padding:0;margin:0 0 0 1px; line-height:0">
+                    <div class="text-xxs inline leading-none">Cargo: </div>
+                    <div class="uppercase courier text-xs inline leading-none">{{ $payroll->position }}</div>
+                </div>
+                <table class="border rounded m-t-15">
+                    <tr>
+                        <td class="text-sm text-left courier w-150-px px-5">
+                            Liquido Pagable:
+                        </td>
+                        <td class="text-lg text-right courier px-10" colspan="3">
+                            {{ Util::formatMoney($payroll->payable_liquid) }}
+                        </td>
+                    </tr>
+                </table>
+                <div class="border rounded m-t-5 p-5 text-center" style="text-align:center; height:33px">
+                    <img src="data:image/png;base64, {{ $payroll->code_image }}" alt="Red dot" style="height: 33px; width: 50%;" />
+                </div>              
+            </div>
         </div>
     </div>
     <hr>
     @endforeach
-    {{-- <div class="m-b-10 ticket" >
-        <div class="main-left">
-            <table>
-
-                <tr>
-                    <th class="w-20 text-left no-padding no-margins align-middle">
-                        <div class="text-center">
-                            <img src="{{ asset('images/logo.jpg') }}" class="w-100">
-                        </div>
-                    </th>
-                    <th class="w-50 align-top">
-                        <span class="font-semibold uppercase leading-tight text-xs">
-                            {{ $institution ?? 'MUTUAL DE SERVICIOS AL POLICÍA "MUSERPOL"' }} <br>
-                            {{ $direction ?? 'DIRECCIÓN DE BENEFICIOS ECONÓMICOS' }} <br>
-                            {{ $unit ?? 'UNIDAD DE OTORGACIÓN DE FONDO DE RETIRO POLICIAL, CUOTA MORTUORIA Y AUXILIO MORTUORIO' }}
-                        </span>
-                    </th>
-                    <th class="w-20 no-padding no-margins align-top">
-                        <table class="table-code no-padding no-margins">
-                            <tbody>
-                                <tr>
-                                    <td class="text-center bg-grey-darker text-white">Nº de Trámite</td>
-                                    <td class="text-bold ">{!! $number ?? 'ERROR' !!}</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center bg-grey-darker text-white">Fecha de Emisión</td>
-                                    <td class="">{!! $date ?? 'dsfsd' !!}</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center bg-grey-darker text-white">Usuario</td>
-                                    <td class="">{!! $username ?? 'nuddf' !!}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </th>
-                </tr>
-            </table>
-
-        </div>
-        <div class="main-right">
-            <table>
-                <tr>
-                    <th class="w-20 text-left no-padding no-margins align-middle">
-                        <div class="text-center">
-                            <img src="{{ asset('images/logo.jpg') }}" class="w-100">
-                        </div>
-                    </th>
-                    <th class="w-50 align-top">
-                        <span class="font-semibold uppercase leading-tight text-xs">
-                            {{ $institution ?? 'MUTUAL DE SERVICIOS AL POLICÍA "MUSERPOL"' }} <br>
-                            {{ $direction ?? 'DIRECCIÓN DE BENEFICIOS ECONÓMICOS' }} <br>
-                            {{ $unit ?? 'UNIDAD DE OTORGACIÓN DE FONDO DE RETIRO POLICIAL, CUOTA MORTUORIA Y AUXILIO MORTUORIO' }}
-                        </span>
-                    </th>
-                </tr>
-            </table>
-        </div>
-    </div> --}}
-
 </body>
 
 </html>
