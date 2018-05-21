@@ -141,6 +141,7 @@ class RrhhTables extends Migration
             $table->string('name')->nullable();
             $table->string('date_start')->nullable();
             $table->string('date_end')->nullable();
+            $table->string('code')->nullable();
             $table->bigInteger('worked_days');
             $table->decimal('base_wage', 8, 2)->nullable();
             $table->decimal('quotable', 8, 2)->nullable();
