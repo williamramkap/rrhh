@@ -47,8 +47,14 @@ class Util
         return self::removeSpaces($result);
 
     }
+    public static function fillZerosLeft($value)
+    {
+        if ($value) {
+            return str_pad($value, 8, "0", STR_PAD_LEFT);
+        }
+        return str_pad(0, 8, "0", STR_PAD_LEFT);
 
-    
+    }
     public static function getCivilStatus($est, $gender)
     {
         switch ($est) {

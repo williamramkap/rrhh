@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Boletas de Pago de {{ $procedure->month->name }} de {{ $procedure->year }}</title>
     <style>
         html,
         body {
@@ -46,13 +46,13 @@
             margin: 0;
             /* background:green; */
         }
-        
+
         .courier{
             padding-top: 3px;
             font-family: 'Courier New';
             font-weight: 500 !important;
         }
-        
+
         .border-bottom{border-bottom: 1px solid #5D6975;}
         .border-top{border-top: 1px solid #5D6975;}
          table { width: 100%; }
@@ -188,6 +188,31 @@
             width:150px;
             max-width:150px;
         }
+        .w-160-px{
+            min-width:160px;
+            width:160px;
+            max-width:160px;
+        }
+        .w-170-px{
+            min-width:170px;
+            width:170px;
+            max-width:170px;
+        }
+        .w-180-px{
+            min-width:180px;
+            width:180px;
+            max-width:180px;
+        }
+        .w-190-px{
+            min-width:190px;
+            width:190px;
+            max-width:190px;
+        }
+        .w-200-px{
+            min-width:200px;
+            width:200px;
+            max-width:200px;
+        }
         .w-235-px{
             min-width:235px;
             width:235px;
@@ -222,9 +247,13 @@
         .m-t-15{ margin-top: 15px; }
         .m-t-20{ margin-top: 20px; }
         .m-t-25{ margin-top: 25px; }
+        .m-t-27{ margin-top: 27px; }
+        .m-t-28{ margin-top: 28px; }
         .m-t-30{ margin-top: 30px; }
         .m-t-35{ margin-top: 35px; }
+        .m-t-48{ margin-top: 48px; }
         .m-t-50{ margin-top: 50px; }
+
         .m-l-5{ margin-left: 5px; }
         .m-l-10{ margin-left: 10px; }
         .m-l-15{ margin-left: 15px; }
@@ -329,7 +358,7 @@
                                 </td>
                                 <td class="w-50 align-top leading-none text-uppercase text-lg courier text-center align-middle" style="min-height: 18px;height: 18px;max-height: 18px">
                                     {{-- {{ $payroll->id }} --}}
-                                    8915564189
+                                    {{ Util::fillZerosLeft($payroll->id) }}
                                 </td>
                             </tr>
                             <tr>
@@ -376,10 +405,11 @@
                 </tr>
             </table>
             {{-- /header --}}
+            <hr style="border-top: 0.016em solid #5D6975; margin:0">
             <table class="table-dticket-1 m-b-5">
                 <tr>
                     <td class="text-xxs w-95-px">Nº de Boleta:</td>
-                    <td class="uppercase courier text-xs w-235-px">98416541</td>
+                    <td class="uppercase courier text-xs w-235-px">{{ $payroll->code }}</td>
                     <td class="text-xxs w-95-px">Modalidad de Pago:</td>
                     <td class="uppercase courier text-xs">ABONO EN CUENTA</td>
                 </tr>
@@ -407,7 +437,6 @@
                         {{ $payroll->full_name }}
                     </td>
                 </tr>
-                
                 <tr>
                     <td class="no-border text-xxs w-95-px">
                         Nº de Cuenta:
@@ -439,11 +468,11 @@
                         N.U.A.:
                     </td>
                     <td class="uppercase courier text-xs" colspan="6">
-                        47213218
+                        {{ $payroll->nua_cua }}
                     </td>
                 </tr>
             </table>
-            <div style="min-height: 21px;max-height: 21px; height: 21px;padding:0 0 0 2px;margin:0; line-height:0">
+            <div style="min-height: 21px;max-height: 21px; height: 21px;padding:0 0 0 3px;margin:0; line-height:0">
                 <div class="text-xxs inline leading-none">Cargo: </div><div class="uppercase courier text-xs inline leading-none">{{ $payroll->position }}</div>
             </div>
             {{-- /personal-info --}}
@@ -537,8 +566,8 @@
                         <td class="text-right courier border-top">{{ Util::formatMoney($payroll->total_discounts) }}</td>
                     </tr>
                     <tr>
-                        <td colspan="3" class="text-sm text-left courier">
-                            Liquido Pagable:
+                        <td colspan="3" class="text-sm text-left courier" style="font-weight:bold !important;">
+                            Liquido Pagable en Bs.:
                         </td>
                         <td class="text-lg text-right courier" colspan="3">
                             {{ Util::formatMoney($payroll->payable_liquid) }}
@@ -562,7 +591,7 @@
                     </td>
                     <td class="w-50 align-top leading-none text-uppercase text-lg courier text-center align-middle" style="min-height: 18px;height: 18px;max-height: 18px">
                         {{-- {{ $payroll->id }} --}}
-                        8915564189
+                        {{ Util::fillZerosLeft($payroll->id) }}
                     </td>
                 </tr>
                 <tr>
@@ -604,14 +633,14 @@
                         </td>
                     </tr>
                 </table>
-                
+                <hr>
                 <table class="table-dticket-1" >
                     <tr>
                         <td class="text-xxs w-95-px">
                             Nº de Boleta:
                         </td>
                         <td class="uppercase courier text-xs w-235-px">
-                            98416541
+                            {{ $payroll->code }}
                         </td>
                     </tr>
                     <tr>
@@ -664,21 +693,21 @@
                     </tr>
                     <tr>
                         <td class="no-border text-xxs w-45-px">N.U.A.:</td>
-                        <td class="uppercase courier text-xs" colspan="6">47213218</td>
+                        <td class="uppercase courier text-xs" colspan="6">{{ $payroll->nua_cua }}</td>
                     </tr>
-                    {{-- <tr>
+                    <tr>
                         <td class="no-border text-xxs w-45-px align-top" style="min-height:50px; max-height:50px; height:50px;">Cargo:</td>
                         <td class="uppercase courier text-xs leading-none align-top" colspan="6">{{ $payroll->position }}</td>
-                    </tr> --}}
+                    </tr>
                 </table>
-                <div style="min-height: 21px;max-height: 21px; height: 21px;padding:0;margin:0 0 0 1px; line-height:0">
+                {{-- <div style="min-height: 21px;max-height: 21px; height: 21px;padding:0;margin:0 0 0 3px; line-height:0">
                     <div class="text-xxs inline leading-none">Cargo: </div>
                     <div class="uppercase courier text-xs inline leading-none">{{ $payroll->position }}</div>
-                </div>
-                <table class="border rounded m-t-15">
+                </div> --}}
+                <table class="border rounded m-t-28">
                     <tr>
-                        <td class="text-sm text-left courier w-150-px px-5">
-                            Liquido Pagable:
+                        <td class="text-sm text-left courier w-200-px px-5" style="font-weight:bold !important;">
+                            Liquido Pagable en Bs.:
                         </td>
                         <td class="text-lg text-right courier px-10" colspan="3">
                             {{ Util::formatMoney($payroll->payable_liquid) }}
@@ -687,7 +716,7 @@
                 </table>
                 <div class="border rounded m-t-5 p-5 text-center" style="text-align:center; height:33px">
                     <img src="data:image/png;base64, {{ $payroll->code_image }}" alt="Red dot" style="height: 33px; width: 50%;" />
-                </div>              
+                </div>
             </div>
         </div>
     </div>
