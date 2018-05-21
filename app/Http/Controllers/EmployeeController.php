@@ -35,6 +35,11 @@ class EmployeeController extends Controller
     }
 
     public function getEmployeeDatatable(){
+
+        $users = Employee::select(['id','first_name','last_name','created_at','updated_at']);
+
+        return Datatables::of($users)->make();
+
         $employees - Employee::get();
         return Datatables::of($employees)
             ->addColumn('action', function ($u) {

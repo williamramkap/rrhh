@@ -44,40 +44,53 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </div>    
 </div>
 
 
 @endsection
-@section('scripts')
-<script src="{{ asset('/js/datatables.js')}}"></script>
-<script>
-    var user_tables = $('#employee-table').DataTable({
-    processing: true,
-    serverSide: true,
-    ajax: "{!! route('employee_list') !!}",
-    columns: [ 
-    {"className":      'details-control',
-    "orderable":      false,
-    "searchable":      false,
-    "data":           'button-roles',
-    "name":            'button-roles',
-    }, 
-    { data: 'id', name: 'username', orderable: true },
-    { data: 'identity_card', name: 'identity_card' },
-    { data: 'last_name_name', name: 'last_name', },
-    { data: 'mothers_last_name', name: 'mothers_last_name', },
-    { data: 'first_name', name: 'first_name' },
-    { data: 'second_name', name: 'second_name', },    
-    { data: 'employee_type', name: 'employee_type' },    
-    {data: 'action', name: 'action', orderable: false, searchable: false},
-    {"className":      'details-control',
-    "name":         'state',
-    "orderable":      false,
-    "searchable":      false,
-    "data":           'state',
-    "defaultContent": ''
-    },]});
 
-</script>
-$endsection
+@section('jss')
+{{-- <script src="{{ asset('/js/datatables.js')}}"></script> --}}
+<script>
+    // alert("here");
+    //     $(document).ready(function () {
+    //         console.log($(".wrapper"));
+            
+    //         // $('#employee-table').DataTable({
+    //         //     processing: true,
+    //         //     serverSide: true,
+    //         //     ajax: "{!! route('employee_list') !!}",
+    //         // });
+    // });
+         
+    
+        // var user_tables = $('#employee-table').DataTable({
+        // processing: true,
+        // serverSide: true,
+        // ajax: "{!! route('employee_list') !!}",
+        // columns: [ 
+        // {"className":      'details-control',
+        // "orderable":      false,
+        // "searchable":      false,
+        // "data":           'button-roles',
+        // "name":            'button-roles',
+        // }, 
+        // { data: 'id', name: 'username', orderable: true },
+        // { data: 'identity_card', name: 'identity_card' },
+        // { data: 'last_name_name', name: 'last_name', },
+        // { data: 'mothers_last_name', name: 'mothers_last_name', },
+        // { data: 'first_name', name: 'first_name' },
+        // { data: 'second_name', name: 'second_name', },    
+        // { data: 'employee_type', name: 'employee_type' },    
+        // {data: 'action', name: 'action', orderable: false, searchable: false},
+        // {"className":      'details-control',
+        // "name":         'state',
+        // "orderable":      false,
+        // "searchable":      false,
+        // "data":           'state',
+        // "defaultContent": ''
+        // },]});
+    
+    </script>
+@endsection
