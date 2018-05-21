@@ -15,7 +15,7 @@
                             <li><a href="{{ url('/')}}"><i class="fa fa-users"></i> Usuarios</a></li>
                             <li class="divider"></li>
                             <li><a href="{{ url('/')}}"><i class="fa fa-sitemap"></i> Permisos</a></li>
-                        @endif                       
+                        @endif
 
                         <li class="divider"></li>
                         <li><a href="{{ url('logout')}}"><i class="fa fa-sign-out"></i> Cerrar Sesión</a></li>
@@ -30,6 +30,9 @@
             </li>
             <li class="" data-toggle="tooltip" data-placement="right" title="Contracts">
                 <a href="{{ url('/contract') }}"><i class="glyphicon glyphicon-piggy-bank"></i> <span class="nav-label">Contratos</span></a>
+            </li>
+            <li class="" data-toggle="tooltip" data-placement="right" title="Planillas">
+                <a href="{{ url('/payroll') }}"><i class="glyphicon glyphicon-paperclip"></i> <span class="nav-label">Planillas</span></a>
             </li>
             <li class="" data-toggle="tooltip" data-placement="right" title="Reportes">
                 <a href="{{ url('/report') }}"><i class="a fa-fw fa-heartbeat"></i> <span class="nav-label">Reportes</span></a>

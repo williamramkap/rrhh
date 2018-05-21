@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Boletas de Pago de {{ $procedure->month->name }} de {{ $procedure->year }}</title>
     <style>
         html,
         body {
@@ -329,7 +329,7 @@
                                 </td>
                                 <td class="w-50 align-top leading-none text-uppercase text-lg courier text-center align-middle" style="min-height: 18px;height: 18px;max-height: 18px">
                                     {{-- {{ $payroll->id }} --}}
-                                    8915564189
+                                    {{ Util::fillZerosLeft($payroll->id) }}
                                 </td>
                             </tr>
                             <tr>
@@ -379,7 +379,7 @@
             <table class="table-dticket-1 m-b-5">
                 <tr>
                     <td class="text-xxs w-95-px">Nº de Boleta:</td>
-                    <td class="uppercase courier text-xs w-235-px">98416541</td>
+                    <td class="uppercase courier text-xs w-235-px">{{ $payroll->code }}</td>
                     <td class="text-xxs w-95-px">Modalidad de Pago:</td>
                     <td class="uppercase courier text-xs">ABONO EN CUENTA</td>
                 </tr>
@@ -407,7 +407,6 @@
                         {{ $payroll->full_name }}
                     </td>
                 </tr>
-                
                 <tr>
                     <td class="no-border text-xxs w-95-px">
                         Nº de Cuenta:
@@ -439,11 +438,11 @@
                         N.U.A.:
                     </td>
                     <td class="uppercase courier text-xs" colspan="6">
-                        47213218
+                        {{ $payroll->nua_cua }}
                     </td>
                 </tr>
             </table>
-            <div style="min-height: 21px;max-height: 21px; height: 21px;padding:0 0 0 2px;margin:0; line-height:0">
+            <div style="min-height: 21px;max-height: 21px; height: 21px;padding:0 0 0 3px;margin:0; line-height:0">
                 <div class="text-xxs inline leading-none">Cargo: </div><div class="uppercase courier text-xs inline leading-none">{{ $payroll->position }}</div>
             </div>
             {{-- /personal-info --}}
@@ -562,7 +561,7 @@
                     </td>
                     <td class="w-50 align-top leading-none text-uppercase text-lg courier text-center align-middle" style="min-height: 18px;height: 18px;max-height: 18px">
                         {{-- {{ $payroll->id }} --}}
-                        8915564189
+                        {{ Util::fillZerosLeft($payroll->id) }}
                     </td>
                 </tr>
                 <tr>
@@ -604,14 +603,13 @@
                         </td>
                     </tr>
                 </table>
-                
                 <table class="table-dticket-1" >
                     <tr>
                         <td class="text-xxs w-95-px">
                             Nº de Boleta:
                         </td>
                         <td class="uppercase courier text-xs w-235-px">
-                            98416541
+                            {{ $payroll->code }}
                         </td>
                     </tr>
                     <tr>
@@ -664,14 +662,14 @@
                     </tr>
                     <tr>
                         <td class="no-border text-xxs w-45-px">N.U.A.:</td>
-                        <td class="uppercase courier text-xs" colspan="6">47213218</td>
+                        <td class="uppercase courier text-xs" colspan="6">{{ $payroll->nua_cua }}</td>
                     </tr>
                     {{-- <tr>
                         <td class="no-border text-xxs w-45-px align-top" style="min-height:50px; max-height:50px; height:50px;">Cargo:</td>
                         <td class="uppercase courier text-xs leading-none align-top" colspan="6">{{ $payroll->position }}</td>
                     </tr> --}}
                 </table>
-                <div style="min-height: 21px;max-height: 21px; height: 21px;padding:0;margin:0 0 0 1px; line-height:0">
+                <div style="min-height: 21px;max-height: 21px; height: 21px;padding:0;margin:0 0 0 3px; line-height:0">
                     <div class="text-xxs inline leading-none">Cargo: </div>
                     <div class="uppercase courier text-xs inline leading-none">{{ $payroll->position }}</div>
                 </div>
@@ -687,7 +685,7 @@
                 </table>
                 <div class="border rounded m-t-5 p-5 text-center" style="text-align:center; height:33px">
                     <img src="data:image/png;base64, {{ $payroll->code_image }}" alt="Red dot" style="height: 33px; width: 50%;" />
-                </div>              
+                </div>
             </div>
         </div>
     </div>

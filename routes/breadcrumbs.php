@@ -1,5 +1,8 @@
 <?php
 
+Breadcrumbs::register('payroll_index', function ($breadcrumbs) {
+    $breadcrumbs->push('Planillas');
+});
 Breadcrumbs::register('payroll', function ($breadcrumbs, $year, $month) {
     $breadcrumbs->push('Planilla de '.$year.' - '.$month);
 });
