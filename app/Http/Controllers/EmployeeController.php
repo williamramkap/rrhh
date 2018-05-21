@@ -16,6 +16,8 @@ use PHPExcel_Style_Fill;
 use App\Contract;
 use App\Position;
 use App\DiscountPayroll;
+use App\InsuranceCompany;
+use App\ManagmentEntity;
 class EmployeeController extends Controller
 {
     /**
@@ -102,9 +104,13 @@ class EmployeeController extends Controller
     {
         $cities = City::get();
         $employee_types = EmployeeType::get();
+        $insurance_company = InsuranceCompany::get();
+        $managment_entity = ManagmentEntity::get();
         $data = [
             'cities'  =>  $cities,
             'employee_types' =>  $employee_types,
+            'insurances' =>  $insurance_company,
+            'managments'    =>  $managment_entity,
         ];
         return view('employee.create',$data);
     }
@@ -155,6 +161,9 @@ class EmployeeController extends Controller
         $employee->birth_date = $request->birth_date;
         $employee->account_number = $request->account_number;
         $employee->gender = $request->gender;
+        $employee->managment_entity_id = $request->managment_entity_id;
+        $employee->insurance_company_id = $request->insurance_company_id;
+        $employee->nua_cua = $request->nua_cua;
         $employee->save();
         return redirect('employee');
     }
@@ -238,6 +247,9 @@ class EmployeeController extends Controller
         $employee->birth_date = $request->birth_date;
         $employee->account_number = $request->account_number;
         $employee->gender = $request->gender;
+        $employee->managment_entity_id = $request->managment_entity_id;
+        $employee->insurance_company_id = $request->insurance_company_id;
+        $employee->nua_cua = $request->nua_cua;
         $employee->save();
         return redirect('employee');
     }
