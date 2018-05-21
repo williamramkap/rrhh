@@ -328,8 +328,8 @@
                                     </div>
                                 </td>
                                 <td class="w-50 align-top leading-none text-uppercase text-lg courier text-center align-middle" style="min-height: 18px;height: 18px;max-height: 18px">
-                                    {{-- {{ $payroll->id }} --} style="min-height: 18px;height: 18px;max-height: 18px"}
-                                    {{-- 8915564189 --}}
+                                    {{-- {{ $payroll->id }} --}}
+                                    8915564189
                                 </td>
                             </tr>
                             <tr>
@@ -422,10 +422,10 @@
                         {{ $payroll->birth_date }}
                     </td>
                     <td class="no-border text-xxs">
-                        Nº Item:
+                        {{-- Nº Item: --}}
                     </td>
                     <td class="uppercase courier text-xs">
-                        1871
+                        {{-- 1871 --}}
                     </td>
                 </tr>
                 <tr>
