@@ -25,14 +25,14 @@
                     M
                 </div>
             </li>
-            <li class="" data-toggle="tooltip" data-placement="right" title="Afiliados">
+            <li class="" data-toggle="tooltip" data-placement="right" title="Empleados">
                 <a href="{{ url('/employee') }}"><i class="fa fa-user"></i> <span class="nav-label">Empleados</span></a>
             </li>
-            <li class="" data-toggle="tooltip" data-placement="right" title="Fondo de Retiro">
-                <a href="{{ url('/ret_fun') }}"><i class="glyphicon glyphicon-piggy-bank"></i> <span class="nav-label">Fondo de Retiro</span></a>
+            <li class="" data-toggle="tooltip" data-placement="right" title="Contracts">
+                <a href="{{ url('/contract') }}"><i class="glyphicon glyphicon-piggy-bank"></i> <span class="nav-label">Contratos</span></a>
             </li>
-            <li class="" data-toggle="tooltip" data-placement="right" title="Cuota y Auxilio Mortuorio">
-                <a href="{{ url('/quota_aid') }}"><i class="a fa-fw fa-heartbeat"></i> <span class="nav-label">Cuota y Auxilio Mortuorio</span></a>
+            <li class="" data-toggle="tooltip" data-placement="right" title="Reportes">
+                <a href="{{ url('/report') }}"><i class="a fa-fw fa-heartbeat"></i> <span class="nav-label">Reportes</span></a>
             </li>
         </ul>
 
