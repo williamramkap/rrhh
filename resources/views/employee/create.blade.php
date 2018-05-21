@@ -76,6 +76,25 @@
                 N&uacute;mero de cuenta
                 <input type="text" name="account_number" class="form-control">
                 <br>
+                NUA/CUA
+                <input type="text" name="nua_cua" class="form-control">
+                <br>
+                AFP
+                <select name="managment_entity_id" class="form-control">
+                    <option></option>
+                    @foreach($managments as $managment) 
+                        <option value="{{ $managment->id }}">{{ $managment->name }}</option>
+                    @endforeach                    
+                </select>
+                <br>
+                Caja de salud
+                <select name="insurance_company_id" class="form-control">
+                    <option></option>
+                    @foreach($insurances as $insurance) 
+                        <option value="{{ $insurance->id }}">{{ $insurance->name }}</option>
+                    @endforeach                    
+                </select>    
+                <br>
                 <button type="submit">
                     guardar</button>
             </form>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Contract;
 use Illuminate\Http\Request;
+use App\PositionGroup;
+use App\Employee;
 
 class ContractController extends Controller
 {
@@ -13,8 +15,12 @@ class ContractController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {           
+        $contracts = Contract::where('status',true)->get();
+        $data = [
+            'contracts' =>  $contracts,
+        ];
+        return view('contract.index',$data); 
     }
 
     /**
@@ -24,7 +30,13 @@ class ContractController extends Controller
      */
     public function create()
     {
-        //
+        $employees = Employee::get();
+        $position_groups = PositionGroup::get();
+        $data = [
+            'employees' => $employees,
+            'position_groups'    =>  $position_groups
+        ];
+        return view('contract.create',$data);
     }
 
     /**
@@ -35,7 +47,14 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $contract = new Contract();
+        $contract->employee_id = $request->employee_id;
+        $contract->position_id = $request->position_id;
+        $contract->date_start = $request->date_start;
+        $contract->date_end = $request->date_end;
+        $contract->status = true;
+        $contract->save();
+        return redirect('contract');
     }
 
     /**
@@ -57,7 +76,14 @@ class ContractController extends Controller
      */
     public function edit(Contract $contract)
     {
-        //
+        $employees = Employee::get();
+        $position_groups = PositionGroup::get();
+        $data = [
+            'contract'  =>  $contract,
+            'employees' => $employees,
+            'position_groups'    =>  $position_groups
+        ];
+        return view('contract.edit',$data);
     }
 
     /**
@@ -69,7 +95,14 @@ class ContractController extends Controller
      */
     public function update(Request $request, Contract $contract)
     {
-        //
+        
+        $contract->employee_id = $request->employee_id;
+        $contract->position_id = $request->position_id;
+        $contract->date_start = $request->date_start;
+        $contract->date_end = $request->date_end;
+        $contract->status = true;
+        $contract->save();
+        return redirect('contract');
     }
 
     /**

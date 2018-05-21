@@ -30,10 +30,18 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('employee','EmployeeController');
+Route::get('employee_data', 'EmployeeController@getEmployeeDatatable' )->name('employee_list');
+
+
 Route::get('employee/{employee}/payroll','PayrollController@employee_payroll');
 Route::get('payroll/{year}/{month}','PayrollController@index');
 Route::get('payroll/{year}/{month}/edit','PayrollController@edit');
 Route::post('payroll','PayrollController@store');
 
+
+Route::resource('report','ReportController');
+Route::resource('contract','ContractController');
+
 /*  tickets */
 Route::get('ticket/print/{year}/{month}', 'TicketController@print');
+
