@@ -22,8 +22,8 @@ class TicketController extends Controller
         if (!$procedure) {
             return "procedure not found";
         }
-        $payrolls = $procedure->payrolls()->skip(5)->take(10)->get();
-        // $payrolls = $procedure->payrolls;
+        // $payrolls = $procedure->payrolls()->skip(5)->take(10)->get();
+        $payrolls = $procedure->payrolls;
         foreach ($payrolls as $key => $payroll) {
             $contract = $payroll->contract;
             $position = $contract->position;
