@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="ibox float-e-margins">
+    <div class="ibox " >
       <div class="ibox-title">
         <h5>Lista de Empleados </h5>
         <div class="ibox-tools">
@@ -9,9 +9,8 @@
           </a>
         </div>
       </div>
-      <div class="ibox-content">
-        <div class="table-responsive"
-             style="max-height:600px;">
+      <div class="ibox-content" >
+        <div class="table-responsive"  style="min-height:450px;max-height:500px;">
           <table class="table table-striped table-bordered table-hover zui-table">
             <thead>
               <tr>

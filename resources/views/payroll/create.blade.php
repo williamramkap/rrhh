@@ -8,7 +8,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
-            <div class="text-center m-t-lg">
+            <div class="text-center ">
                 <form action="/payroll" method="POST">
                     <input type="hidden" value="{{ $procedure->month->name}}" name="month">
                     <input type="hidden" value="{{ $procedure->year }}" name="year">
