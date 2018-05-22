@@ -49,7 +49,7 @@
 
         .courier{
             padding-top: 3px;
-            font-family: 'Courier New';
+            font-family: 'Courier new', monospace;
             font-weight: 500 !important;
         }
 
@@ -246,6 +246,8 @@
         .m-t-10{ margin-top: 10px; }
         .m-t-15{ margin-top: 15px; }
         .m-t-20{ margin-top: 20px; }
+        .m-t-22{ margin-top: 22px; }
+        .m-t-23{ margin-top: 23px; }
         .m-t-25{ margin-top: 25px; }
         .m-t-27{ margin-top: 27px; }
         .m-t-28{ margin-top: 28px; }
@@ -566,7 +568,7 @@
                         <td class="text-right courier border-top">{{ Util::formatMoney($payroll->total_discounts) }}</td>
                     </tr>
                     <tr>
-                        <td colspan="3" class="text-sm text-left courier" style="font-weight:bold !important;">
+                        <td colspan="3" class="text-sm text-left" style="font-weight:bold">
                             Liquido Pagable en Bs.:
                         </td>
                         <td class="text-lg text-right courier" colspan="3">
@@ -636,64 +638,64 @@
                 <hr>
                 <table class="table-dticket-1" >
                     <tr>
-                        <td class="text-xxs w-95-px">
+                        <td class="text-xxs w-95-px" style="min-height:14px;height:14px;max-height:14px;">
                             Nº de Boleta:
                         </td>
-                        <td class="uppercase courier text-xs w-235-px">
+                        <td class="uppercase courier text-xs w-235-px" style="min-height:14px;height:14px;max-height:14px;">
                             {{ $payroll->code }}
                         </td>
                     </tr>
                     <tr>
-                        <td class="text-xxs w-95-px">
+                        <td class="text-xxs w-95-px" style="min-height:14px;height:14px;max-height:14px;">
                             Modalidad de Pago:
                         </td>
-                        <td class="uppercase courier text-xs">
+                        <td class="uppercase courier text-xs" style="min-height:14px;height:14px;max-height:14px;">
                             ABONO EN CUENTA
                         </td>
                     </tr>
                     <tr>
-                        <td class="text-xxs w-95-px">
+                        <td class="text-xxs w-95-px" style="min-height:14px;height:14px;max-height:14px;">
                             Concepto de Pago:
                         </td>
-                        <td class="uppercase courier text-xs w-235-px">
+                        <td class="uppercase courier text-xs w-235-px" style="min-height:14px;height:14px;max-height:14px;">
                             PAGO DE HABERES {{ $procedure->month->shortened}} {{ $procedure->year }}
                         </td>
                     </tr>
                     <tr>
-                        <td class="text-xxs w-95-px">
+                        <td class="text-xxs w-95-px" style="min-height:14px;height:14px;max-height:14px;">
                             Nº Días Trab.:
                         </td>
-                        <td class="uppercase courier text-xs">
+                        <td class="uppercase courier text-xs" style="min-height:14px;height:14px;max-height:14px;">
                             {{ $payroll->worked_days }}
                         </td>
                     </tr>
                     <tr>
-                        <td class="no-border text-xxs w-95-px">Carnet de Identidad:</td>
-                        <td class="uppercase courier text-xs w-120-px">{{ $payroll->ci_ext }}</td>
+                        <td class="no-border text-xxs w-95-px" style="min-height:14px;height:14px;max-height:14px;">Carnet de Identidad:</td>
+                        <td class="uppercase courier text-xs w-120-px" style="min-height:14px;height:14px;max-height:14px;">{{ $payroll->ci_ext }}</td>
                     </tr>
                     <tr>
                         <td class="no-border text-xxs w-55-px" style="min-height:30px; max-height:30px; height:30px;" >Nombre:</td>
                         <td colspan="6" class="uppercase courier text-xs">{{ $payroll->full_name }}</td>
                     </tr>
                     <tr>
-                        <td class="no-border text-xxs w-95-px">Nº de Cuenta:</td>
-                        <td class="no-border uppercase courier text-xs w-120-px">{{ $payroll->account_number }}</td>
+                        <td class="no-border text-xxs w-95-px" style="min-height:14px;height:14px;max-height:14px;">Nº de Cuenta:</td>
+                        <td class="no-border uppercase courier text-xs w-120-px" style="min-height:14px;height:14px;max-height:14px;">{{ $payroll->account_number }}</td>
                     </tr>
                     <tr>
-                        <td class="no-border text-xxs w-55-px">Fecha Nac.:</td>
-                        <td class="no-border uppercase courier text-xs w-110-px">{{ $payroll->birth_date }}</td>
+                        <td class="no-border text-xxs w-55-px" style="min-height:14px;height:14px;max-height:14px;">Fecha Nac.:</td>
+                        <td class="no-border uppercase courier text-xs w-110-px" style="min-height:14px;height:14px;max-height:14px;" >{{ $payroll->birth_date }}</td>
                     </tr>
                     {{-- <tr>
                         <td class="no-border text-xxs">Nº Item:</td>
                         <td class="uppercase courier text-xs">1871</td>
                     </tr> --}}
                     <tr>
-                        <td class="no-border text-xxs w-95-px">A.F.P.:</td>
-                        <td class="no-border uppercase courier text-xs w-130-px">{{ $payroll->management_entity }}</td>
+                        <td class="no-border text-xxs w-95-px" style="min-height:14px;height:14px;max-height:14px;">A.F.P.:</td>
+                        <td class="no-border uppercase courier text-xs w-130-px" style="min-height:14px;height:14px;max-height:14px;">{{ $payroll->management_entity }}</td>
                     </tr>
                     <tr>
-                        <td class="no-border text-xxs w-45-px">N.U.A.:</td>
-                        <td class="uppercase courier text-xs" colspan="6">{{ $payroll->nua_cua }}</td>
+                        <td class="no-border text-xxs w-45-px" style="min-height:14px;height:14px;max-height:14px;">N.U.A.:</td>
+                        <td class="uppercase courier text-xs" style="min-height:14px;height:14px;max-height:14px;">{{ $payroll->nua_cua }}</td>
                     </tr>
                     <tr>
                         <td class="no-border text-xxs w-45-px align-top" style="min-height:50px; max-height:50px; height:50px;">Cargo:</td>
@@ -704,9 +706,9 @@
                     <div class="text-xxs inline leading-none">Cargo: </div>
                     <div class="uppercase courier text-xs inline leading-none">{{ $payroll->position }}</div>
                 </div> --}}
-                <table class="border rounded m-t-28">
+                <table class="border rounded m-t-22">
                     <tr>
-                        <td class="text-sm text-left courier w-200-px px-5" style="font-weight:bold !important;">
+                        <td class="text-sm text-left w-200-px px-5" style="font-weight:bold;">
                             Liquido Pagable en Bs.:
                         </td>
                         <td class="text-lg text-right courier px-10" colspan="3">
