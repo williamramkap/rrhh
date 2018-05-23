@@ -120,16 +120,17 @@ class PayrollController extends Controller
                 $total_discount_law = (($quotable * $procedure->discount_old) / 100) + (($quotable * $procedure->discount_common_risk)/100)+(($quotable * $procedure->discount_commission)/100)+(($quotable * $procedure->discount_solidary)/100)+(($quotable * $procedure->discount_national)/100);
                 $payroll->total_amount_discount_law = $total_discount_law;
                 $payroll->net_salary = $quotable - $total_discount_law;
-                $payroll->discount_faults = floatval($value[1]);
-                $payroll->total_amount_discount_institution = floatval($value[1]);
-                $total_discounts = $total_discount_law + floatval($value[1]);
+                $payroll->discount_rc_iva = floatval($value[1]);
+                $payroll->discount_faults = floatval($value[2]);
+                $payroll->total_amount_discount_institution = floatval($value[2]);
+                $total_discounts = $total_discount_law + floatval($value[2]);
                 $payroll->total_discounts = $total_discounts;
                 $payroll->payable_liquid = $quotable - $total_discounts;
 
                 $payroll->save();
             }
         }
-        return Payroll::all();
+        return redirect(url('payroll'));
     }
 
     /**
