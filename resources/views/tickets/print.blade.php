@@ -53,8 +53,14 @@
             font-weight: 500 !important;
         }
 
-        .border-bottom{border-bottom: 1px solid #5D6975;}
-        .border-top{border-top: 1px solid #5D6975;}
+        .border-bottom{
+            /* border-bottom: 1px solid #5D6975; */
+            border-bottom: 1px solid transparent;
+        }
+        .border-top{
+            /* border-top: 1px solid #5D6975; */
+            border-top: 1px solid transparent;
+        }
          table { width: 100%; }
          .table-striped tr:nth-child(even){background:#F1F5F8}
 
@@ -62,18 +68,23 @@
 
         .table-info thead tr td:first-child {
             border-radius:1em 0 0 0;
-            border-left: 1px solid #5D6975;
+            /* border-left: 1px solid #5D6975; */
+            border-left: 1px solid transparent;
         }
 
         .table-info thead tr td{
-            border-left: 1px solid #5D6975;
-            border-top: 1px solid #5D6975;
-            border-bottom: 1px solid #5D6975;
+            /* border-left: 1px solid #5D6975; */
+            border-left: 1px solid transparent;
+            /* border-top: 1px solid #5D6975; */
+            border-top: 1px solid transparent;
+            /* border-bottom: 1px solid #5D6975; */
+            border-bottom: 1px solid transparent;
         }
 
         .table-info thead tr td:last-child {
             border-radius:0 1em 0 0 ;
-            border-right: 1px solid #5D6975;
+            /* border-right: 1px solid #5D6975; */
+            border-right: 1px solid transparent;
         }
 
         .table-info thead tr td:only-child { border-radius:1em 1em 0 0 ; }
@@ -82,36 +93,55 @@
             border-left: none;
         }
         .table-info tbody tr td {
-            border-left: 1px solid #5D6975;
+            /* border-left: 1px solid #5D6975; */
+            border-left: 1px solid transparent;
             padding: 1px 10px;
         }
 
         .table-info tbody tr:last-child td {
-            border-bottom: 1px solid #5D6975;
-            border-top: 1px solid #5D6975;
+            /* border-bottom: 1px solid #5D6975; */
+            border-bottom: 1px solid transparent;
+            /* border-top: 1px solid #5D6975; */
+            border-top: 1px solid transparent;
         }
         .table-info tbody tr td:last-child {
-            border-right: 1px solid #5D6975;
+            /* border-right: 1px solid #5D6975; */
+            border-right: 1px solid transparent;
         }
         .table-info tbody tr:last-child td:last-child {
-            border-right: 1px solid #5D6975;
-            border-bottom:1px solid #5D6975;
+            /* border-right: 1px solid #5D6975; */
+            border-right: 1px solid transparent;
+            /* border-bottom:1px solid #5D6975; */
+            border-bottom:1px solid transparent;
         }
         .table-info tbody tr:last-child td:first-child {
             border-radius: 0 0 0 1em;
-            border-bottom:1px solid #5D6975;
+            /* border-bottom:1px solid #5D6975; */
+            border-bottom:1px solid transparent;
         }
         .table-info tbody tr:last-child td:last-child {
             border-radius: 0 0 1em 0;
-            border-bottom:1px solid #5D6975;
+            /* border-bottom:1px solid #5D6975; */
+            border-bottom:1px solid transparent;
             }
         .table-info tbody tr:last-child td:only-child {
-            border-bottom:1px solid #5D6975;
+            /* border-bottom:1px solid #5D6975; */
+            border-bottom:1px solid transparent;
             border-radius: 0 0 1em 1em;
         } 
-        .table-collapse{ border-collapse: collapse; } .border-grey-darker{ border-color:
-        #5D6975; border-style: solid; border-width: 1px; } .border{ border-color: #5D6975; border-style: solid; border-width: 1px;
-        } .border-b{ border-bottom: 1px solid #fff; } .border-b{ border-color: #22292f; border-style: solid; border-bottom-width:
+        .table-collapse{ border-collapse: collapse; }
+        .border-grey-darker{
+            /* border-color:#5D6975; */
+            border-color:transparent;
+            border-style: solid; border-width: 1px;
+        }
+        .border{
+            /* border-color: #5D6975; */
+            border-color: transparent;
+            border-style: solid;
+            border-width: 1px;
+        }
+        .border-b{ border-bottom: 1px solid #fff; } .border-b{ border-color: #22292f; border-style: solid; border-bottom-width:
         1px, } .border-t{ border-color: #22292f; border-style: solid; border-top-width: 1px, } .border-r{ border-color: #22292f;
         border-style: solid; border-right-width: 1px, } .border-l{ border-color: #22292f; border-style: solid; border-left-width:
         1px; } .inline{ display: inline; } .inline-block{ display: inline-block; } .block{ display: block; } .table{ display: table;
@@ -246,6 +276,7 @@
         .m-t-10{ margin-top: 10px; }
         .m-t-15{ margin-top: 15px; }
         .m-t-20{ margin-top: 20px; }
+        .m-t-21{ margin-top: 21px; }
         .m-t-22{ margin-top: 22px; }
         .m-t-23{ margin-top: 23px; }
         .m-t-25{ margin-top: 25px; }
@@ -335,19 +366,23 @@
             background-position: center center;
             background-size: auto
         }
+            .page {
+                overflow: hidden;
+                page-break-after: always;
+            }
+        
     </style>
 
 </head>
 
 <body>
-
-    @foreach ($payrolls as $payroll)
-        
-    
-
-    <div class="m-b-10 ticket">
+<div class="page">
+    HOLA
+</div>
+    @foreach ($payrolls as $index=>$payroll)
+    <div class="m-b-25 ticket">
         <div class="main-left">
-            <table>
+            <table class="m-t-20">
                 <tr>
                     <td class="w-50 text-left no-padding no-margins align-top">
                         <table style="border-spacing: 0;border-collapse: collapse;">
@@ -355,17 +390,17 @@
                                 <td class="w-150-px" rowspan="2">
                                     <div class="text-center">
                                         {{-- <img src="{{ asset('images/logo.jpg') }}" class="w-100" style="opacity:0"> --}}
-                                        <img src="{{ asset('images/logo.jpg') }}" class="w-100">
+                                        {{-- <img src="{{ asset('images/logo.jpg') }}" class="w-100"> --}}
                                     </div>
                                 </td>
                                 <td class="w-50 align-top leading-none text-uppercase text-lg courier text-center align-middle" style="min-height: 18px;height: 18px;max-height: 18px">
                                     {{-- {{ $payroll->id }} --}}
-                                    {{ Util::fillZerosLeft($payroll->id) }}
+                                    {{-- {{ Util::fillZerosLeft($payroll->id) }} --}}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-center text-sm font-bold" >
-                                    TALÓN DEL BENEFICIARIO
+                                    {{-- TALÓN DEL BENEFICIARIO --}}
                                 </td>
                             </tr>
                         </table>
@@ -374,7 +409,7 @@
                         <table>
                             <tr>
                                 <td class="no-border text-xxs w-60-px">
-                                    Entidad:
+                                    {{-- Entidad: --}}
                                 </td>
                                 <td class="no-border uppercase courier text-xs" colspan="3">
                                     MUTUAL DE SERVICIOS AL POLÍCIA
@@ -382,7 +417,7 @@
                             </tr>
                             <tr>
                                 <td class="no-border text-xxs w-60-px">
-                                    Dirección:
+                                    {{-- Dirección: --}}
                                 </td>
                                 <td class="no-border courier text-xxs" colspan="3">
                                     Av. 6 de Agosto #2354 Z. Sopocachi
@@ -390,13 +425,13 @@
                             </tr>
                             <tr>
                                 <td class="no-border text-xxs w-60-px">
-                                    Nº Patronal:
+                                    {{-- Nº Patronal: --}}
                                 </td>
                                 <td class="no-border uppercase courier text-xxs w-110-px">
                                     001-720-0025
                                 </td>
                                 <td class="no-border text-xxs w-30-px">
-                                    NIT:
+                                    {{-- NIT: --}}
                                 </td>
                                 <td class="no-border uppercase courier text-xxs">
                                     234578021
@@ -407,18 +442,26 @@
                 </tr>
             </table>
             {{-- /header --}}
-            <hr style="border-top: 0.016em solid #5D6975; margin:0">
-            <table class="table-dticket-1 m-b-5">
+            <hr style="border-top: 0.016em solid #5D6975; margin:0; opacity:0;">
+            <table class="table-dticket-1 m-b-5 m-t-5">
                 <tr>
-                    <td class="text-xxs w-95-px">Nº de Boleta:</td>
+                    <td class="text-xxs w-95-px">
+                        {{-- Nº de Boleta: --}}
+                    </td>
                     <td class="uppercase courier text-xs w-235-px">{{ $payroll->code }}</td>
-                    <td class="text-xxs w-95-px">Modalidad de Pago:</td>
+                    <td class="text-xxs w-95-px">
+                        {{-- Modalidad de Pago: --}}
+                    </td>
                     <td class="uppercase courier text-xs">ABONO EN CUENTA</td>
                 </tr>
                 <tr>
-                    <td class="text-xxs w-95-px">Concepto de Pago:</td>
+                    <td class="text-xxs w-95-px">
+                        {{-- Concepto de Pago: --}}
+                    </td>
                     <td class="uppercase courier text-xs w-235-px">PAGO DE HABERES {{ $procedure->month->shortened}} {{ $procedure->year }}</td>
-                    <td class="text-xxs w-95-px">Nº Días Trab.:</td>
+                    <td class="text-xxs w-95-px">
+                        {{-- Nº Días Trab.: --}}
+                    </td>
                     <td class="uppercase courier text-xs">{{ $payroll->worked_days }}</td>
                 </tr>
             </table>
@@ -427,13 +470,13 @@
             <table>
                 <tr>
                     <td class="no-border text-xxs w-95-px">
-                        Carnet de Identidad:
+                        {{-- Carnet de Identidad: --}}
                     </td>
                     <td class="uppercase courier text-xs w-120-px">
                         {{ $payroll->ci_ext }}
                     </td>
                     <td  class="no-border text-xxs w-55-px">
-                        Nombre:
+                        {{-- Nombre: --}}
                     </td>
                     <td colspan="6" class="uppercase courier text-xs">
                         {{ $payroll->full_name }}
@@ -441,13 +484,13 @@
                 </tr>
                 <tr>
                     <td class="no-border text-xxs w-95-px">
-                        Nº de Cuenta:
+                        {{-- Nº de Cuenta: --}}
                     </td>
                     <td class="no-border uppercase courier text-xs w-120-px">
                         {{ $payroll->account_number }}
                     </td>
                     <td class="no-border text-xxs w-55-px">
-                        Fecha Nac.:
+                        {{-- Fecha Nac.: --}}
                     </td>
                     <td class="no-border uppercase courier text-xs w-110-px">
                         {{ $payroll->birth_date }}
@@ -461,13 +504,13 @@
                 </tr>
                 <tr>
                     <td class="no-border text-xxs w-95-px">
-                        A.F.P.:
+                        {{-- A.F.P.: --}}
                     </td>
                     <td class="no-border uppercase courier text-xs w-130-px">
                         {{ $payroll->management_entity }}
                     </td>
                     <td class="no-border text-xxs w-45-px">
-                        N.U.A.:
+                        {{-- N.U.A.: --}}
                     </td>
                     <td class="uppercase courier text-xs" colspan="6">
                         {{ $payroll->nua_cua }}
@@ -475,7 +518,10 @@
                 </tr>
             </table>
             <div style="min-height: 21px;max-height: 21px; height: 21px;padding:0 0 0 3px;margin:0; line-height:0">
-                <div class="text-xxs inline leading-none">Cargo: </div><div class="uppercase courier text-xs inline leading-none">{{ $payroll->position }}</div>
+                <div class="text-xxs inline leading-none" style="min-width:28px; max-width:28px;width:28px; display:inline-block">
+                    {{-- Cargo: --}}
+                </div>
+                <div class="uppercase courier text-xs inline leading-none">{{ $payroll->position }}</div>
             </div>
             {{-- /personal-info --}}
 
@@ -485,57 +531,67 @@
                 <thead>
                     <tr class="text-xs text-center font-bold">
                         <td colspan="2">
-                            INGRESOS
+                            {{-- INGRESOS --}}
                         </td>
                         <td colspan="3">
-                            DESCUENTOS
+                            {{-- DESCUENTOS --}}
+                            &nbsp;
                         </td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="text-xs text-center border-bottom">
-                        <td class="border-bottom">Detalle</td>
-                        <td class="border-bottom">Importe Bs.</td>
-                        <td class="border-bottom">Acreedor</td>
-                        <td class="border-bottom">Importe Bs.</td>
+                        <td class="border-bottom">
+                            {{-- Detalle --}}
+                        </td>
+                        <td class="border-bottom">
+                            {{-- Importe Bs. --}}
+                        </td>
+                        <td class="border-bottom">
+                            {{-- Acreedor --}}
+                        </td>
+                        <td class="border-bottom">
+                            {{-- Importe Bs. --}}
+                            &nbsp;
+                        </td>
                     </tr>
                     <tr><td></td><td></td><td></td><td></td></tr>
                     <tr><td></td><td></td><td></td><td></td></tr>
                     <tr class="courier">
                         <td class="text-left">SUELDOS</td>
                         <td class="text-right"> {{ Util::formatMoney($payroll->quotable) }}</td>
-                        <td class="text-left">AFP.RV.10%</td>
+                        <td class="text-left px-5">AFP.RV.10%</td>
                         <td class="text-right"> {{ Util::formatMoney($payroll->discount_old) }} </td>
                     </tr>
                     {{-- discounts --}}
                     <tr class="courier">
                         <td></td>
                         <td></td>
-                        <td class="text-left">AFP.RC.1,71%</td>
+                        <td class="text-left px-5">AFP.RC.1,71%</td>
                         <td class="text-right"> {{ Util::formatMoney($payroll->discount_common_risk) }} </td>
                     </tr>
                     <tr class="courier">
                         <td></td>
                         <td></td>
-                        <td class="text-left">AFP.CM.0,5%</td>
+                        <td class="text-left px-5">AFP.CM.0,5%</td>
                         <td class="text-right"> {{ Util::formatMoney($payroll->discount_commission) }} </td>
                     </tr>
                     <tr class="courier">
                         <td></td>
                         <td></td>
-                        <td class="text-left">AFP.SOL.ASE.0,5%</td>
+                        <td class="text-left px-5">AFP.SOL.ASE.0,5%</td>
                         <td class="text-right"> {{ Util::formatMoney($payroll->discount_solidary) }} </td>
                     </tr>
                     <tr class="courier">
                         <td></td>
                         <td></td>
-                        <td class="text-left">RC-IVA</td>
+                        <td class="text-left px-5">RC-IVA</td>
                         <td class="text-right"> {{ Util::formatMoney($payroll->discount_rc_iva) }} </td>
                     </tr>
                     <tr class="courier">
                         <td></td>
                         <td></td>
-                        <td class="text-left">OTROS DESCUENTOS</td>
+                        <td class="text-left px-5">OTROS DESCUENTOS</td>
                         <td class="text-right"> {{ Util::formatMoney($payroll->discount_faults) }} </td>
                     </tr>
                     <tr>
@@ -551,25 +607,44 @@
                         <td>&nbsp;</td>
                     </tr>
                     <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    
                     {{-- /discounts --}}
                     <tr>
                         <td class="text-xs text-left border-top">
-                            Total Ingresos:
+                            {{-- Total Ingresos: --}}
                         </td>
                         <td class="text-right courier border-top">{{ Util::formatMoney($payroll->quotable) }}</td>
                         <td class="text-xs text-left border-top">
-                            Total Descuentos:
+                            {{-- Total Descuentos: --}}
                         </td>
                         <td class="text-right courier border-top">{{ Util::formatMoney($payroll->total_discounts) }}</td>
                     </tr>
                     <tr>
                         <td colspan="3" class="text-sm text-left" style="font-weight:bold">
-                            Liquido Pagable en Bs.:
+                            {{-- Liquido Pagable en Bs.: --}}
                         </td>
                         <td class="text-lg text-right courier" colspan="3">
                             {{ Util::formatMoney($payroll->payable_liquid) }}
@@ -583,22 +658,23 @@
             {{-- /amounts --}}
         </div>
         <div class="main-right" >
-            <table>
+            <table class="m-t-20">
                 <tr>
-                    <td class="w-50" rowspan="2">
+                    <td class="w-50" rowspan="2" style="min-height:61px;height:61px;max-height:61px;">
                         <div class="text-center">
                             {{-- <img src="{{ asset('images/logo.jpg') }}" class="w-100" style="opacity:0"> --}}
-                            <img src="{{ asset('images/logo.jpg') }}" class="w-100">
+                            {{-- <img src="{{ asset('images/logo.jpg') }}" class="w-100"> --}}
                         </div>
                     </td>
                     <td class="w-50 align-top leading-none text-uppercase text-lg courier text-center align-middle" style="min-height: 18px;height: 18px;max-height: 18px">
                         {{-- {{ $payroll->id }} --}}
-                        {{ Util::fillZerosLeft($payroll->id) }}
+                        {{-- {{ Util::fillZerosLeft($payroll->id) }} --}}
                     </td>
                 </tr>
                 <tr>
                     <td class="text-center text-sm font-bold">
-                        TALÓN DE EFECTIVIZACIÓN
+                        {{-- TALÓN DE EFECTIVIZACIÓN --}}
+                        &nbsp;
                     </td>
                 </tr>
             </table>
@@ -606,7 +682,7 @@
                 <table>
                     <tr>
                         <td class="no-border text-xxs w-60-px">
-                            Entidad:
+                            {{-- Entidad: --}}
                         </td>
                         <td class="no-border uppercase courier text-xs" colspan="3">
                             MUTUAL DE SERVICIOS AL POLÍCIA
@@ -614,7 +690,7 @@
                     </tr>
                     <tr>
                         <td class="no-border text-xxs w-60-px">
-                            Dirección:
+                            {{-- Dirección: --}}
                         </td>
                         <td class="no-border courier text-xs" colspan="3">
                             Av. 6 de Agosto #2354 Z. Sopocachi
@@ -622,24 +698,24 @@
                     </tr>
                     <tr>
                         <td class="no-border text-xxs w-60-px">
-                            Nº Patronal:
+                            {{-- Nº Patronal: --}}
                         </td>
                         <td class="no-border uppercase courier text-xs w-110-px">
                             001-720-0025
                         </td>
                         <td class="no-border text-xxs w-30-px">
-                            NIT:
+                            {{-- NIT: --}}
                         </td>
                         <td class="no-border uppercase courier text-xs">
                             234578021
                         </td>
                     </tr>
                 </table>
-                <hr>
+                <hr style="opacity:0">
                 <table class="table-dticket-1" >
                     <tr>
                         <td class="text-xxs w-95-px" style="min-height:14px;height:14px;max-height:14px;">
-                            Nº de Boleta:
+                            {{-- Nº de Boleta: --}}
                         </td>
                         <td class="uppercase courier text-xs w-235-px" style="min-height:14px;height:14px;max-height:14px;">
                             {{ $payroll->code }}
@@ -647,7 +723,7 @@
                     </tr>
                     <tr>
                         <td class="text-xxs w-95-px" style="min-height:14px;height:14px;max-height:14px;">
-                            Modalidad de Pago:
+                            {{-- Modalidad de Pago: --}}
                         </td>
                         <td class="uppercase courier text-xs" style="min-height:14px;height:14px;max-height:14px;">
                             ABONO EN CUENTA
@@ -655,7 +731,7 @@
                     </tr>
                     <tr>
                         <td class="text-xxs w-95-px" style="min-height:14px;height:14px;max-height:14px;">
-                            Concepto de Pago:
+                            {{-- Concepto de Pago: --}}
                         </td>
                         <td class="uppercase courier text-xs w-235-px" style="min-height:14px;height:14px;max-height:14px;">
                             PAGO DE HABERES {{ $procedure->month->shortened}} {{ $procedure->year }}
@@ -663,26 +739,34 @@
                     </tr>
                     <tr>
                         <td class="text-xxs w-95-px" style="min-height:14px;height:14px;max-height:14px;">
-                            Nº Días Trab.:
+                            {{-- Nº Días Trab.: --}}
                         </td>
                         <td class="uppercase courier text-xs" style="min-height:14px;height:14px;max-height:14px;">
                             {{ $payroll->worked_days }}
                         </td>
                     </tr>
                     <tr>
-                        <td class="no-border text-xxs w-95-px" style="min-height:14px;height:14px;max-height:14px;">Carnet de Identidad:</td>
+                        <td class="no-border text-xxs w-95-px" style="min-height:14px;height:14px;max-height:14px;">
+                            {{-- Carnet de Identidad: --}}
+                        </td>
                         <td class="uppercase courier text-xs w-120-px" style="min-height:14px;height:14px;max-height:14px;">{{ $payroll->ci_ext }}</td>
                     </tr>
                     <tr>
-                        <td class="no-border text-xxs w-55-px" style="min-height:30px; max-height:30px; height:30px;" >Nombre:</td>
+                        <td class="no-border text-xxs w-55-px" style="min-height:30px; max-height:30px; height:30px;" >
+                            {{-- Nombre: --}} &nbsp;
+                        </td>
                         <td colspan="6" class="uppercase courier text-xs">{{ $payroll->full_name }}</td>
                     </tr>
                     <tr>
-                        <td class="no-border text-xxs w-95-px" style="min-height:14px;height:14px;max-height:14px;">Nº de Cuenta:</td>
+                        <td class="no-border text-xxs w-95-px" style="min-height:14px;height:14px;max-height:14px;">
+                            {{-- Nº de Cuenta: --}}
+                        </td>
                         <td class="no-border uppercase courier text-xs w-120-px" style="min-height:14px;height:14px;max-height:14px;">{{ $payroll->account_number }}</td>
                     </tr>
                     <tr>
-                        <td class="no-border text-xxs w-55-px" style="min-height:14px;height:14px;max-height:14px;">Fecha Nac.:</td>
+                        <td class="no-border text-xxs w-55-px" style="min-height:14px;height:14px;max-height:14px;">
+                            {{-- Fecha Nac.: --}}
+                        </td>
                         <td class="no-border uppercase courier text-xs w-110-px" style="min-height:14px;height:14px;max-height:14px;" >{{ $payroll->birth_date }}</td>
                     </tr>
                     {{-- <tr>
@@ -690,15 +774,21 @@
                         <td class="uppercase courier text-xs">1871</td>
                     </tr> --}}
                     <tr>
-                        <td class="no-border text-xxs w-95-px" style="min-height:14px;height:14px;max-height:14px;">A.F.P.:</td>
+                        <td class="no-border text-xxs w-95-px" style="min-height:14px;height:14px;max-height:14px;">
+                            {{-- A.F.P.: --}}
+                        </td>
                         <td class="no-border uppercase courier text-xs w-130-px" style="min-height:14px;height:14px;max-height:14px;">{{ $payroll->management_entity }}</td>
                     </tr>
                     <tr>
-                        <td class="no-border text-xxs w-45-px" style="min-height:14px;height:14px;max-height:14px;">N.U.A.:</td>
+                        <td class="no-border text-xxs w-45-px" style="min-height:14px;height:14px;max-height:14px;">
+                            {{-- N.U.A.: --}}
+                        </td>
                         <td class="uppercase courier text-xs" style="min-height:14px;height:14px;max-height:14px;">{{ $payroll->nua_cua }}</td>
                     </tr>
                     <tr>
-                        <td class="no-border text-xxs w-45-px align-top" style="min-height:50px; max-height:50px; height:50px;">Cargo:</td>
+                        <td class="no-border text-xxs w-45-px align-top" style="min-height:50px; max-height:50px; height:50px;">
+                            {{-- Cargo: --}}&nbsp;
+                        </td>
                         <td class="uppercase courier text-xs leading-none align-top" colspan="6">{{ $payroll->position }}</td>
                     </tr>
                 </table>
@@ -706,10 +796,10 @@
                     <div class="text-xxs inline leading-none">Cargo: </div>
                     <div class="uppercase courier text-xs inline leading-none">{{ $payroll->position }}</div>
                 </div> --}}
-                <table class="border rounded m-t-22">
+                <table class="border rounded m-t-10">
                     <tr>
                         <td class="text-sm text-left w-200-px px-5" style="font-weight:bold;">
-                            Liquido Pagable en Bs.:
+                            {{-- Liquido Pagable en Bs.: --}}
                         </td>
                         <td class="text-lg text-right courier px-10" colspan="3">
                             {{ Util::formatMoney($payroll->payable_liquid) }}
@@ -722,7 +812,7 @@
             </div>
         </div>
     </div>
-    <hr>
+    
     @endforeach
 </body>
 

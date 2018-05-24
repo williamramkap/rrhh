@@ -56,7 +56,7 @@ class TicketController extends Controller
             ->setOption('page-width', '216')
             ->setOption('page-height', '356')
             // ->setPaper('letter')
-            ->setOption('margin-top',0.5)
+            ->setOption('margin-top',0)
             ->setOption('margin-bottom', 0)
             ->setOption('margin-left', 4)
             ->setOption('margin-right', 4)
