@@ -29,7 +29,8 @@
             height: 100%;
             width: 600px;
             /* background:red; */
-            border-right: 2px dashed #3c3c3c;
+            /* border-right: 2px dashed #3c3c3c; */
+            border-right: 2px dashed transparent;
             display: inline-block;
             margin-right: 0;
             padding: 2px;
@@ -141,6 +142,11 @@
             border-style: solid;
             border-width: 1px;
         }
+        .border1{
+            border-color: #5D6975;
+            border-style: solid;
+            border-width: 1px;
+        }
         .border-b{ border-bottom: 1px solid #fff; } .border-b{ border-color: #22292f; border-style: solid; border-bottom-width:
         1px, } .border-t{ border-color: #22292f; border-style: solid; border-top-width: 1px, } .border-r{ border-color: #22292f;
         border-style: solid; border-right-width: 1px, } .border-l{ border-color: #22292f; border-style: solid; border-left-width:
@@ -192,6 +198,11 @@
             min-width:95px;
             width:95px;
             max-width:95px;
+        }
+        .w-100-px{
+            min-width:100px;
+            width:100px;
+            max-width:100px;
         }
         .w-110-px{
             min-width:110px;
@@ -377,7 +388,9 @@
 
 <body>
 <div class="page">
-    HOLA
+    <div class="text-center border1 rounded" style="margin-top:50%">
+        <h1>PLANILLA DE LA MUSERPOL</h1>
+    </div>
 </div>
     @foreach ($payrolls as $index=>$payroll)
     <div class="m-b-25 ticket">
@@ -541,16 +554,16 @@
                 </thead>
                 <tbody>
                     <tr class="text-xs text-center border-bottom">
-                        <td class="border-bottom">
+                        <td class="border-bottom w-100-px">
                             {{-- Detalle --}}
                         </td>
-                        <td class="border-bottom">
+                        <td class="border-bottom w-110-px">
                             {{-- Importe Bs. --}}
                         </td>
-                        <td class="border-bottom">
+                        <td class="border-bottom W-200-px">
                             {{-- Acreedor --}}
                         </td>
-                        <td class="border-bottom">
+                        <td class="border-bottom w-100-px">
                             {{-- Importe Bs. --}}
                             &nbsp;
                         </td>

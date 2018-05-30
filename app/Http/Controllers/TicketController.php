@@ -24,8 +24,8 @@ class TicketController extends Controller
             return "procedure not found";
         }
         $procedure = Procedure::with('month')->find($procedure->id);
-        // $payrolls = $procedure->payrolls()->skip(5)->take(10)->get();
-        $payrolls = $procedure->payrolls;
+        $payrolls = $procedure->payrolls()->skip(5)->take(10)->get();
+        // $payrolls = $procedure->payrolls;
         foreach ($payrolls as $key => $payroll) {
             $contract = $payroll->contract;
             $position = $contract->position;
