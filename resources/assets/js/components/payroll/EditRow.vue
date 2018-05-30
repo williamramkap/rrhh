@@ -17,7 +17,7 @@
         <td>{{ calculateDiscount(procedure.discount_national) | currency }}</td>
         <td>{{ calculateTotalDiscountLaw() | currency }}</td>
         <td>{{ salary | currency}}</td>
-        <td>0</td>
+        <td><input type="text" class="form-control" :name="`contract-${payroll.contract_id}[]`" v-model="rcIva"></td>
         <td><input type="text" class="form-control" :name="`contract-${payroll.contract_id}[]`" v-model="delay"></td>
         <td> {{ totalDiscounts | currency }} </td>
         <td> {{ total | currency}} </td>
@@ -33,6 +33,7 @@ export default {
         di: null,
         baseWage: this.payroll.base_wage,
         delay: this.payroll.discount_faults,
+        rcIva: this.payroll.discount_rc_iva,
     }
   },
   created(){
@@ -57,7 +58,7 @@ export default {
           return this.quotable - this.totalDiscounts;
       },
       totalDiscounts(){
-          return this.calculateTotalDiscountLaw() + parseFloat(this.delay || 0 );
+          return this.calculateTotalDiscountLaw() + parseFloat(this.delay || 0 ) + parseFloat(this.rcIva || 0);
       },
       quotable()  {
           return (this.baseWage/30)*this.days;
