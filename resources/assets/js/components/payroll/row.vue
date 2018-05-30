@@ -17,9 +17,9 @@
         <td>{{ calculateDiscount(procedure.discount_national) | currency }}</td>
         <td>{{ calculateTotalDiscountLaw() | currency }}</td>
         <td>{{ salary | currency}}</td>
-        <td>0</td>
+        <td><input type="text" class="form-control" :name="`contract-${contract.id}[]`" v-model="rcIva"></td>
         <td><input type="text" class="form-control" :name="`contract-${contract.id}[]`" v-model="delay"></td>
-        <td> {{ totalDiscounts | currency }} </t>
+        <td> {{ totalDiscounts | currency }} </td>
         <td> {{ total | currency}} </td>
     </tr>
 </template>
@@ -32,14 +32,15 @@ export default {
         days: 30,
         baseWage: this.contract.base_wage,
         delay: 0,
+        rcIva: 0,
     }
   },
   created(){
-      console.log(this.contract);
+    //   console.log(this.contract);
   },
   methods:{
       fullName(contract){
-          let name = `${contract.first_name || ''} ${contract.second_name || ''} ${contract.last_name || ''} ${contract.mothers_last_name || ''} ${contract.surname_husband || ''}`
+          let name = `${contract.last_name || ''} ${contract.mothers_last_name || ''} ${contract.surname_husband || ''} ${contract.first_name || ''} ${contract.second_name || ''}  `
           name = name.replace(/\s+/gi, ' ').trim().toUpperCase();
           return name;
       },
@@ -56,7 +57,7 @@ export default {
           return this.quotable - this.totalDiscounts;
       },
       totalDiscounts(){
-          return this.calculateTotalDiscountLaw() + parseFloat(this.delay || 0 );
+          return this.calculateTotalDiscountLaw() + parseFloat(this.delay || 0 ) + parseFloat(this.rcIva || 0);
       },
       quotable()  {
           return (this.baseWage/30)*this.days;
@@ -68,7 +69,7 @@ export default {
 }
 </script>
 <style scoped>
-.zui-table .zui-sticky-col {
+/* .zui-table .zui-sticky-col {
     left: 0;
     position: absolute;
     top: auto;
@@ -83,5 +84,5 @@ export default {
     height:51px;
     width: 320px;
     text-align:left;
-}
+} */
 </style>

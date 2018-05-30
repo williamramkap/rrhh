@@ -19,7 +19,7 @@
         <td>{{ salary | currency}}</td>
         <td>0</td>
         <td><input type="text" class="form-control" :name="`contract-${payroll.contract_id}[]`" v-model="delay"></td>
-        <td> {{ totalDiscounts | currency }} </t>
+        <td> {{ totalDiscounts | currency }} </td>
         <td> {{ total | currency}} </td>
     </tr>
 </template>
@@ -40,7 +40,7 @@ export default {
   },
   methods:{
       fullName(payroll){
-          let name = `${payroll.first_name || ''} ${payroll.second_name || ''} ${payroll.last_name || ''} ${payroll.mothers_last_name || ''} ${payroll.surname_husband || ''}`
+          let name = `${payroll.last_name || ''} ${payroll.mothers_last_name || ''} ${payroll.surname_husband || ''} ${payroll.first_name || ''} ${payroll.second_name || ''} `
           name = name.replace(/\s+/gi, ' ').trim().toUpperCase();
           return name;
       },

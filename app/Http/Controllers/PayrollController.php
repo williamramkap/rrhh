@@ -19,7 +19,16 @@ class PayrollController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($year, $month)
+    public function index()
+    {
+        $procedures = Procedure::with('month')->orderBy('year', 'asc')->orderBy('month_id','desc')->get();
+        $data=[
+            'procedures'=> $procedures,
+        ];
+        return view("payroll.index", $data);
+
+    }
+    public function create($year, $month)
     {
         
         $months = array_map(function ($v)
@@ -38,22 +47,13 @@ class PayrollController extends Controller
                     return "procedure not found";
                 }
                 $procedure =  Procedure::with('month')->find($procedure->id);
-            return view('payroll.index', compact('year', 'month', 'procedure'));
+            return view('payroll.create', compact('year', 'month', 'procedure'));
         }else {
             return 'error';
         }
 
     }
-    
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -117,20 +117,20 @@ class PayrollController extends Controller
                 $payroll->discount_commission = ($quotable * $procedure->discount_commission)/100;
                 $payroll->discount_solidary = ($quotable * $procedure->discount_solidary)/100;
                 $payroll->discount_national = ($quotable * $procedure->discount_national)/100;
-                $total_discount_law = (($quotable * $procedure->discount_common_risk)/100)+(($quotable * $procedure->discount_commission)/100)+(($quotable * $procedure->discount_solidary)/100)+(($quotable * $procedure->discount_national)/100);
+                $total_discount_law = (($quotable * $procedure->discount_old) / 100) + (($quotable * $procedure->discount_common_risk)/100)+(($quotable * $procedure->discount_commission)/100)+(($quotable * $procedure->discount_solidary)/100)+(($quotable * $procedure->discount_national)/100);
                 $payroll->total_amount_discount_law = $total_discount_law;
                 $payroll->net_salary = $quotable - $total_discount_law;
-                $total_discount_law = (($quotable * $procedure->discount_old) / 100) + (($quotable * $procedure->discount_common_risk)/100)+(($quotable * $procedure->discount_commission)/100)+(($quotable * $procedure->discount_solidary)/100)+(($quotable * $procedure->discount_national)/100);
-                $payroll->discount_faults = floatval($value[1]);
-                $payroll->total_amount_discount_institution = floatval($value[1]);
-                $total_discounts = $total_discount_law + floatval($value[1]);
+                $payroll->discount_rc_iva = floatval($value[1]);
+                $payroll->discount_faults = floatval($value[2]);
+                $payroll->total_amount_discount_institution = floatval($value[2]);
+                $total_discounts = $total_discount_law + floatval($value[2]);
                 $payroll->total_discounts = $total_discounts;
-                $payroll->payable_liquid = $quotable - $total_discounts;                                                                            
+                $payroll->payable_liquid = $quotable - $total_discounts;
 
                 $payroll->save();
             }
         }
-        return Payroll::all();
+        return redirect(url('payroll'));
     }
 
     /**

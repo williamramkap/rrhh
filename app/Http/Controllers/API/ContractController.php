@@ -57,6 +57,7 @@ class ContractController extends Controller
             ->leftJoin('management_entities', 'employees.management_entity_id', '=', 'management_entities.id')
             ->leftJoin('positions', 'contracts.position_id', '=', 'positions.id')
             ->leftJoin('charges', 'positions.charge_id', '=', 'charges.id')
+            ->orderBy('employees.last_name', 'asc')
             ->get();
 
 
