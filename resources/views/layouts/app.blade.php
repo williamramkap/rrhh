@@ -43,7 +43,7 @@
     </div>
     <!-- End wrapper-->
 
-{{-- <script src="{!! asset('js/app.js') !!}" type="text/javascript"></script> --}}
+<script src="{!! asset('js/app.js') !!}" type="text/javascript"></script>
 <script>
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();

@@ -54,14 +54,14 @@
 {{-- <script src="{{ asset('/js/datatables.js')}}"></script> --}}
 <script>
     // alert("here");
-    //     $(document).ready(function () {
-    //         console.log($(".wrapper"));
+        // $(document).ready(function () {
+            // console.log($(".wrapper"));
             
-    //         // $('#employee-table').DataTable({
-    //         //     processing: true,
-    //         //     serverSide: true,
-    //         //     ajax: "{!! route('employee_list') !!}",
-    //         // });
+            // $('#employee-table').DataTable({
+            //     processing: true,
+            //     serverSide: true,
+            //     ajax: "{!! route('employee_list') !!}",
+            // });
     // });
          
     
