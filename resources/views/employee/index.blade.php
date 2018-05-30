@@ -17,10 +17,14 @@
                     <tr>
                         <th>id</th>
                         <th>CI</th>
-                        <th>Name</th>
-                        <th>Segundo Nombre</th>
                         <th>Apellido</th>
                         <th>Materno</th>
+                        <th>Name</th>
+                        <th>Segundo Nombre</th>
+                        <th>Fecha de nacimiento</th>
+                        <th>Nro Cuenta</th>
+                        <th>CUA/NUA</th>
+                        <th>AFP</th>         
                         <th>Tipo</th>
                         <th>Acci&oacute;n</th>
                     </tr>
@@ -29,12 +33,16 @@
                     @foreach($employees as $employee)
                         <tr>
                             <td> {{ $employee->id }} </td>
-                            <td> {{ $employee->identity_card }} </td>
+                            <td> {{ $employee->identity_card.' '.$employee->city_identity_card->shortened }} </td>
                             <td> {{ $employee->last_name }} </td>
                             <td> {{ $employee->mothers_last_name }} </td>
                             <td> {{ $employee->first_name }} </td>
-                            <td> {{ $employee->second_name }} </td>                            
-                            <td> {{ $employee->employee_type->name }} </td>
+                            <td> {{ $employee->second_name }} </td>                                                                    
+                            <td> {{ date("d-m-Y", strtotime($employee->birth_date)) }} </td>
+                            <td> {{ $employee->account_number }} </td>
+                            <td> {{ $employee->nua_cua }} </td>
+                            <td> {{ $employee->management_entity->name }} </td>
+                            <td> {{ $employee->employee_type->name }} </td> 
                             <td> 
                                 <a class="btn btn-primary" type="button" href="{{ asset('employee/'.$employee->id ) }}"><i class="fa fa-check-circle"></i>&nbsp;Ver</a>
                                 <a class="btn btn-primary" type="button" href="{{ asset('employee/'.$employee->id.'/edit' ) }}"><i class="fa fa-check-circle"></i>&nbsp;Editar</a>
