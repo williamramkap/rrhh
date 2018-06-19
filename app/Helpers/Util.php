@@ -2,6 +2,9 @@
 
 namespace App\Helpers;
 
+use Carbon\Carbon;
+
+
 class Util
 {
 
@@ -76,6 +79,47 @@ class Util
             default:
                 return '';
                 break;
+        }
+    }
+    public static function geMonth($value)
+    {
+        switch ($value) {
+            case 'Enero':
+                return Carbon::parse('1 January');
+            break;
+            case 'Febrero':
+                return Carbon::parse('1 February');
+            break;
+            case 'Marzo':
+                return Carbon::parse('1 March');
+            break;
+            case 'Abril':
+                return Carbon::parse('1 April');
+            break;
+            case 'Mayo':
+                return Carbon::parse('1 May');
+            break;
+            case 'Junio':
+                return Carbon::parse('1 June');
+            break;
+            case 'Julio':
+                return Carbon::parse('1 July');
+            break;
+            case 'Agosto':
+                return Carbon::parse('1 August');
+            break;
+            case 'Septiembre':
+                return Carbon::parse('1 September');
+            break;
+            case 'Octubre':
+                return Carbon::parse('1 October');
+            break;
+            case 'Noviembre':
+                return Carbon::parse('1 November');
+            break;
+            case 'Diciembre':
+                return Carbon::parse('1 December');
+            break;
         }
     }
 }

@@ -5,6 +5,9 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Contract;
+use Carbon\Carbon;
+use App\Month;
+use App\Helpers\Util;
 
 class ContractController extends Controller
 {
@@ -15,6 +18,11 @@ class ContractController extends Controller
      */
     public function index(Request $request)
     {
+        $month = Month::whereRaw("lower(name) like '" . strtolower($request->month) . "'")->first();
+        if (!$month) {
+            return "month not found";
+        }
+        $number_month = Util::geMonth($month->name);
         $offset = $request->offset ?? 0;
         $limit = $request->limit ?? 10;
         $sort = $request->sort ?? 'id';
@@ -25,15 +33,6 @@ class ContractController extends Controller
         $mothers_last_name = strtoupper($request->mothers_last_name) ?? '';
         $surname_husband = strtoupper($request->surname_husband) ?? '';
         $identity_card = strtoupper($request->identity_card) ?? '';
-        $total = Contract::select('contracts.id')//,'identity_card','registration','degrees.name as degree','first_name','second_name','last_name','mothers_last_name','civil_status')->
-            // ->whereRaw("coalesce(contracts.first_name,'' ) LIKE '$first_name%'")
-            // ->whereRaw("coalesce(contracts.second_name,'' ) LIKE '$second_name%'")
-            // ->whereRaw("coalesce(contracts.last_name,'') LIKE '$last_name%'")
-            // ->whereRaw("coalesce(contracts.mothers_last_name,'') LIKE '$mothers_last_name%'")
-            // ->whereRaw("coalesce(contracts.surname_husband,'') LIKE '$surname_husband%'")
-            // ->whereRaw("coalesce(contracts.identity_card, '') LIKE '$identity_card%'")
-            ->count();
-
         $contracts = Contract::select(
             'contracts.id',
             'employees.id as employee_id',
@@ -52,6 +51,8 @@ class ContractController extends Controller
             'charges.name as charge'
         )
             ->where('status', true)
+            ->whereRaw($number_month->month. " BETWEEN  extract(month from contracts.date_start::date) and  extract(month from contracts.date_end::date)")
+            ->whereRaw($request->year. " BETWEEN  extract(year from contracts.date_start::date) and  extract(year from contracts.date_end::date)")
             ->leftJoin('employees', 'contracts.employee_id', '=', 'employees.id')
             ->leftJoin('cities', 'cities.id', '=', 'employees.city_identity_card_id')
             ->leftJoin('management_entities', 'employees.management_entity_id', '=', 'management_entities.id')
@@ -59,41 +60,8 @@ class ContractController extends Controller
             ->leftJoin('charges', 'positions.charge_id', '=', 'charges.id')
             ->orderBy('employees.last_name', 'asc')
             ->get();
-
-
+        $total = $contracts->count();
         return response()->json(['contracts' => $contracts->toArray(), 'total' => $total]);
-
-        // $employees = Employee::select(
-        //     'employees.id',
-        //     'identity_card',
-        //     'cities.first_shortened as city_identity_card',
-        //     'first_name',
-        //     'second_name',
-        //     'surname_husband',
-        //     'last_name',
-        //     'mothers_last_name',
-        //     'birth_date',
-        //     'account_number',
-        //     'management_entities.name as management_entity',
-        //     'positions.name as position',
-        //     'charges.base_wage',
-        //     'charges.name as charge'
-        // )   
-        // // ->skip($offset)
-        //     // ->take($limit)
-        //     ->orderBy($sort, $order)
-        //     ->leftJoin('management_entities', 'management_entities.id', '=', 'employees.management_entity_id')
-        //     ->leftJoin('positions', 'positions.employee_id', '=', 'employees.id')
-        //     ->leftJoin('charges', 'charges.id', '=', 'positions.id')
-        //     ->leftJoin('cities', 'cities.id', '=', 'employees.city_identity_card_id')
-        //     ->whereRaw("coalesce(employees.first_name,'' ) LIKE '$first_name%'")
-        //     ->whereRaw("coalesce(employees.second_name,'' ) LIKE '$second_name%'")
-        //     ->whereRaw("coalesce(employees.last_name,'') LIKE '$last_name%'")
-        //     ->whereRaw("coalesce(employees.mothers_last_name,'') LIKE '$mothers_last_name%'")
-        //     ->whereRaw("coalesce(employees.surname_husband,'') LIKE '$surname_husband%'")
-        //     ->whereRaw("coalesce(employees.identity_card, '') LIKE '$identity_card%'")
-        //     ->get();
-        // return response()->json(['employees' => $employees->toArray(), 'total' => $total]);
     }
 
     /**

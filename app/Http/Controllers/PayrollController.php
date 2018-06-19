@@ -155,7 +155,6 @@ class PayrollController extends Controller
         $months = array_map(function ($v) {
             return strtolower($v);
         }, Month::pluck('name')->toArray());
-
         //add more validations
         if ($year <= Carbon::now()->year && in_array(strtolower($month), $months)) {
             $procedure = Procedure::select('procedures.id')
@@ -163,12 +162,11 @@ class PayrollController extends Controller
                 ->whereRaw("lower(months.name) like '" . strtolower($month) . "'")
                 ->where('year', '=', $year)
                 ->first();
-            $procedure = Procedure::find($procedure->id)->with('month')->first();
+            $procedure = Procedure::with('month')->find($procedure->id);
             return view('payroll.edit', compact('year', 'month', 'procedure'));
         } else {
             return 'error';
         }
-
     }
 
     /**

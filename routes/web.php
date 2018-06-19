@@ -29,7 +29,8 @@ Route::get('payroll/{year}/{month}/edit','PayrollController@edit')->name('edit_p
 Route::post('payroll','PayrollController@store');
 
 
-Route::resource('report','ReportController');
+// Route::resource('report','ReportController');
+Route::get('report/{year}/{month}','ReportController@getExcel')->name('report_excel');
 Route::resource('contract','ContractController');
 
 /*  tickets */
