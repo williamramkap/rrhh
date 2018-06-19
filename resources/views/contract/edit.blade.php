@@ -22,8 +22,9 @@
                 </div>
                 @endif
             <h3>Editar Contrato</h3>
-            <form method="POST" action="{{asset('contract')}}">
+            <form method="POST" action="{{action('ContractController@update', $contract->id)}}">
                 {{ csrf_field() }}
+                <input name="_method" type="hidden" value="PATCH">
                 Empleado
                 <select id="" name="employee_id" class="form-control">
                     <option></option>
@@ -49,9 +50,14 @@
                 Fecha de fin
                 <input type="date" name="date_end" value="{{ $contract->date_end }}" class="form-control">
                 <br>
-
-                <button type="submit">
-                    guardar</button>
+                <label for="">Contrato Vigente: </label>
+                @if ($contract->status)
+                    <input style="transform: scale(1.5);"  type="checkbox" checked name="status">
+                @else
+                    <input style="transform: scale(1.5);"  type="checkbox" name="status">
+                @endif
+                <br>
+                <button type="submit">guardar</button>
             </form>
         </div>
     </div>
