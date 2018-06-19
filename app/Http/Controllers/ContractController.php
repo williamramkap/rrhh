@@ -6,7 +6,6 @@ use App\Contract;
 use Illuminate\Http\Request;
 use App\PositionGroup;
 use App\Employee;
-
 class ContractController extends Controller
 {
     /**
@@ -96,14 +95,18 @@ class ContractController extends Controller
      * @param  \App\Contract  $contract
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Contract $contract)
+    public function update(Request $request, $id)
     {
-        
+        $contract = Contract::find($id);
         $contract->employee_id = $request->employee_id;
         $contract->position_id = $request->position_id;
         $contract->date_start = $request->date_start;
         $contract->date_end = $request->date_end;
-        $contract->status = true;
+        if ($request->status == 'on') {
+            $contract->status = true;
+        }else{
+            $contract->status = false;
+        }
         $contract->save();
         return redirect('contract');
     }
