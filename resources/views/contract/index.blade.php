@@ -23,6 +23,7 @@
                         <th>Segundo Nombre</th>                        
                         <th>Cargo</th>
                         <th>Puesto</th>                        
+                        <th>Fecha de contrato</th>
                         <th>Acci&oacute;n</th>
                     </tr>
                 </thead>
@@ -38,6 +39,7 @@
                             
                             <td> {{ $contract->position->name }} </td>
                             <td> {{ $contract->position->position_group->name }} </td>
+                            <td> {{ date("d-m-Y", strtotime($contract->date_start)) }} </td>
                             <td> 
                                 <a class="btn btn-primary" type="button" href="{{ asset('contract/'.$contract->id ) }}"><i class="fa fa-check-circle"></i>&nbsp;Ver</a>
                                 <a class="btn btn-primary" type="button" href="{{ asset('contract/'.$contract->id.'/edit' ) }}"><i class="fa fa-check-circle"></i>&nbsp;Editar</a>
