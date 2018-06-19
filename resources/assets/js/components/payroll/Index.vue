@@ -2,7 +2,7 @@
   <div>
     <div class="ibox " >
       <div class="ibox-title">
-        <h5>Lista de Empleados </h5>
+        <h5>Lista de Empleados ({{ total }})</h5>
         <div class="ibox-tools">
           <a class="collapse-link">
             <i class="fa fa-chevron-up"></i>
@@ -74,6 +74,7 @@
     },
     data() {
       return {
+        total: 0,
         contracts: [],
         payrolls: []
       };
@@ -83,23 +84,28 @@
         axios
           .get("/api/payrolls", {
             params: {
-              year: 2018,
-              month: "abril"
-              // year: this.procedure.year,
-              // month: this.procedure.month.name
+              year: this.procedure.year,
+              month: this.procedure.month.name
             }
           })
           .then(response => {
-            this.payrolls = response.data;
+            this.payrolls = response.data.payrolls;
+            this.total = response.data.total;
           })
           .catch(error => {
             console.log(error);
           });
       } else {
         axios
-          .get("/api/contracts")
+          .get("/api/contracts",{
+            params:{
+              year: this.procedure.year,
+              month: this.procedure.month.name
+            }
+          })
           .then(response => {
             this.contracts = response.data.contracts;
+            this.total = response.data.total;
           })
           .catch(error => {
             console.log(error);

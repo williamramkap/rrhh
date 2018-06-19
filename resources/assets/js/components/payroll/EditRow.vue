@@ -6,7 +6,7 @@
         <td>{{ payroll.birth_date}}</td>
         <td>{{ payroll.charge}}</td>
         <td>{{ payroll.position }}</td>
-        <td><input type="number" v-model="days" :name="`contract-${payroll.contract_id}[]`" class="form-control" placeholder="dias trabajados" min="1" max="30"></td>
+        <td><input type="number" v-model="days" :name="`contract-${payroll.contract_id}[]`" class="form-control" placeholder="dias trabajados" min="0" max="30"></td>
         <td>{{ baseWage | currency }}</td>
         <td>{{ quotable | currency }}</td>
         <td>{{ payroll.management_entity}}</td>
