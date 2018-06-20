@@ -26,19 +26,27 @@
                 {{ csrf_field() }}
                 <input name="_method" type="hidden" value="PATCH">
                 Empleado
-                <select id="" name="employee_id" class="form-control">
+                <input type="text" class="form-control" disabled value="{{$employee->fullName()}}"  >
+                <br>
+                CI
+                <input type="text" class="form-control" disabled value="{{$employee->identity_card}}"  >
+                {{-- <select id="" name="employee_id" class="form-control">
                     <option></option>
                     @foreach($employees as $employee)
                     <option value="{{$employee->id}}" @if($employee->id == $contract->employee_id) SELECTED @endif>{{$employee->identity_card.' '.$employee->last_name.' '.$employee->first_name.' '.$employee->second_name}}</option>
                     @endforeach
-                </select>
+                </select> --}}
                 <br>
                 Cargo:
                 <select id="" name="position_id" class="form-control">
                     @foreach($position_groups as $p)
                         <optgroup label="{{ $p->name}}">
                             @foreach($p->positions as $position)
-                                <option value="{{$position->id}}" @if($position->id == $contract->position_id) @endif >{{ $position->name }}</option>
+                                @if($position->id == $contract->position_id)
+                                    <option value="{{$position->id}}" selected>{{ $position->name }}</option>
+                                @else
+                                    <option value="{{$position->id}}">{{ $position->name }}</option>
+                                @endif
                             @endforeach
                         </optgroup>
                     @endforeach

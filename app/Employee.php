@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Helpers\Util;
 
 class Employee extends Model
 {
@@ -26,6 +27,10 @@ class Employee extends Model
     public function contracts()
     {
         return $this->hasMany(Contract::class);
+    }
+    public function fullName()
+    {
+        return Util::fullName($this);
     }
 
 }

@@ -16,7 +16,7 @@ class ContractController extends Controller
     public function index()
     {
         $contracts = Contract::where('status',true)->get();
-        // $contracts = Contract::all();
+        $contracts = Contract::all();
         $data = [
             'contracts' =>  $contracts,
         ];
@@ -79,12 +79,13 @@ class ContractController extends Controller
      */
     public function edit(Contract $contract)
     {
-        $employees = Employee::get();
+        $employee = $contract->employee;
         $position_groups = PositionGroup::get();
         $data = [
-            'contract'  =>  $contract,
-            'employees' => $employees,
-            'position_groups'    =>  $position_groups
+            'contract' => $contract,
+            'employee' => $employee,
+            'employees' => Employee::all(),
+            'position_groups' => $position_groups
         ];
         return view('contract.edit',$data);
     }
@@ -99,7 +100,7 @@ class ContractController extends Controller
     public function update(Request $request, $id)
     {
         $contract = Contract::find($id);
-        $contract->employee_id = $request->employee_id;
+        $contract->employee_id = $contract->employee_id;
         $contract->position_id = $request->position_id;
         $contract->date_start = $request->date_start;
         $contract->date_end = $request->date_end;

@@ -51,8 +51,8 @@ class ContractController extends Controller
             'charges.name as charge'
         )
             ->where('status', true)
-            ->whereRaw($number_month->month. " BETWEEN  extract(month from contracts.date_start::date) and  extract(month from contracts.date_end::date)")
-            ->whereRaw($request->year. " BETWEEN  extract(year from contracts.date_start::date) and  extract(year from contracts.date_end::date)")
+            // ->whereRaw($number_month->month. " BETWEEN  extract(month from contracts.date_start::date) and  extract(month from contracts.date_end::date)")
+            // ->whereRaw($request->year. " BETWEEN  extract(year from contracts.date_start::date) and  extract(year from contracts.date_end::date)")
             ->leftJoin('employees', 'contracts.employee_id', '=', 'employees.id')
             ->leftJoin('cities', 'cities.id', '=', 'employees.city_identity_card_id')
             ->leftJoin('management_entities', 'employees.management_entity_id', '=', 'management_entities.id')
