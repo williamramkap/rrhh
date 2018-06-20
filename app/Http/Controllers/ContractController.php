@@ -14,8 +14,9 @@ class ContractController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {           
+    {
         $contracts = Contract::where('status',true)->get();
+        // $contracts = Contract::all();
         $data = [
             'contracts' =>  $contracts,
         ];
