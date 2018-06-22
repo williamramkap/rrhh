@@ -5,7 +5,10 @@
 ```sh
 git clone https://github.com/MUS3RP0L/rrhh.git
 cd rrhh
+cp .env.example .env
 ```
+
+* Editar el archivo `.env` y definir las credenciales para la conexióna la base de datos
 
 * Servir la aplicación mediante Apache o Nginx con extensión PHP habilitada y apuntar a la ruta `public`
 
@@ -29,6 +32,12 @@ sudo apt install -y ttf-mscorefonts-installer
 
 ```sh
 composer install
+```
+
+* Inicializar la base de datos
+
+```sh
+php artisan migrate
 ```
 
 * Instalar las dependencias del frontend
