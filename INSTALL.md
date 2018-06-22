@@ -40,6 +40,12 @@ composer install
 php artisan migrate
 ```
 
+* Generar una clave para cifrado
+
+```sh
+php artisan key:generate
+```
+
 * Instalar las dependencias del frontend
 
 ```sh
