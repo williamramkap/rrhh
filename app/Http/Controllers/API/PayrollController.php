@@ -58,7 +58,7 @@ class PayrollController extends Controller
     {
         $month = Month::whereRaw("lower(name) like '" . strtolower($monthReq) . "'")->first();
         if (!$month) {
-            return array(
+            return (object)array(
                 "code" => 400,
                 "error" => true,
                 "message" => "Mes inexistente",
@@ -136,7 +136,7 @@ class PayrollController extends Controller
                 $totals->payable_liquid += $e->payable_liquid;
             }
         } else {
-            return array(
+            return (object)array(
                 "code" => 404,
                 "error" => true,
                 "message" => "Planilla inexistente",
@@ -144,13 +144,14 @@ class PayrollController extends Controller
             );
         }
 
-        return array(
+        return (object)array(
             "code" => 200,
             "error" => false,
             "message" => "Planilla generada con éxito",
             "data" => [
                 'totals' => $totals,
                 'employees' => $employees,
+                'procedure' => $procedure,
             ]
         );
     }
@@ -174,11 +175,11 @@ class PayrollController extends Controller
      */
     public function show($type, $month, $year)
     {
-        return response()->json($this->getFormattedData($month, $year), 200);
+        // $response = $this->getFormattedData($month, $year);
+        // return response()->json($response, $response->code);
 
-        // $data = $this->getFormattedData($month, $year);
-        // \Debugbar::info($data);
-        // return view('payroll.print-A1', $data);
+        $response = $this->getFormattedData($month, $year);
+        return view('payroll.print-A1', $response->data);
 
         // TODO PDF stream
 
