@@ -29,7 +29,9 @@
             }
 
             .header-right {
+                width: 50%;
                 float: right;
+                text-align: right;
             }
 
             .header-center {
@@ -103,7 +105,7 @@
 
         <div class="header-right">
             <span>No. Patronal CNS: {{ $title->employer_number }}</span>
-            <span style="padding-left:10em;">&nbsp;</span>
+            <span style="padding-left: 5em;"></span>
             <span>{{ $title->type }}</span>
         </div>
 
