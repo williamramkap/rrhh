@@ -8,6 +8,7 @@ use App\Payroll;
 use App\Month;
 use App\Procedure;
 use App\Employee;
+use App\Helpers\Util;
 
 class PayrollController extends Controller
 {
@@ -53,6 +54,95 @@ class PayrollController extends Controller
         return response()->json(['payrolls' => $payrolls->toArray(), 'total' => $total]);
     }
 
+    private function getFormattedData($year, $monthReq)
+    {
+        $month = Month::whereRaw("lower(name) like '" . strtolower($monthReq) . "'")->first();
+        if (!$month) {
+            return array(
+                "code" => 400,
+                "error" => true,
+                "message" => "Mes inexistente",
+                "data" => null
+            );
+        }
+      
+        $procedure = Procedure::where('month_id', $month->id)->where('year', $year)->select()->first();
+
+        if (isset($procedure->id)) {
+            $employees = array();
+            $totals = (object)array();
+
+            $payrolls = Payroll::where('procedure_id',$procedure->id)->get();
+            foreach ($payrolls as $key => $payroll) {
+                $contract = $payroll->contract;
+                $employee = $contract->employee;
+
+                $e = (object)array(
+                    "ci_ext" => Util::ciExt($employee),
+                    "full_name" => Util::fullName($employee),
+                    "account_number" => $employee->account_number,
+                    "birth_date" => Util::getDate($employee->birth_date),
+                    "gender" => $employee->gender,
+                    "charge" => $contract->position->charge->name,
+                    "position" => $contract->position->name,
+                    "date_start" => Util::getDate($contract->date_start),
+                    "date_end" => Util::getDate($contract->date_end),
+                    "worked_days" => $payroll->worked_days,
+                    "base_wage" => $payroll->base_wage,
+                    "quotable" => $payroll->quotable,
+                    "management_entity" => $employee->management_entity->name,
+                    "discount_old" => $payroll->discount_old,
+                    "discount_common_risk" => $payroll->discount_common_risk,
+                    "discount_commission" => $payroll->discount_commission,
+                    "discount_solidary" => $payroll->discount_solidary,
+                    "discount_national" => $payroll->discount_national,
+                    "total_amount_discount_law" => $payroll->total_amount_discount_law,
+                    "net_salary" => $payroll->net_salary,
+                    "discount_rc_iva" => $payroll->discount_rc_iva,
+                    "total_amount_discount_institution" => $payroll->total_amount_discount_institution,
+                    "total_discounts" => $payroll->total_discounts,
+                    "payable_liquid" => $payroll->payable_liquid,
+                    "position_group" => $contract->position->position_group->name,
+                    "position_group_group" => $contract->position->position_group->group,
+                    "position_group_subgroup" => $contract->position->position_group->subgroup,
+                );
+               
+                $employees[] = $e;
+
+                $totals->base_wage += $e->base_wage;
+                $totals->quotable += $e->quotable;
+                $totals->discount_old += $e->discount_old;
+                $totals->discount_common_risk += $e->discount_common_risk;
+                $totals->discount_commission += $e->discount_commission;
+                $totals->discount_solidary += $e->discount_solidary;
+                $totals->discount_national += $e->discount_national;
+                $totals->total_amount_discount_law += $e->total_amount_discount_law;
+                $totals->net_salary += $e->net_salary;
+                $totals->discount_rc_iva += $e->discount_rc_iva;
+                $totals->total_amount_discount_institution += $e->total_amount_discount_institution;
+                $totals->total_discounts += $e->total_discounts;
+                $totals->payable_liquid += $e->payable_liquid;
+            }
+        } else {
+            return array(
+                "code" => 404,
+                "error" => true,
+                "message" => "Planilla inexistente",
+                "data" => null
+            );
+        }
+
+        return array(
+            "code" => 404,
+            "error" => true,
+            "message" => "Planilla inexistente",
+            "data" => [
+                'employees' => $employees,
+                'totals' => $totals,
+            ]
+        );
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -70,9 +160,41 @@ class PayrollController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($type, $month, $year)
     {
-        //
+        return response()->json($this->getFormattedData($month, $year), 200);
+
+        // $data = $this->getFormattedData($month, $year);
+        // \Debugbar::info($data);
+        // return view('payroll.print-A1', $data);
+
+        // TODO PDF stream
+
+        // switch ($type) {
+        //     case 'A1':
+        //         $file_name= "Planilla de Haberes A1.pdf";
+        //         $data = [
+        //             "title" => "TITULO"
+        //         ];
+        //         break;
+        //     default:
+        //         return response()->json([
+        //             'error' => true,
+        //             'message' => 'No se encuentra la planilla',
+        //             'data' => null
+        //         ]);
+        // }
+
+        // return \PDF::loadView('payroll.print-'.$type, $data)
+        //     ->setOption('page-width', '216')
+        //     ->setOption('page-height', '356')
+        //     ->setOrientation('landscape')
+        //     ->setOption('margin-top',0)
+        //     ->setOption('margin-bottom', 0)
+        //     ->setOption('margin-left', 0)
+        //     ->setOption('margin-right', 0)
+        //     ->setOption('encoding', 'utf-8')
+        //     ->stream($file_name);
     }
 
     /**
