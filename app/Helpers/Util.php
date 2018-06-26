@@ -176,5 +176,10 @@ class Util
 			}
 		}
 		return $grouped;
-	}
+    }
+
+    public static function format_number($number, $decimals = 2)
+    {
+        return number_format($number, $decimals, ',', '.');
+    }
 }

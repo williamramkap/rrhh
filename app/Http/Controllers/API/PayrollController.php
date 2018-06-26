@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
 use App\Payroll;
 use App\Month;
@@ -86,7 +87,7 @@ class PayrollController extends Controller
                 'payable_liquid' => 0,
             );
 
-            $payrolls = Payroll::where('procedure_id',$procedure->id)->get();
+            $payrolls = Payroll::where('procedure_id',$procedure->id)->take(3)->get();
             foreach ($payrolls as $key => $payroll) {
                 $contract = $payroll->contract;
                 $employee = $contract->employee;
@@ -152,6 +153,15 @@ class PayrollController extends Controller
                 'totals' => $totals,
                 'employees' => $employees,
                 'procedure' => $procedure,
+                'title' => (object)array(
+                    'nit' => '01234596789',
+                    'address' => 'QWERTY',
+                    'employer_number' => '9876543210',
+                    'month' => $month->name,
+                    'year' => $year,
+                    'type' => 'A-1',
+                    'logo' => File::get(storage_path('app/public/img/logo_base64.txt')),
+                ),
             ]
         );
     }
@@ -179,7 +189,7 @@ class PayrollController extends Controller
         // return response()->json($response, $response->code);
 
         $response = $this->getFormattedData($month, $year);
-        return view('payroll.print-A1', $response->data);
+        // return view('payroll.print-A1', $response->data);
 
         // TODO PDF stream
 
@@ -198,16 +208,18 @@ class PayrollController extends Controller
         //         ]);
         // }
 
-        // return \PDF::loadView('payroll.print-'.$type, $data)
-        //     ->setOption('page-width', '216')
-        //     ->setOption('page-height', '356')
-        //     ->setOrientation('landscape')
-        //     ->setOption('margin-top',0)
-        //     ->setOption('margin-bottom', 0)
-        //     ->setOption('margin-left', 0)
-        //     ->setOption('margin-right', 0)
-        //     ->setOption('encoding', 'utf-8')
-        //     ->stream($file_name);
+        $file_name = "Planilla de Haberes A1.pdf";
+
+        return \PDF::loadView('payroll.print-'.$type, $response->data)
+            ->setOption('page-width', '216')
+            ->setOption('page-height', '356')
+            ->setOrientation('landscape')
+            ->setOption('margin-top', 13)
+            ->setOption('margin-bottom', 12)
+            ->setOption('margin-left', 12)
+            ->setOption('margin-right', 12)
+            ->setOption('encoding', 'utf-8')
+            ->stream($file_name);
     }
 
     /**
