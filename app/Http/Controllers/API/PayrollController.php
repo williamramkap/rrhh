@@ -70,7 +70,21 @@ class PayrollController extends Controller
 
         if (isset($procedure->id)) {
             $employees = array();
-            $totals = (object)array();
+            $totals = (object)array(
+                'base_wage' => 0,
+                'quotable' => 0,
+                'discount_old' => 0,
+                'discount_common_risk' => 0,
+                'discount_commission' => 0,
+                'discount_solidary' => 0,
+                'discount_national' => 0,
+                'total_amount_discount_law' => 0,
+                'net_salary' => 0,
+                'discount_rc_iva' => 0,
+                'total_amount_discount_institution' => 0,
+                'total_discounts' => 0,
+                'payable_liquid' => 0,
+            );
 
             $payrolls = Payroll::where('procedure_id',$procedure->id)->get();
             foreach ($payrolls as $key => $payroll) {
@@ -79,7 +93,7 @@ class PayrollController extends Controller
 
                 $e = (object)array(
                     "ci_ext" => Util::ciExt($employee),
-                    "full_name" => Util::fullName($employee),
+                    "full_name" => Util::fullName($employee, 'uppercase', 'lastname_first'),
                     "account_number" => $employee->account_number,
                     "birth_date" => Util::getDate($employee->birth_date),
                     "gender" => $employee->gender,
@@ -102,9 +116,7 @@ class PayrollController extends Controller
                     "total_amount_discount_institution" => $payroll->total_amount_discount_institution,
                     "total_discounts" => $payroll->total_discounts,
                     "payable_liquid" => $payroll->payable_liquid,
-                    "position_group" => $contract->position->position_group->name,
-                    "position_group_group" => $contract->position->position_group->group,
-                    "position_group_subgroup" => $contract->position->position_group->subgroup,
+                    "position_group" => $contract->position->position_group->name
                 );
                
                 $employees[] = $e;
@@ -133,12 +145,12 @@ class PayrollController extends Controller
         }
 
         return array(
-            "code" => 404,
-            "error" => true,
-            "message" => "Planilla inexistente",
+            "code" => 200,
+            "error" => false,
+            "message" => "Planilla generada con éxito",
             "data" => [
-                'employees' => $employees,
                 'totals' => $totals,
+                'employees' => $employees,
             ]
         );
     }
