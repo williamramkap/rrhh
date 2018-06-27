@@ -93,24 +93,23 @@
             tfoot { display: table-row-group }
             tr { page-break-inside: avoid }
         </style>
-
     </head>
 
     <body>
         <div class="header-left">
-            <p>MUTUAL DE SERVICIOS AL POLICIA</p>
-            <p>NIT {{ $title->nit }}</p>
-            <p>{{ $title->address }}</p>
+            <p>{{ $company->name }}</p>
+            <p>NIT {{ $company->tax_id_number }}</p>
+            <p>{{ $company->address }}</p>
         </div>
 
         <div class="header-right">
-            <span>No. Patronal CNS: {{ $title->employer_number }}</span>
+            <span>No. Patronal CNS: {{ $company->employer_number }}</span>
             <span style="padding-left: 5em;"></span>
             <span>{{ $title->type }}</span>
         </div>
 
         <div class="header-center">
-            <h2>PLANILLA DE LA HABERES</h2>
+            <h2>{{ $title->name }}</h2>
             <h3>PERSONAL EVENTUAL - MES {{ $title->month }} DE {{ $title->year }}</h3>
             <h3>(EXPRESADO EN BOLIVIANOS)</h3>
         </div>

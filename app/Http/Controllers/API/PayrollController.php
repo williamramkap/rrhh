@@ -9,6 +9,7 @@ use App\Payroll;
 use App\Month;
 use App\Procedure;
 use App\Employee;
+use App\Company;
 use App\Helpers\Util;
 
 class PayrollController extends Controller
@@ -87,6 +88,8 @@ class PayrollController extends Controller
                 'payable_liquid' => 0,
             );
 
+            $company = Company::select()->first();
+
             $payrolls = Payroll::where('procedure_id',$procedure->id)->take(3)->get();
             foreach ($payrolls as $key => $payroll) {
                 $contract = $payroll->contract;
@@ -153,10 +156,9 @@ class PayrollController extends Controller
                 'totals' => $totals,
                 'employees' => $employees,
                 'procedure' => $procedure,
+                'company' => $company,
                 'title' => (object)array(
-                    'nit' => '01234596789',
-                    'address' => 'QWERTY',
-                    'employer_number' => '9876543210',
+                    'name' => 'PLANILLA DE HABERES',
                     'month' => $month->name,
                     'year' => $year,
                     'type' => 'A-1',
@@ -185,11 +187,10 @@ class PayrollController extends Controller
      */
     public function show($type, $month, $year)
     {
-        // $response = $this->getFormattedData($month, $year);
+        $response = $this->getFormattedData($month, $year);
         // return response()->json($response, $response->code);
 
-        $response = $this->getFormattedData($month, $year);
-        // return view('payroll.print-A1', $response->data);
+        // return view('payroll.print-'.$type, $response->data);
 
         // TODO PDF stream
 
