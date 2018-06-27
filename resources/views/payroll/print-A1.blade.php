@@ -6,12 +6,16 @@
         <meta name="viewport" content="initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Planilla de Haberes</title>
-
         <style>
+            body {
+                font-size: 0.5em;
+                font-family: sans-serif;
+                font-family: 'Arial', sans-serif;
+            }
+
             table {
                 border-collapse: collapse;
                 table-layout: fixed;
-                /* width: 100%; */
                 clear: both;
             }
 
@@ -46,15 +50,10 @@
             #header-image {
                 float: left;
                 clear: both;
-                margin-top: -35% !important;
-                margin-left: 15%;
+                /* margin-top: -35% !important; */
+                /* margin-left: 15%; */
                 width: 20em;
                 height: 6em;
-            }
-
-            body {
-                font-size: 0.5em;
-                font-family: sans-serif;
             }
 
             td {
@@ -169,38 +168,38 @@
                     <td>{{ $employee->date_start }}</td>
                     <td>{{ $employee->date_end }}</td>
                     <td>{{ $employee->worked_days }}</td>
-                    <td>{{ $employee->base_wage }}</td>
-                    <td>{{ $employee->quotable }}</td>
+                    <td>{{ \App\Helpers\Util::format_number($employee->base_wage) }}</td>
+                    <td>{{ \App\Helpers\Util::format_number($employee->quotable) }}</td>
                     <td>{{ $employee->management_entity }}</td>
-                    <td>{{ $employee->discount_old }}</td>
-                    <td>{{ $employee->discount_common_risk }}</td>
-                    <td>{{ $employee->discount_commission }}</td>
-                    <td>{{ $employee->discount_solidary }}</td>
-                    <td>{{ $employee->discount_national }}</td>
-                    <td>{{ $employee->total_amount_discount_law }}</td>
-                    <td>{{ $employee->net_salary }}</td>
-                    <td>{{ $employee->discount_rc_iva }}</td>
-                    <td>{{ $employee->total_amount_discount_institution }}</td>
-                    <td>{{ $employee->total_discounts }}</td>
-                    <td>{{ $employee->payable_liquid }}</td>
+                    <td>{{ \App\Helpers\Util::format_number($employee->discount_old) }}</td>
+                    <td>{{ \App\Helpers\Util::format_number($employee->discount_common_risk) }}</td>
+                    <td>{{ \App\Helpers\Util::format_number($employee->discount_commission) }}</td>
+                    <td>{{ \App\Helpers\Util::format_number($employee->discount_solidary) }}</td>
+                    <td>{{ \App\Helpers\Util::format_number($employee->discount_national) }}</td>
+                    <td>{{ \App\Helpers\Util::format_number($employee->total_amount_discount_law) }}</td>
+                    <td>{{ \App\Helpers\Util::format_number($employee->net_salary) }}</td>
+                    <td>{{ \App\Helpers\Util::format_number($employee->discount_rc_iva) }}</td>
+                    <td>{{ \App\Helpers\Util::format_number($employee->total_amount_discount_institution) }}</td>
+                    <td>{{ \App\Helpers\Util::format_number($employee->total_discounts) }}</td>
+                    <td>{{ \App\Helpers\Util::format_number($employee->payable_liquid) }}</td>
                 </tr>
             @endforeach
                 <tr class="total">
                     <td class="footer" colspan="12">TOTAL PLANILLA</td>
-                    <td class="footer">{{ $totals->base_wage }}</td>
-                    <td class="footer">{{ $totals->quotable }}</td>
+                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->base_wage) }}</td>
+                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->quotable) }}</td>
                     <td class="footer"></td>
-                    <td class="footer">{{ $totals->discount_old }}</td>
-                    <td class="footer">{{ $totals->discount_common_risk }}</td>
-                    <td class="footer">{{ $totals->discount_commission }}</td>
-                    <td class="footer">{{ $totals->discount_solidary }}</td>
-                    <td class="footer">{{ $totals->discount_national }}</td>
-                    <td class="footer">{{ $totals->total_amount_discount_law }}</td>
-                    <td class="footer">{{ $totals->net_salary }}</td>
-                    <td class="footer">{{ $totals->discount_rc_iva }}</td>
-                    <td class="footer">{{ $totals->total_amount_discount_institution }}</td>
-                    <td class="footer">{{ $totals->total_discounts }}</td>
-                    <td class="footer">{{ $totals->payable_liquid }}</td>
+                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->discount_old) }}</td>
+                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->discount_common_risk) }}</td>
+                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->discount_commission) }}</td>
+                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->discount_solidary) }}</td>
+                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->discount_national) }}</td>
+                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->total_amount_discount_law) }}</td>
+                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->net_salary) }}</td>
+                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->discount_rc_iva) }}</td>
+                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->total_amount_discount_institution) }}</td>
+                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->total_discounts) }}</td>
+                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->payable_liquid) }}</td>
                 </tr>
             </tbody>
         </table>

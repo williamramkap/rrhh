@@ -213,12 +213,8 @@ class PayrollController extends Controller
 
         return \PDF::loadView('payroll.print-'.$type, $response->data)
             ->setOption('page-width', '216')
-            ->setOption('page-height', '356')
+            ->setOption('page-height', '330')
             ->setOrientation('landscape')
-            ->setOption('margin-top', 13)
-            ->setOption('margin-bottom', 12)
-            ->setOption('margin-left', 12)
-            ->setOption('margin-right', 12)
             ->setOption('encoding', 'utf-8')
             ->stream($file_name);
     }
