@@ -27,7 +27,7 @@ Route::get('payroll','PayrollController@index');
 Route::get('payroll/{year}/{month}','PayrollController@create')->name('create_payroll');
 Route::get('payroll/{year}/{month}/edit','PayrollController@edit')->name('edit_payroll');
 Route::post('payroll','PayrollController@store');
-Route::get('payroll/print/{type}/{year}/{month}' , 'PayrollController@print');
+Route::get('payroll/print/{year}/{month}/{params}' , 'PayrollController@print')->where(['params'=>'.*']);
 
 
 // Route::resource('report','ReportController');

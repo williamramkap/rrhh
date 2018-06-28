@@ -36,6 +36,11 @@ class EmployeePayroll
         $this->total_amount_discount_institution = $payroll->total_amount_discount_institution;
         $this->total_discounts = $this->total_amount_discount_law + $this->total_amount_discount_institution + $this->discount_rc_iva;
         $this->payable_liquid = round(($this->quotable - $this->total_discounts), 2);
+        $this->contribution_insurance_company = Util::get_percentage($this->quotable, $procedure->contribution_insurance_company);
+        $this->contribution_professional_risk = Util::get_percentage($this->quotable, $procedure->contribution_professional_risk);
+        $this->contribution_employer_solidary = Util::get_percentage($this->quotable, $procedure->contribution_employer_solidary);
+        $this->contribution_employer_housing = Util::get_percentage($this->quotable, $procedure->contribution_employer_housing);
+        $this->total_contributions = round($this->contribution_insurance_company + $this->contribution_professional_risk + $this->contribution_employer_solidary + $this->contribution_employer_housing);
         $this->position_group = $contract->position->position_group->name;
         $this->valid_contract = Carbon::create($procedure->year, $procedure->month->id)->endOfMonth()->gte(Carbon::create(2018, 1, 20, 0, 0, 0));
     }

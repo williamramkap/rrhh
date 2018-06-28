@@ -48,7 +48,7 @@
                         @php ($table_header_space2 = 6)
                         @break
                     @case ('A2')
-                        @php ($table_header_space1 = 8)
+                        @php ($table_header_space1 = 9)
                         @php ($table_header_space2 = 5)
                         @break
                 @endswitch
@@ -64,32 +64,33 @@
                     <th width="1%">N°</th>
                     <th width="2%">C.I.</th>
                     <th width="10%">TRABAJADOR</th>
-                @if ($title->type == 'A1')
+                @if (in_array($title->type, ['A1']))
                     <th width="1%">CUENTA BANCO UNIÓN</th>
                 @endif
-                @if ($title->type == 'A1')
+                @if (in_array($title->type, ['A1']))
                     <th width="1%">FECHA NACIMIENTO</th>
                 @endif
-                @if ($title->type == 'A1')
+                @if (in_array($title->type, ['A1']))
                     <th width="1%">SEXO</th>
                 @endif
-                @if ($title->type == 'A1')
+                @if (in_array($title->type, ['A1']))
                     <th width="1%">CARGO</th>
                 @endif
                     <th width="3%">PUESTO</th>
-                @if ($title->type == 'A1')
+                @if (in_array($title->type, ['A1', 'A2']))
                     <th width="3%">AREA</th>
                 @endif
                     <th width="1%">FECHA DE INGRESO</th>
-                @if ($title->type == 'A1')
+                @if (in_array($title->type, ['A1']))
                     <th width="1%">FECHA VENCIMIENTO CONTRATO</th>
                 @endif
                     <th width="1%">DIAS TRABAJADOS</th>
-                @if ($title->type == 'A1')
+                @if (in_array($title->type, ['A1']))
                     <th width="2%">HABER BÁSICO</th>
                 @endif
                     <th width="2%">TOTAL GANADO</th>
                     <th width="1%">AFP</th>
+                @if (in_array($title->type, ['A1']))
                     <th width="1%">Renta vejez {{ $procedure->discount_old }}%</th>
                     <th width="1%">Riesgo común {{ $procedure->discount_common_risk }}%</th>
                     <th width="1%">Comisión {{ $procedure->discount_commission }}%</th>
@@ -101,6 +102,14 @@
                     <th width="3%">Desc Atrasos, Faltas y Licencia S/G Haberes</th>
                     <th width="3%">TOTAL DESCUENTOS</th>
                     <th width="3%">LIQUIDO PAGABLE</th>
+                @endif
+                @if (in_array($title->type, ['A2']))
+                    <th width="1%">CNS {{ $procedure->contribution_insurance_companty }}%</th>
+                    <th width="1%">Riesgo Profesional {{ $procedure->contribution_professional_risk }}%</th>
+                    <th width="1%">Aporte Patronal Solidario {{ $procedure->contribution_employer_solidary }}%</th>
+                    <th width="1%">Aporte Patronal para Vivienda {{ $procedure->contribution_employer_housing }}%</th>
+                    <th width="3%">TOTAL A PAGAR</th>
+                @endif
                 </tr>
             </thead>
             <tbody>
@@ -109,32 +118,33 @@
                     <td>{{ ++$i }}</td>
                     <td>{{ $employee->ci_ext }}</td>
                     <td class="name">{{ $employee->full_name }}</td>
-                @if ($title->type == 'A1')
+                @if (in_array($title->type, ['A1']))
                     <td>{{ $employee->account_number }}</td>
                 @endif
-                @if ($title->type == 'A1')
+                @if (in_array($title->type, ['A1']))
                     <td>{{ $employee->birth_date }}</td>
                 @endif
-                @if ($title->type == 'A1')
+                @if (in_array($title->type, ['A1']))
                     <td>{{ $employee->gender }}</td>
                 @endif
-                @if ($title->type == 'A1')
+                @if (in_array($title->type, ['A1']))
                     <td>{{ $employee->charge }}</td>
                 @endif
                     <td>{{ $employee->position }}</td>
-                @if ($title->type == 'A1')
+                @if (in_array($title->type, ['A1', 'A2']))
                     <td>{{ $employee->position_group }}</td>
                 @endif
                     <td>{{ $employee->date_start }}</td>
-                @if ($title->type == 'A1')
+                    @if (in_array($title->type, ['A1']))
                     <td>{{ $employee->date_end }}</td>
                 @endif
                     <td>{{ $employee->worked_days }}</td>
-                @if ($title->type == 'A1')
+                @if (in_array($title->type, ['A1']))
                     <td>{{ Util::format_number($employee->base_wage) }}</td>
                 @endif
                     <td>{{ Util::format_number($employee->quotable) }}</td>
                     <td>{{ $employee->management_entity }}</td>
+                @if (in_array($title->type, ['A1']))
                     <td>{{ Util::format_number($employee->discount_old) }}</td>
                     <td>{{ Util::format_number($employee->discount_common_risk) }}</td>
                     <td>{{ Util::format_number($employee->discount_commission) }}</td>
@@ -146,6 +156,14 @@
                     <td>{{ Util::format_number($employee->total_amount_discount_institution) }}</td>
                     <td>{{ Util::format_number($employee->total_discounts) }}</td>
                     <td>{{ Util::format_number($employee->payable_liquid) }}</td>
+                @endif
+                @if (in_array($title->type, ['A2']))
+                    <td>{{ Util::format_number($employee->contribution_insurance_company) }}</td>
+                    <td>{{ Util::format_number($employee->contribution_professional_risk) }}</td>
+                    <td>{{ Util::format_number($employee->contribution_employer_solidary) }}</td>
+                    <td>{{ Util::format_number($employee->contribution_employer_housing) }}</td>
+                    <td>{{ Util::format_number($employee->total_contributions) }}</td>
+                @endif
                 </tr>
             @endforeach
                 <tr class="total">
@@ -154,24 +172,35 @@
                         @php ($table_footer_space1 = 12)
                         @break
                     @case ('A2')
-                        @php ($table_footer_space1 = 5)
+                        @php ($table_footer_space1 = 7)
                         @break
                 @endswitch
                     <td class="footer" colspan="{{ $table_footer_space1 }}">TOTAL PLANILLA</td>
-                    <td class="footer">{{ Util::format_number($totals->base_wage) }}</td>
-                    <td class="footer">{{ Util::format_number($totals->quotable) }}</td>
+                @if (in_array($title->type, ['A1']))
+                    <td class="footer">{{ Util::format_number($total_discounts->base_wage) }}</td>
+                    <td class="footer">{{ Util::format_number($total_discounts->quotable) }}</td>
                     <td class="footer"></td>
-                    <td class="footer">{{ Util::format_number($totals->discount_old) }}</td>
-                    <td class="footer">{{ Util::format_number($totals->discount_common_risk) }}</td>
-                    <td class="footer">{{ Util::format_number($totals->discount_commission) }}</td>
-                    <td class="footer">{{ Util::format_number($totals->discount_solidary) }}</td>
-                    <td class="footer">{{ Util::format_number($totals->discount_national) }}</td>
-                    <td class="footer">{{ Util::format_number($totals->total_amount_discount_law) }}</td>
-                    <td class="footer">{{ Util::format_number($totals->net_salary) }}</td>
-                    <td class="footer">{{ Util::format_number($totals->discount_rc_iva) }}</td>
-                    <td class="footer">{{ Util::format_number($totals->total_amount_discount_institution) }}</td>
-                    <td class="footer">{{ Util::format_number($totals->total_discounts) }}</td>
-                    <td class="footer">{{ Util::format_number($totals->payable_liquid) }}</td>
+                    <td class="footer">{{ Util::format_number($total_discounts->discount_old) }}</td>
+                    <td class="footer">{{ Util::format_number($total_discounts->discount_common_risk) }}</td>
+                    <td class="footer">{{ Util::format_number($total_discounts->discount_commission) }}</td>
+                    <td class="footer">{{ Util::format_number($total_discounts->discount_solidary) }}</td>
+                    <td class="footer">{{ Util::format_number($total_discounts->discount_national) }}</td>
+                    <td class="footer">{{ Util::format_number($total_discounts->total_amount_discount_law) }}</td>
+                    <td class="footer">{{ Util::format_number($total_discounts->net_salary) }}</td>
+                    <td class="footer">{{ Util::format_number($total_discounts->discount_rc_iva) }}</td>
+                    <td class="footer">{{ Util::format_number($total_discounts->total_amount_discount_institution) }}</td>
+                    <td class="footer">{{ Util::format_number($total_discounts->total_discounts) }}</td>
+                    <td class="footer">{{ Util::format_number($total_discounts->payable_liquid) }}</td>
+                @endif
+                @if (in_array($title->type, ['A2']))
+                    <td class="footer">{{ Util::format_number($total_contributions->quotable) }}</td>
+                    <td class="footer"></td>
+                    <td class="footer">{{ Util::format_number($total_contributions->contribution_insurance_company) }}</td>
+                    <td class="footer">{{ Util::format_number($total_contributions->contribution_professional_risk) }}</td>
+                    <td class="footer">{{ Util::format_number($total_contributions->contribution_employer_solidary) }}</td>
+                    <td class="footer">{{ Util::format_number($total_contributions->contribution_employer_housing) }}</td>
+                    <td class="footer">{{ Util::format_number($total_contributions->total_contributions) }}</td>
+                @endif
                 </tr>
             </tbody>
         </table>
