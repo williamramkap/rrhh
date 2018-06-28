@@ -17,3 +17,4 @@ package-lock.json
 composer.lock
 .env
 storage/debugbar/
+public/css/

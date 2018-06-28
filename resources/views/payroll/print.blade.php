@@ -5,92 +5,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Planilla de Haberes</title>
+        <title>{{ $title->name }} {{ $title->year }}</title>
+        <!-- <link rel="stylesheet" type="text/css" href="{{ asset('css/all.css') }}"></link> -->
         <style>
-            body {
-                font-size: 0.5em;
-                font-family: sans-serif;
-                font-family: 'Arial', sans-serif;
-            }
-
-            table {
-                border-collapse: collapse;
-                table-layout: fixed;
-                clear: both;
-            }
-
-            table, th, td {
-                border: 1px solid black;
-                text-align: center;
-            }
-
-            .total {
-                font-weight: bold;
-            }
-
-            .header-left {
-                float: left;
-            }
-
-            .header-right {
-                width: 50%;
-                float: right;
-                text-align: right;
-            }
-
-            .header-center {
-                padding-top: 1%;
-                margin-bottom: 1%;
-                text-align: center;
-                align-content: center;
-                float: center;
-                clear: both;
-            }
-
-            #header-image {
-                float: left;
-                clear: both;
-                /* margin-top: -35% !important; */
-                /* margin-left: 15%; */
-                width: 20em;
-                height: 6em;
-            }
-
-            td {
-                height: 5.5em;
-                display: table-cell;
-            }
-
-            th {
-                word-wrap: break-word;
-                background-color: lightgray;
-            }
-
-            .footer {
-                border-left: 1px solid white;
-                border-right: 1px solid white;
-                border-bottom: 1px solid white;
-            }
-
-            h1, h2, h3 {
-                text-transform: uppercase;
-            }
-
-            p, h1, h2, h3 {
-                padding-top: 0 !important;
-                padding-bottom: 0 !important;
-                margin: 0 !important;
-            }
-
-            .name {
-                text-align: left;
-                padding-left: 0.5%;
-            }
-
-            /* Fix snappy header */
-            thead { display: table-header-group }
-            tfoot { display: table-row-group }
-            tr { page-break-inside: avoid }
+            <?php include public_path('css/all.css') ?>
         </style>
     </head>
 
@@ -104,7 +22,7 @@
         <div class="header-right">
             <span>No. Patronal CNS: {{ $company->employer_number }}</span>
             <span style="padding-left: 5em;"></span>
-            <span>{{ $title->type }}</span>
+            <span>{{ implode('-', str_split($title->type)) }}</span>
         </div>
 
         <div class="header-center">
@@ -120,24 +38,52 @@
         <table align="center">
             <thead>
                 <tr>
-                    <th colspan="15" style="border-left: 1px solid white; border-top: 1px solid white; background-color: white;"></th>
-                    <th colspan="6">DESCUENTOS DEL SISTEMA DE PENSIONES</th>
-                    <th colspan="5" style="border-right: 1px solid white; border-top: 1px solid white; background-color: white;"></th>
+                @switch ($title->type)
+                    @case ('A1')
+                        @php ($table_header_space1 = 15)
+                        @php ($table_header_space2 = 6)
+                        @break
+                    @case ('A2')
+                        @php ($table_header_space1 = 8)
+                        @php ($table_header_space2 = 5)
+                        @break
+                @endswitch
+                @if ($title->name == 'PLANILLA DE HABERES')
+                    @php ($discount_name = 'DESCUENTOS DEL SISTEMA DE PENSIONES')
+                @elseif ($title->name == 'PLANILLA PATRONAL')
+                    @php ($discount_name = 'APORTES PATRONALES')
+                @endif
+                    <th colspan="{{ $table_header_space1 }}" style="border-left: 1px solid white; border-top: 1px solid white; background-color: white;"></th>
+                    <th colspan="{{ $table_header_space2 }}">{{ $discount_name }}</th>
                 </tr>
                 <tr>
                     <th width="1%">N°</th>
                     <th width="2%">C.I.</th>
                     <th width="10%">TRABAJADOR</th>
+                @if ($title->type == 'A1')
                     <th width="1%">CUENTA BANCO UNIÓN</th>
+                @endif
+                @if ($title->type == 'A1')
                     <th width="1%">FECHA NACIMIENTO</th>
+                @endif
+                @if ($title->type == 'A1')
                     <th width="1%">SEXO</th>
+                @endif
+                @if ($title->type == 'A1')
                     <th width="1%">CARGO</th>
+                @endif
                     <th width="3%">PUESTO</th>
+                @if ($title->type == 'A1')
                     <th width="3%">AREA</th>
+                @endif
                     <th width="1%">FECHA DE INGRESO</th>
+                @if ($title->type == 'A1')
                     <th width="1%">FECHA VENCIMIENTO CONTRATO</th>
+                @endif
                     <th width="1%">DIAS TRABAJADOS</th>
+                @if ($title->type == 'A1')
                     <th width="2%">HABER BÁSICO</th>
+                @endif
                     <th width="2%">TOTAL GANADO</th>
                     <th width="1%">AFP</th>
                     <th width="1%">Renta vejez {{ $procedure->discount_old }}%</th>
@@ -159,16 +105,30 @@
                     <td>{{ ++$i }}</td>
                     <td>{{ $employee->ci_ext }}</td>
                     <td class="name">{{ $employee->full_name }}</td>
+                @if ($title->type == 'A1')
                     <td>{{ $employee->account_number }}</td>
+                @endif
+                @if ($title->type == 'A1')
                     <td>{{ $employee->birth_date }}</td>
+                @endif
+                @if ($title->type == 'A1')
                     <td>{{ $employee->gender }}</td>
+                @endif
+                @if ($title->type == 'A1')
                     <td>{{ $employee->charge }}</td>
+                @endif
                     <td>{{ $employee->position }}</td>
+                @if ($title->type == 'A1')
                     <td>{{ $employee->position_group }}</td>
+                @endif
                     <td>{{ $employee->date_start }}</td>
+                @if ($title->type == 'A1')
                     <td>{{ $employee->date_end }}</td>
+                @endif
                     <td>{{ $employee->worked_days }}</td>
+                @if ($title->type == 'A1')
                     <td>{{ \App\Helpers\Util::format_number($employee->base_wage) }}</td>
+                @endif
                     <td>{{ \App\Helpers\Util::format_number($employee->quotable) }}</td>
                     <td>{{ $employee->management_entity }}</td>
                     <td>{{ \App\Helpers\Util::format_number($employee->discount_old) }}</td>
@@ -185,7 +145,15 @@
                 </tr>
             @endforeach
                 <tr class="total">
-                    <td class="footer" colspan="12">TOTAL PLANILLA</td>
+                @switch ($title->type)
+                    @case ('A1')
+                        @php ($table_footer_space1 = 12)
+                        @break
+                    @case ('A2')
+                        @php ($table_footer_space1 = 5)
+                        @break
+                @endswitch
+                    <td class="footer" colspan="{{ $table_footer_space1 }}">TOTAL PLANILLA</td>
                     <td class="footer">{{ \App\Helpers\Util::format_number($totals->base_wage) }}</td>
                     <td class="footer">{{ \App\Helpers\Util::format_number($totals->quotable) }}</td>
                     <td class="footer"></td>

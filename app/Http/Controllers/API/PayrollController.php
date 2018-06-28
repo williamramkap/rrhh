@@ -158,10 +158,8 @@ class PayrollController extends Controller
                 'procedure' => $procedure,
                 'company' => $company,
                 'title' => (object)array(
-                    'name' => 'PLANILLA DE HABERES',
                     'month' => $month->name,
                     'year' => $year,
-                    'type' => 'A-1',
                     'logo' => File::get(storage_path('app/public/img/logo_base64.txt')),
                 ),
             ]
@@ -185,33 +183,35 @@ class PayrollController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($type, $month, $year)
+    public function show($type, $year, $month)
     {
-        $response = $this->getFormattedData($month, $year);
+        $response = $this->getFormattedData($year, $month);
+
         // return response()->json($response, $response->code);
 
         // return view('payroll.print-'.$type, $response->data);
 
-        // TODO PDF stream
+        $response->data['title']->type = $type;
+        $type = strtoupper($type);
 
-        // switch ($type) {
-        //     case 'A1':
-        //         $file_name= "Planilla de Haberes A1.pdf";
-        //         $data = [
-        //             "title" => "TITULO"
-        //         ];
-        //         break;
-        //     default:
-        //         return response()->json([
-        //             'error' => true,
-        //             'message' => 'No se encuentra la planilla',
-        //             'data' => null
-        //         ]);
-        // }
+        switch ($type) {
+            case 'A1':
+                $response->data['title']->name = 'PLANILLA DE HABERES';
+                break;
+            case 'A2':
+                $response->data['title']->name = 'PLANILLA PATRONAL';
+                break;
+            default:
+                return response()->json([
+                    'error' => true,
+                    'message' => 'No se encuentra la planilla',
+                    'data' => null
+                ]);
+        }
 
-        $file_name = "Planilla de Haberes A1.pdf";
+        $file_name= implode(" ", [$response->data['title']->name, $type, $year, strtoupper($month)]).".pdf";
 
-        return \PDF::loadView('payroll.print-'.$type, $response->data)
+        return \PDF::loadView('payroll.print', $response->data)
             ->setOption('page-width', '216')
             ->setOption('page-height', '330')
             ->setOrientation('landscape')
