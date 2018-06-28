@@ -597,8 +597,11 @@ class PayrollController extends Controller
 
             $company = Company::select()->first();
 
-            // $payrolls = Payroll::where('procedure_id',$procedure->id)->get();
-            $payrolls = Payroll::where('procedure_id',$procedure->id)->take(3)->get();
+            if (!config('app.debug')) {
+                $payrolls = Payroll::where('procedure_id',$procedure->id)->get();
+            } else {
+                $payrolls = Payroll::where('procedure_id',$procedure->id)->take(3)->get();
+            }
             foreach ($payrolls as $key => $payroll) {
                 $contract = $payroll->contract;
                 $employee = $contract->employee;
