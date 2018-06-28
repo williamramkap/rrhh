@@ -18,6 +18,7 @@ class CreateEmployerNumbersTable extends Migration
             $table->timestamps();
             $table->string('number');
             $table->softDeletes();
+            $table->unique('number');
         });
     }
 

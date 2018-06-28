@@ -11,5 +11,8 @@ class EmployerNumber extends Model
 
     protected $dates = ['deleted_at'];
 
-    //
+    public function position_groups()
+	{
+		return $this->hasMany(PositionGroup::class, 'employer_number_id', 'id');
+	}
 }
