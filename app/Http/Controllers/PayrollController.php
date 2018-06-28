@@ -15,7 +15,7 @@ use App\Company;
 use App\Helpers\Util;
 use Illuminate\Support\Facades\File;
 use App\EmployeePayroll;
-use App\TotalPayroll;
+use App\TotalPayrollEmployee;
 
 class PayrollController extends Controller
 {
@@ -591,7 +591,7 @@ class PayrollController extends Controller
 
         if (isset($procedure->id)) {
             $employees = array();
-            $totals = new TotalPayroll();
+            $totals = new TotalPayrollEmployee();
 
             $company = Company::select()->first();
 

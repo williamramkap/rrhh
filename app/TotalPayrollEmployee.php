@@ -2,7 +2,7 @@
 
 namespace App;
 
-class TotalPayroll
+class TotalPayrollEmployee
 {
     function __construct()
     {
