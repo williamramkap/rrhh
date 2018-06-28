@@ -11,6 +11,12 @@ use Prophecy\Promise\ReturnPromise;
 use App\Procedure;
 use App\Month;
 use App\Contract;
+use App\Company;
+use App\Helpers\Util;
+use Illuminate\Support\Facades\File;
+use App\EmployeePayroll;
+use App\TotalPayrollEmployee;
+use App\TotalPayrollEmployer;
 
 class PayrollController extends Controller
 {
@@ -568,5 +574,127 @@ class PayrollController extends Controller
                }
             });
         })->download('xls');    
+    }
+
+    private function getFormattedData($year, $monthReq)
+    {
+        $month = Month::whereRaw("lower(name) like '" . strtolower($monthReq) . "'")->first();
+        if (!$month) {
+            return (object)array(
+                "code" => 400,
+                "error" => true,
+                "message" => "Mes inexistente",
+                "data" => null
+            );
+        }
+      
+        $procedure = Procedure::where('month_id', $month->id)->where('year', $year)->select()->first();
+
+        if (isset($procedure->id)) {
+            $employees = array();
+            $total_discounts = new TotalPayrollEmployee();
+            $total_contributions = new TotalPayrollEmployer();
+
+            $company = Company::select()->first();
+
+            // $payrolls = Payroll::where('procedure_id',$procedure->id)->get();
+            $payrolls = Payroll::where('procedure_id',$procedure->id)->take(3)->get();
+            foreach ($payrolls as $key => $payroll) {
+                $contract = $payroll->contract;
+                $employee = $contract->employee;
+
+                $e = new EmployeePayroll($payroll, $procedure);
+                $employees[] = $e;
+
+                $total_discounts->add_base_wage($e->base_wage);
+                $total_discounts->add_quotable($e->quotable);
+                $total_discounts->add_discount_old($e->discount_old);
+                $total_discounts->add_discount_common_risk($e->discount_common_risk);
+                $total_discounts->add_discount_commission($e->discount_commission);
+                $total_discounts->add_discount_solidary($e->discount_solidary);
+                $total_discounts->add_discount_national($e->discount_national);
+                $total_discounts->add_total_amount_discount_law($e->total_amount_discount_law);
+                $total_discounts->add_net_salary($e->net_salary);
+                $total_discounts->add_discount_rc_iva($e->discount_rc_iva);
+                $total_discounts->add_total_amount_discount_institution($e->total_amount_discount_institution);
+                $total_discounts->add_total_discounts($e->total_discounts);
+                $total_discounts->add_payable_liquid($e->payable_liquid);
+
+                $total_contributions->add_quotable($e->quotable);
+                $total_contributions->add_contribution_insurance_company($e->contribution_insurance_company);
+                $total_contributions->add_contribution_professional_risk($e->contribution_professional_risk);
+                $total_contributions->add_contribution_employer_solidary($e->contribution_employer_solidary);
+                $total_contributions->add_contribution_employer_housing($e->contribution_employer_housing);
+                $total_contributions->add_total_contributions($e->total_contributions);
+            }
+        } else {
+            return (object)array(
+                "code" => 404,
+                "error" => true,
+                "message" => "Planilla inexistente",
+                "data" => null
+            );
+        }
+
+        return (object)array(
+            "code" => 200,
+            "error" => false,
+            "message" => "Planilla generada con éxito",
+            "data" => [
+                'total_discounts' => $total_discounts,
+                'total_contributions' => $total_contributions,
+                'employees' => $employees,
+                'procedure' => $procedure,
+                'company' => $company,
+                'title' => (object)array(
+                    'month' => $month->name,
+                    'year' => $year,
+                    'logo' => File::get(storage_path('app/public/img/logo_base64.txt')),
+                ),
+            ]
+        );
+    }
+
+    public function print($year, $month, $params)
+    {
+        $params = explode("/", $params);
+        $type = $params[0];
+        
+        if (count($params) > 1) {
+            $employer_number = $params[1];
+        }
+
+        $response = $this->getFormattedData($year, $month);
+
+        // return response()->json($response, $response->code);
+
+        // return view('payroll.print-'.$type, $response->data);
+
+        $response->data['title']->type = $type;
+        $type = strtoupper($type);
+
+        switch ($type) {
+            case 'A1':
+                $response->data['title']->name = 'PLANILLA DE HABERES';
+                break;
+            case 'A2':
+                $response->data['title']->name = 'PLANILLA PATRONAL';
+                break;
+            default:
+                return response()->json([
+                    'error' => true,
+                    'message' => 'No se encuentra la planilla',
+                    'data' => null
+                ]);
+        }
+
+        $file_name= implode(" ", [$response->data['title']->name, $type, $year, strtoupper($month)]).".pdf";
+
+        return \PDF::loadView('payroll.print', $response->data)
+            ->setOption('page-width', '216')
+            ->setOption('page-height', '330')
+            ->setOrientation('landscape')
+            ->setOption('encoding', 'utf-8')
+            ->stream($file_name);
     }
 }

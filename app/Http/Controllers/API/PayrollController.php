@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
 use App\Payroll;
 use App\Month;
 use App\Procedure;
 use App\Employee;
+use App\Company;
+use App\Helpers\Util;
 
 class PayrollController extends Controller
 {
@@ -70,7 +73,7 @@ class PayrollController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         //
     }

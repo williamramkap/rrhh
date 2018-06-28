@@ -21,7 +21,11 @@ class ProcedureTableSeeder extends Seeder
                 'discount_solidary' => 0.5,
                 'discount_national' => 0,
                 'discount_rc_iva' => 13,
-                'discount_faults' => 0
+                'discount_faults' => 0,
+                'contribution_insurance_company' => 10,
+                'contribution_professional_risk' => 1.71,
+                'contribution_employer_solidary' => 3,
+                'contribution_employer_housing' => 2,
             ];
 
             App\Procedure::create($statuses);
