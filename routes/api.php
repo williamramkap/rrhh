@@ -22,7 +22,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::apiResource('contracts' , 'API\ContractController');
 // Route::apiResource('employees' , 'API\EmployeeController');
 Route::get('payrolls' , 'API\PayrollController@index');
-Route::get('payrolls/{type}/{year}/{month}' , 'API\PayrollController@show');
 Route::get('discounts', function ()
 {
     return Discount::orderBy('id')->get();

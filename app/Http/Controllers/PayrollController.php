@@ -11,6 +11,11 @@ use Prophecy\Promise\ReturnPromise;
 use App\Procedure;
 use App\Month;
 use App\Contract;
+use App\Company;
+use App\Helpers\Util;
+use Illuminate\Support\Facades\File;
+use App\EmployeePayroll;
+use App\TotalPayroll;
 
 class PayrollController extends Controller
 {
@@ -568,5 +573,110 @@ class PayrollController extends Controller
                }
             });
         })->download('xls');    
+    }
+
+    private function getFormattedData($year, $monthReq)
+    {
+        $month = Month::whereRaw("lower(name) like '" . strtolower($monthReq) . "'")->first();
+        if (!$month) {
+            return (object)array(
+                "code" => 400,
+                "error" => true,
+                "message" => "Mes inexistente",
+                "data" => null
+            );
+        }
+      
+        $procedure = Procedure::where('month_id', $month->id)->where('year', $year)->select()->first();
+
+        if (isset($procedure->id)) {
+            $employees = array();
+            $totals = new TotalPayroll();
+
+            $company = Company::select()->first();
+
+            $payrolls = Payroll::where('procedure_id',$procedure->id)->take(3)->get();
+            foreach ($payrolls as $key => $payroll) {
+                $contract = $payroll->contract;
+                $employee = $contract->employee;
+
+                $e = new EmployeePayroll($payroll, $procedure);
+                $employees[] = $e;
+
+                $totals->add_base_wage($e->base_wage);
+                $totals->add_quotable($e->quotable);
+                $totals->add_discount_old($e->discount_old);
+                $totals->add_discount_common_risk($e->discount_common_risk);
+                $totals->add_discount_commission($e->discount_commission);
+                $totals->add_discount_solidary($e->discount_solidary);
+                $totals->add_discount_national($e->discount_national);
+                $totals->add_total_amount_discount_law($e->total_amount_discount_law);
+                $totals->add_net_salary($e->net_salary);
+                $totals->add_discount_rc_iva($e->discount_rc_iva);
+                $totals->add_total_amount_discount_institution($e->total_amount_discount_institution);
+                $totals->add_total_discounts($e->total_discounts);
+                $totals->add_payable_liquid($e->payable_liquid);
+            }
+        } else {
+            return (object)array(
+                "code" => 404,
+                "error" => true,
+                "message" => "Planilla inexistente",
+                "data" => null
+            );
+        }
+
+        return (object)array(
+            "code" => 200,
+            "error" => false,
+            "message" => "Planilla generada con éxito",
+            "data" => [
+                'totals' => $totals,
+                'employees' => $employees,
+                'procedure' => $procedure,
+                'company' => $company,
+                'title' => (object)array(
+                    'month' => $month->name,
+                    'year' => $year,
+                    'logo' => File::get(storage_path('app/public/img/logo_base64.txt')),
+                ),
+            ]
+        );
+    }
+
+    public function print($type, $year, $month)
+    {
+        $response = $this->getFormattedData($year, $month);
+
+        // return response()->json($response, $response->code);
+
+        // return view('payroll.print-'.$type, $response->data);
+
+        $response->data['title']->type = $type;
+        $type = strtoupper($type);
+
+        switch ($type) {
+            case 'A1':
+                $response->data['title']->name = 'PLANILLA DE HABERES';
+                break;
+            case 'A2':
+                $response->data['title']->name = 'PLANILLA PATRONAL';
+                break;
+            default:
+                return response()->json([
+                    'error' => true,
+                    'message' => 'No se encuentra la planilla',
+                    'data' => null
+                ]);
+        }
+
+        $file_name= implode(" ", [$response->data['title']->name, $type, $year, strtoupper($month)]).".pdf";
+
+        return \PDF::loadView('payroll.print', $response->data)
+            ->setOption('page-width', '216')
+            ->setOption('page-height', '330')
+            ->setOrientation('landscape')
+            ->setOption('encoding', 'utf-8')
+            ->stream($file_name);
     }
 }

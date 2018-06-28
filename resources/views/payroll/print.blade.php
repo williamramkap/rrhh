@@ -1,3 +1,7 @@
+<?php
+  use \App\Helpers\Util;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -127,21 +131,21 @@
                 @endif
                     <td>{{ $employee->worked_days }}</td>
                 @if ($title->type == 'A1')
-                    <td>{{ \App\Helpers\Util::format_number($employee->base_wage) }}</td>
+                    <td>{{ Util::format_number($employee->base_wage) }}</td>
                 @endif
-                    <td>{{ \App\Helpers\Util::format_number($employee->quotable) }}</td>
+                    <td>{{ Util::format_number($employee->quotable) }}</td>
                     <td>{{ $employee->management_entity }}</td>
-                    <td>{{ \App\Helpers\Util::format_number($employee->discount_old) }}</td>
-                    <td>{{ \App\Helpers\Util::format_number($employee->discount_common_risk) }}</td>
-                    <td>{{ \App\Helpers\Util::format_number($employee->discount_commission) }}</td>
-                    <td>{{ \App\Helpers\Util::format_number($employee->discount_solidary) }}</td>
-                    <td>{{ \App\Helpers\Util::format_number($employee->discount_national) }}</td>
-                    <td>{{ \App\Helpers\Util::format_number($employee->total_amount_discount_law) }}</td>
-                    <td>{{ \App\Helpers\Util::format_number($employee->net_salary) }}</td>
-                    <td>{{ \App\Helpers\Util::format_number($employee->discount_rc_iva) }}</td>
-                    <td>{{ \App\Helpers\Util::format_number($employee->total_amount_discount_institution) }}</td>
-                    <td>{{ \App\Helpers\Util::format_number($employee->total_discounts) }}</td>
-                    <td>{{ \App\Helpers\Util::format_number($employee->payable_liquid) }}</td>
+                    <td>{{ Util::format_number($employee->discount_old) }}</td>
+                    <td>{{ Util::format_number($employee->discount_common_risk) }}</td>
+                    <td>{{ Util::format_number($employee->discount_commission) }}</td>
+                    <td>{{ Util::format_number($employee->discount_solidary) }}</td>
+                    <td>{{ Util::format_number($employee->discount_national) }}</td>
+                    <td>{{ Util::format_number($employee->total_amount_discount_law) }}</td>
+                    <td>{{ Util::format_number($employee->net_salary) }}</td>
+                    <td>{{ Util::format_number($employee->discount_rc_iva) }}</td>
+                    <td>{{ Util::format_number($employee->total_amount_discount_institution) }}</td>
+                    <td>{{ Util::format_number($employee->total_discounts) }}</td>
+                    <td>{{ Util::format_number($employee->payable_liquid) }}</td>
                 </tr>
             @endforeach
                 <tr class="total">
@@ -154,20 +158,20 @@
                         @break
                 @endswitch
                     <td class="footer" colspan="{{ $table_footer_space1 }}">TOTAL PLANILLA</td>
-                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->base_wage) }}</td>
-                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->quotable) }}</td>
+                    <td class="footer">{{ Util::format_number($totals->base_wage) }}</td>
+                    <td class="footer">{{ Util::format_number($totals->quotable) }}</td>
                     <td class="footer"></td>
-                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->discount_old) }}</td>
-                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->discount_common_risk) }}</td>
-                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->discount_commission) }}</td>
-                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->discount_solidary) }}</td>
-                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->discount_national) }}</td>
-                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->total_amount_discount_law) }}</td>
-                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->net_salary) }}</td>
-                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->discount_rc_iva) }}</td>
-                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->total_amount_discount_institution) }}</td>
-                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->total_discounts) }}</td>
-                    <td class="footer">{{ \App\Helpers\Util::format_number($totals->payable_liquid) }}</td>
+                    <td class="footer">{{ Util::format_number($totals->discount_old) }}</td>
+                    <td class="footer">{{ Util::format_number($totals->discount_common_risk) }}</td>
+                    <td class="footer">{{ Util::format_number($totals->discount_commission) }}</td>
+                    <td class="footer">{{ Util::format_number($totals->discount_solidary) }}</td>
+                    <td class="footer">{{ Util::format_number($totals->discount_national) }}</td>
+                    <td class="footer">{{ Util::format_number($totals->total_amount_discount_law) }}</td>
+                    <td class="footer">{{ Util::format_number($totals->net_salary) }}</td>
+                    <td class="footer">{{ Util::format_number($totals->discount_rc_iva) }}</td>
+                    <td class="footer">{{ Util::format_number($totals->total_amount_discount_institution) }}</td>
+                    <td class="footer">{{ Util::format_number($totals->total_discounts) }}</td>
+                    <td class="footer">{{ Util::format_number($totals->payable_liquid) }}</td>
                 </tr>
             </tbody>
         </table>

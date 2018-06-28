@@ -182,4 +182,8 @@ class Util
     {
         return number_format($number, $decimals, ',', '.');
     }
+
+    public static function get_percentage($number, $percent){
+        return ($number * $percent / 100);
+    }
 }
