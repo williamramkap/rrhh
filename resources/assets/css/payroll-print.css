@@ -47,11 +47,6 @@ table, th, td {
     height: 6em;
 }
 
-td {
-    height: 5.5em;
-    display: table-cell;
-}
-
 th {
     word-wrap: break-word;
     background-color: lightgray;
@@ -68,9 +63,9 @@ h1, h2, h3 {
 }
 
 p, h1, h2, h3 {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    margin: 0 !important;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0;
 }
 
 .name {
