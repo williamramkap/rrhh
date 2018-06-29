@@ -14,7 +14,7 @@ class AddRelationshipPositionGroupsEmployerNumber extends Migration
     public function up()
     {
         Schema::table('position_groups', function (Blueprint $table) {
-            $table->integer('employer_number_id')->unsigned();
+            $table->integer('employer_number_id')->unsigned()->nullable();
             $table->foreign('employer_number_id')->references('id')->on('employer_numbers');
         });
     }

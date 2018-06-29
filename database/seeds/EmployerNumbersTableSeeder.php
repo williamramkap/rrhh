@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class EmployerTableSeeder extends Seeder
+class EmployerNumbersTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,7 +19,7 @@ class EmployerTableSeeder extends Seeder
             ['number' => '04-720-00004'],
         ];
         foreach ($numbers as $number) {
-            App\EmployeeType::create($number);
+            App\EmployerNumber::create($number);
         }
     }
 }
