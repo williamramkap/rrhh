@@ -10,10 +10,13 @@
         <meta name="viewport" content="initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>{{ $title->name }} {{ $title->year }}</title>
-        <!-- <link rel="stylesheet" type="text/css" href="{{ asset('css/all.css') }}"></link> -->
-        <style>
-            <?php include public_path('css/all.css') ?>
-        </style>
+        @if (Config::get('app.debug'))
+            <style>
+                <?php include public_path('css/all.css') ?>
+            </style>
+        @else
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/all.css') }}"></link>
+        @endif
     </head>
 
     <body>
@@ -75,14 +78,16 @@
                     <th width="3%">AREA</th>
                 @endif
                     <th width="4%">FECHA DE INGRESO</th>
-                @if ($title->type == 'H')
-                    @if (!$title->management_entity)
+                @if ($title->type == 'H' && !$title->management_entity)
                     <th width="1%">FECHA VENCIMIENTO CONTRATO</th>
-                    @endif
+                @endif
                     <th width="1%">DIAS TRABAJADOS</th>
+                @if ($title->type == 'H')
                     <th width="2%">HABER BÁSICO</th>
+                @endif
                     <th width="2%">TOTAL GANADO</th>
                     <th width="1%">AFP</th>
+                @if ($title->type == 'H')
                     <th width="1%">Renta vejez {{ $procedure->discount_old }}%</th>
                     <th width="1%">Riesgo común {{ $procedure->discount_common_risk }}%</th>
                     <th width="1%">Comisión {{ $procedure->discount_commission }}%</th>
@@ -96,7 +101,7 @@
                     <th width="3%">LIQUIDO PAGABLE</th>
                 @endif
                 @if ($title->type =='P')
-                    <th width="1%">CNS {{ $procedure->contribution_insurance_companty }}%</th>
+                    <th width="1%">CNS {{ $procedure->contribution_insurance_company }}%</th>
                     <th width="1%">Riesgo Profesional {{ $procedure->contribution_professional_risk }}%</th>
                     <th width="1%">Aporte Patronal Solidario {{ $procedure->contribution_employer_solidary }}%</th>
                     <th width="1%">Aporte Patronal para Vivienda {{ $procedure->contribution_employer_housing }}%</th>
@@ -123,11 +128,11 @@
                     <td>{{ $employee->position_group }}</td>
                 @endif
                     <td>{{ $employee->date_start }}</td>
-                @if ($title->type == 'H')
-                    @if (!$title->management_entity)
+                @if ($title->type == 'H' && !$title->management_entity)
                     <td>{{ $employee->date_end }}</td>
-                    @endif
+                @endif
                     <td>{{ $employee->worked_days }}</td>
+                @if ($title->type == 'H')
                     <td>{{ Util::format_number($employee->base_wage) }}</td>
                 @endif
                     <td>{{ Util::format_number($employee->quotable) }}</td>
@@ -159,14 +164,18 @@
                     @case ('H')
                         @if ($title->position_group)
                             @php ($table_footer_space1 = 9)
-                        @elseif ($title->management_entity != '')
+                        @elseif ($title->management_entity)
                             @php ($table_footer_space1 = 10)
                         @else
                             @php ($table_footer_space1 = 12)
                         @endif
                         @break
                     @case ('P')
-                        @php ($table_footer_space1 = 7)
+                        @if ($title->position_group)
+                            @php ($table_footer_space1 = 6)
+                        @else
+                            @php ($table_footer_space1 = 7)
+                        @endif
                         @break
                 @endswitch
                     <td class="footer" colspan="{{ $table_footer_space1 }}">TOTAL PLANILLA</td>
