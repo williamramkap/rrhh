@@ -737,7 +737,7 @@ class PayrollController extends Controller
                 ]);
         }
 
-        $file_name= implode(" ", [$response->data['title']->name, $form_name, $year, strtoupper($month)]).".pdf";
+        $file_name= implode(" ", [$response->data['title']->name, $form_name, $year, strtoupper($month->name)]).".pdf";
 
         // return response()->json($response, $response->code);
 
@@ -746,6 +746,8 @@ class PayrollController extends Controller
             ->setOption('page-height', '330')
             ->setOrientation('landscape')
             ->setOption('encoding', 'utf-8')
+            ->setOption('footer-font-size', 5)
+            ->setOption('footer-center', '[page] de [topage] - Impreso el '.date('m/d/Y H:i'))
             ->stream($file_name);
     }
 }
