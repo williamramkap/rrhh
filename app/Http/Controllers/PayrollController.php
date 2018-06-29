@@ -18,6 +18,8 @@ use App\EmployeePayroll;
 use App\TotalPayrollEmployee;
 use App\TotalPayrollEmployer;
 use App\ManagementEntity;
+use App\PositionGroup;
+use App\EmployerNumber;
 
 class PayrollController extends Controller
 {
@@ -588,11 +590,11 @@ class PayrollController extends Controller
 
             $company = Company::select()->first();
 
-            // if (!config('app.debug')) {
+            if (!config('app.debug')) {
                 $payrolls = Payroll::where('procedure_id',$procedure->id)->get();
-            // } else {
-            //     $payrolls = Payroll::where('procedure_id',$procedure->id)->take(3)->get();
-            // }
+            } else {
+                $payrolls = Payroll::where('procedure_id',$procedure->id)->take(3)->get();
+            }
             foreach ($payrolls as $key => $payroll) {
                 $contract = $payroll->contract;
                 $employee = $contract->employee;
@@ -670,18 +672,22 @@ class PayrollController extends Controller
         $position_group = 0;
         $management_entity = 0;
         $valid_contract = 0;
+        $subtype = 1;
+        $type = 'H';
 
         switch (count($params)) {
+            case 6:
+                $employer_number = $params[5];
             case 5:
-                $employer_number = $params[4];
+                $position_group = $params[4];
             case 4:
-                $position_group = $params[3];
+                $management_entity = $params[3];
             case 3:
-                $management_entity = $params[2];
+                $valid_contract = $params[2];
             case 2:
-                $valid_contract = $params[1];
+                $subtype = $params[1];
             case 1:
-                $type = $params[0];
+                $type = strtoupper($params[0]);
                 break;
             default:
                 return response()->json([
@@ -691,21 +697,41 @@ class PayrollController extends Controller
                 ], 404);
         }
 
-        $type = $params[0];
         $response = $this->getFormattedData($year, $month->id, $valid_contract, $management_entity, $position_group, $employer_number);
 
         // return response()->json($response, $response->code);
 
+        $response->data['title']->subtitle = '';
         $response->data['title']->type = $type;
+        $response->data['title']->subtype = $subtype;
         $response->data['title']->month = $month->name;
-        $type = strtoupper($type);
+
+        if ($management_entity) {
+            $management_entity = ManagementEntity::find($management_entity);
+            $response->data['title']->subtitle = implode(' - ', [$response->data['title']->subtitle, $management_entity->name]);
+            $response->data['title']->subtype = implode('-', [$response->data['title']->subtype, $management_entity->id]);
+        }
+        if ($position_group) {
+            $position_group = PositionGroup::find($position_group);
+            $response->data['title']->subtitle = implode(' - ', [$response->data['title']->subtitle, $position_group->name]);
+            $response->data['title']->subtype = implode('-', [$response->data['title']->subtype, $position_group->id]);
+            $response->data['company']->employer_number = $position_group->employer_number->number;
+        }
+        if ($employer_number) {
+            $employer_number = EmployerNumber::find($employer_number);
+            $response->data['title']->subtitle = implode(' - CNS: ', [$response->data['title']->subtitle, $employer_number->number]);
+            $response->data['title']->subtype = implode('-', [$response->data['title']->subtype, $employer_number->id]);
+            $response->data['company']->employer_number = $employer_number->number;
+        }
 
         switch ($type) {
-            case 'A1':
+            case 'H':
                 $response->data['title']->name = 'PLANILLA DE HABERES';
+                $response->data['title']->table_header = 'DESCUENTOS DEL SISTEMA DE PENSIONES';
                 break;
-            case 'A2':
+            case 'P':
                 $response->data['title']->name = 'PLANILLA PATRONAL';
+                $response->data['title']->table_header = 'APORTES PATRONALES';
                 break;
             default:
                 return response()->json([
@@ -715,7 +741,7 @@ class PayrollController extends Controller
                 ]);
         }
 
-        $file_name= implode(" ", [$response->data['title']->name, $type, $year, strtoupper($month)]).".pdf";
+        $file_name= implode(" ", [$response->data['title']->name, $type.$subtype, $year, strtoupper($month)]).".pdf";
 
         return \PDF::loadView('payroll.print', $response->data)
             ->setOption('page-width', '216')

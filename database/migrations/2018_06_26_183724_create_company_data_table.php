@@ -18,7 +18,6 @@ class CreateCompanyDataTable extends Migration
             $table->string('name')->nullable();
             $table->string('address')->nullable();
             $table->integer('tax_id_number')->nullable();
-            $table->string('employer_number')->nullable();
             $table->timestamps();
         });
     }

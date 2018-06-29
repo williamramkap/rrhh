@@ -41,7 +41,7 @@ class EmployeePayroll
         $this->contribution_professional_risk = Util::get_percentage($this->quotable, $procedure->contribution_professional_risk);
         $this->contribution_employer_solidary = Util::get_percentage($this->quotable, $procedure->contribution_employer_solidary);
         $this->contribution_employer_housing = Util::get_percentage($this->quotable, $procedure->contribution_employer_housing);
-        $this->total_contributions = round($this->contribution_insurance_company + $this->contribution_professional_risk + $this->contribution_employer_solidary + $this->contribution_employer_housing);
+        $this->total_contributions = round(($this->contribution_insurance_company + $this->contribution_professional_risk + $this->contribution_employer_solidary + $this->contribution_employer_housing), 2);
         $this->position_group = $contract->position->position_group->name;
         $this->position_group_id = $contract->position->position_group->id;
         $this->employer_number = $contract->position->position_group->employer_number->number;
