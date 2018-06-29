@@ -13,6 +13,6 @@ class PositionGroup extends Model
 
     public function employer_number()
     {
-        return $this->belongsTo(City::class, 'employer_number_id', 'id');
+        return $this->belongsTo(EmployerNumber::class, 'employer_number_id', 'id');
     }
 }

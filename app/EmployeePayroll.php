@@ -25,6 +25,7 @@ class EmployeePayroll
         $this->base_wage = $payroll->base_wage;
         $this->quotable = $this->base_wage * $this->worked_days / 30;
         $this->management_entity = $employee->management_entity->name;
+        $this->management_entity_id = $employee->management_entity->id;
         $this->discount_old = Util::get_percentage($this->quotable, $procedure->discount_old);
         $this->discount_common_risk = Util::get_percentage($this->quotable,$procedure->discount_common_risk);
         $this->discount_commission = Util::get_percentage($this->quotable,$procedure->discount_commission);
@@ -42,6 +43,32 @@ class EmployeePayroll
         $this->contribution_employer_housing = Util::get_percentage($this->quotable, $procedure->contribution_employer_housing);
         $this->total_contributions = round($this->contribution_insurance_company + $this->contribution_professional_risk + $this->contribution_employer_solidary + $this->contribution_employer_housing);
         $this->position_group = $contract->position->position_group->name;
-        $this->valid_contract = Carbon::create($procedure->year, $procedure->month->id)->endOfMonth()->gte(Carbon::create(2018, 1, 20, 0, 0, 0));
+        $this->position_group_id = $contract->position->position_group->id;
+        $this->employer_number = $contract->position->position_group->employer_number->number;
+        $this->employer_number_id = $contract->position->position_group->employer_number->id;
+        $this->valid_contract = Carbon::parse($contract->date_end)->gte(Carbon::create($procedure->year, $procedure->month->id)->endOfMonth());
+    }
+
+    public function setZeroAccounts() {
+        $this->base_wage = 0;
+        $this->quotable = 0;
+        $this->discount_old = 0;
+        $this->discount_common_risk = 0;
+        $this->discount_commission = 0;
+        $this->discount_solidary = 0;
+        $this->discount_national = 0;
+        $this->total_amount_discount_law = 0;
+        $this->discount_commission = 0;
+        $this->net_salary = 0;
+        $this->discount_rc_iva = 0;
+        $this->total_amount_discount_institution = 0;
+        $this->total_discounts = 0;
+        $this->total_amount_discount_institution = 0;
+        $this->payable_liquid = 0;
+        $this->contribution_insurance_company = 0;
+        $this->contribution_professional_risk = 0;
+        $this->contribution_employer_solidary = 0;
+        $this->contribution_employer_housing = 0;
+        $this->total_contributions = 0;
     }
 }

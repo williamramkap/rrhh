@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\File;
 use App\EmployeePayroll;
 use App\TotalPayrollEmployee;
 use App\TotalPayrollEmployer;
+use App\ManagementEntity;
 
 class PayrollController extends Controller
 {
@@ -576,19 +577,9 @@ class PayrollController extends Controller
         })->download('xls');    
     }
 
-    private function getFormattedData($year, $monthReq)
+    private function getFormattedData($year, $month, $valid_contract, $management_entity, $position_group, $employer_number)
     {
-        $month = Month::whereRaw("lower(name) like '" . strtolower($monthReq) . "'")->first();
-        if (!$month) {
-            return (object)array(
-                "code" => 400,
-                "error" => true,
-                "message" => "Mes inexistente",
-                "data" => null
-            );
-        }
-      
-        $procedure = Procedure::where('month_id', $month->id)->where('year', $year)->select()->first();
+        $procedure = Procedure::where('month_id', $month)->where('year', $year)->select()->first();
 
         if (isset($procedure->id)) {
             $employees = array();
@@ -597,17 +588,22 @@ class PayrollController extends Controller
 
             $company = Company::select()->first();
 
-            if (!config('app.debug')) {
+            // if (!config('app.debug')) {
                 $payrolls = Payroll::where('procedure_id',$procedure->id)->get();
-            } else {
-                $payrolls = Payroll::where('procedure_id',$procedure->id)->take(3)->get();
-            }
+            // } else {
+            //     $payrolls = Payroll::where('procedure_id',$procedure->id)->take(3)->get();
+            // }
             foreach ($payrolls as $key => $payroll) {
                 $contract = $payroll->contract;
                 $employee = $contract->employee;
 
                 $e = new EmployeePayroll($payroll, $procedure);
-                $employees[] = $e;
+                
+                if (($valid_contract && !$e->valid_contract) || (($management_entity != 0) && ($e->management_entity_id != $management_entity)) || (($position_group != 0) && ($e->position_group_id != $position_group)) || ($employer_number && ($e->employer_number_id != $employer_number))) {
+                    $e->setZeroAccounts();
+                } else {
+                    $employees[] = $e;
+                }
 
                 $total_discounts->add_base_wage($e->base_wage);
                 $total_discounts->add_quotable($e->quotable);
@@ -650,7 +646,6 @@ class PayrollController extends Controller
                 'procedure' => $procedure,
                 'company' => $company,
                 'title' => (object)array(
-                    'month' => $month->name,
                     'year' => $year,
                     'logo' => File::get(storage_path('app/public/img/logo_base64.txt')),
                 ),
@@ -660,20 +655,49 @@ class PayrollController extends Controller
 
     public function print($year, $month, $params)
     {
-        $params = explode("/", $params);
-        $type = $params[0];
-        
-        if (count($params) > 1) {
-            $employer_number = $params[1];
+        $month = Month::where('id', $month)->select()->first();
+        if (!$month) {
+            return response()->json([
+                "error" => true,
+                "message" => "Mes inexistente",
+                "data" => null,
+            ], 404);
         }
 
-        $response = $this->getFormattedData($year, $month);
+        $params = explode("/", $params);
+        
+        $employer_number = 0;
+        $position_group = 0;
+        $management_entity = 0;
+        $valid_contract = 0;
+
+        switch (count($params)) {
+            case 5:
+                $employer_number = $params[4];
+            case 4:
+                $position_group = $params[3];
+            case 3:
+                $management_entity = $params[2];
+            case 2:
+                $valid_contract = $params[1];
+            case 1:
+                $type = $params[0];
+                break;
+            default:
+                return response()->json([
+                    'error' => true,
+                    'message' => 'No se encuentra la planilla',
+                    'data' => null,
+                ], 404);
+        }
+
+        $type = $params[0];
+        $response = $this->getFormattedData($year, $month->id, $valid_contract, $management_entity, $position_group, $employer_number);
 
         // return response()->json($response, $response->code);
 
-        // return view('payroll.print-'.$type, $response->data);
-
         $response->data['title']->type = $type;
+        $response->data['title']->month = $month->name;
         $type = strtoupper($type);
 
         switch ($type) {
