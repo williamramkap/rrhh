@@ -17,7 +17,7 @@ class InsuranceController extends Controller
     {
         $contract = Contract::where('id',$id)->first();
         
-        $meses = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Dicie'];
+        $meses = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
         
         $file_name= "Seguro.pdf";
         $data = [
@@ -27,8 +27,8 @@ class InsuranceController extends Controller
             'fecha' => 'La Paz, '.date('d').' de '.$meses[(int)date('m')].' del '.date('Y')
         ];
         return \PDF::loadView('insurance.printhigh',$data)
-            ->setOption('page-width', '200')
-            ->setOption('page-height', '135')
+            ->setOption('page-width', '216')
+            ->setOption('page-height', '279')
             ->setOption('margin-top',0)
             ->setOption('margin-bottom', 0)
             ->setOption('margin-left', 4)
@@ -40,7 +40,7 @@ class InsuranceController extends Controller
     {
         $contract = Contract::where('id',$id)->first();
         
-        $meses = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Dicie'];
+        $meses = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
         
         $file_name= "Seguro.pdf";
         $data = [
@@ -49,9 +49,8 @@ class InsuranceController extends Controller
             'noemp' => '01-720-0025',
             'fecha' => 'La Paz, '.date('d').' de '.$meses[(int)date('m')].' del '.date('Y')
         ];
-        return \PDF::loadView('insurance.printhigh',$data)
-            ->setOption('page-width', '200')
-            ->setOption('page-height', '135')
+        return \PDF::loadView('insurance.printlow',$data)
+            ->setPaper('letter')
             ->setOption('margin-top',0)
             ->setOption('margin-bottom', 0)
             ->setOption('margin-left', 4)

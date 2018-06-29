@@ -17,88 +17,114 @@
             font-family: 'Arial', sans-serif;
             text-align: center;
             
-            margin: 1cm ;
+            margin: 1.5cm 0 0 2cm;
         }
         .first{
-            margin: 3cm 0 0 0;            
+            margin: 4.5cm 0 0 0;
         }
         .second{
-            margin: 2cm 0 0 0;
+            margin: 1.2cm 0 0 0;
         }
         .three{
-            margin: 2cm 0 0 0;
+            margin: 0.7cm 0 0 0;
         }
         .four{
-            margin: 2cm 0 0 0;
+            margin: 0.5cm 0 0 0;
         }
         .five{
-            margin: 2cm 0 0 0;
+            margin: 0 0 0 0;
         }
-        .camp{
-            float: left;
+        .camp{ 
+            display: table-cell;
+            vertical-align: middle;            
         }
         .separate{
             clear: both;
         }
         .pat{
-            width: 5cm;
+            width: 5.5cm;
+            height:1.2cm;    
         }
         .mat{
-            width: 5cm;            
-        }
+            width: 5.5cm;
+            height:1.2cm;    
+        }            
         .name{
-            width: 5cm; 
+            width: 5.5cm;
+            height:1.2cm;    
         }
         .noasegurado{
-            width: 5cm;
+            width: 5.5cm; 
+            height:1.2cm;   
         }
         .day_birth{
-            width: 1.7cm;
+            width: 1.8cm; 
+            height:1.2cm;   
         }
         .month_birth{
-            width: 1.7cm;
+            width: 1.8cm; 
+            height:1.2cm;   
         }
         .year_birth{
-            width: 1.7cm;
+            width: 1.8cm; 
+            height:1.2cm;   
         }
         .gender{
-            width: 2.5cm;
+            width: 2.8cm; 
+            height:1.2cm;   
         }
         .zone{
-            width: 3cm;
+            width: 3.6cm; 
+            height:1.2cm;   
         }
         .street{
-            width: 3cm;
+            width: 4.4cm; 
+            height:1.2cm;   
         }
         .no{
-            width: 2cm;
+            width: 2cm; 
+            height:1.2cm;   
         }
         .location{
-            width: 3cm;
+            width: 3.6cm; 
+            height:1.2cm;   
         }
         .salary{
-            width: 5cm;
+            width: 5.6cm; 
+            height:1.2cm;  
         }
         .position{
-            width: 8cm;
+            width: 7.9cm; 
+            height: 1.2cm;  
+             
+        }
+        .start{
+            width: 8.4cm; 
+            height: 1.2cm;  
         }
         .day_end{
-            width: 2cm;
+            width: 2.1cm; 
+            height:0.8cm;   
         }
         .month_end{
-            width: 3cm;
+            width: 4.2cm;
+            height:0.8cm;    
         }
         .year_end{
-            width: 2cm;
+            width: 2.1cm;
+            height:0.8cm;    
         }
         .razon{
-            width: 13cm;
+            width: 13.5cm;
+            height: 1.3cm;    
         }
         .noemp{
-            width: 7cm;
+            width: 8.5cm;
+            height: 1.3cm;    
         }
         .fecha{
-            width: 15cm;
+            width: 17.1cm;
+            height: 0.8cm;    
         }
     </style>
 
@@ -129,9 +155,12 @@
         <div class="three">
             <div class="camp salary"> {{ $contract->position->charge->base_wage }} </div>
             <div class="camp position"> {{ $contract->position->name }} </div>
-            <div class="camp day_end"> {{ date('d', strtotime($contract->date_end)) }} </div>
-            <div class="camp month_end"> {{ date('m', strtotime($contract->date_end)) }} </div>
-            <div class="camp year_end"> {{ date('Y', strtotime($contract->date_end)) }} </div>
+            <div class="camp start"> 
+                <div>&nbsp;</div> 
+                <div class="camp day_end"> {{ date('d', strtotime($contract->date_start)) }} </div>
+                <div class="camp month_end"> {{ Util::getMonthEs(date('m', strtotime($contract->date_start))) }} </div>
+                <div class="camp year_end"> {{ date('Y', strtotime($contract->date_start)) }} </div>
+            </div>
         </div>
         <div class="separate"></div>
         <div class="four">
@@ -144,7 +173,5 @@
         </div>
     </div>
 </div>
-    
 </body>
-
 </html>
