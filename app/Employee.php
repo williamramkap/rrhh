@@ -28,9 +28,9 @@ class Employee extends Model
     {
         return $this->hasMany(Contract::class);
     }
-    public function fullName()
+    public function fullName($style="uppercase", $order="name_first")
     {
-        return Util::fullName($this);
+        return Util::fullName($this, $style, $order);
     }
 
 }

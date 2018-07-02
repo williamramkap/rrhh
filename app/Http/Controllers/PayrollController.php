@@ -11,6 +11,15 @@ use Prophecy\Promise\ReturnPromise;
 use App\Procedure;
 use App\Month;
 use App\Contract;
+use App\Company;
+use App\Helpers\Util;
+use Illuminate\Support\Facades\File;
+use App\EmployeePayroll;
+use App\TotalPayrollEmployee;
+use App\TotalPayrollEmployer;
+use App\ManagementEntity;
+use App\PositionGroup;
+use App\EmployerNumber;
 
 class PayrollController extends Controller
 {
@@ -37,8 +46,22 @@ class PayrollController extends Controller
             $pro->save();
         }
         $procedures = Procedure::with('month')->orderBy('year', 'asc')->orderBy('month_id','desc')->get();
+
+        $positions = PositionGroup::all()->groupBy('employer_number_id');
+        $position_groups = [];
+
+        foreach($positions as $i => $value) {
+            if (count($value) == 1) {
+                $position_groups[] = $value[0];
+            }
+        }
+
+        $management_entities = ManagementEntity::all();
+
         $data=[
-            'procedures'=> $procedures,
+            'procedures' => $procedures,
+            'position_groups' => $position_groups,
+            'management_entities' => $management_entities,
         ];
         return view("payroll.index", $data);
 
@@ -583,5 +606,190 @@ class PayrollController extends Controller
                }
             });
         })->download('xls');    
+    }
+
+    private function getFormattedData($year, $month, $valid_contracts, $management_entity, $position_group, $employer_number)
+    {
+        $procedure = Procedure::where('month_id', $month)->where('year', $year)->select()->first();
+
+        if (isset($procedure->id)) {
+            $employees = array();
+            $total_discounts = new TotalPayrollEmployee();
+            $total_contributions = new TotalPayrollEmployer();
+
+            $company = Company::select()->first();
+
+            $payrolls = Payroll::where('procedure_id',$procedure->id)->get();
+            // if (!config('app.debug')) {
+            //     $payrolls = Payroll::where('procedure_id',$procedure->id)->take(3)->get();
+            // }
+            foreach ($payrolls as $key => $payroll) {
+                $contract = $payroll->contract;
+                $employee = $contract->employee;
+
+                $e = new EmployeePayroll($payroll, $procedure);
+                
+                if (($valid_contracts && !$e->valid_contract) || (($management_entity != 0) && ($e->management_entity_id != $management_entity)) || (($position_group != 0) && ($e->position_group_id != $position_group)) || ($employer_number && ($e->employer_number_id != $employer_number))) {
+                    $e->setZeroAccounts();
+                } else {
+                    $employees[] = $e;
+                }
+
+                $total_discounts->add_base_wage($e->base_wage);
+                $total_discounts->add_quotable($e->quotable);
+                $total_discounts->add_discount_old($e->discount_old);
+                $total_discounts->add_discount_common_risk($e->discount_common_risk);
+                $total_discounts->add_discount_commission($e->discount_commission);
+                $total_discounts->add_discount_solidary($e->discount_solidary);
+                $total_discounts->add_discount_national($e->discount_national);
+                $total_discounts->add_total_amount_discount_law($e->total_amount_discount_law);
+                $total_discounts->add_net_salary($e->net_salary);
+                $total_discounts->add_discount_rc_iva($e->discount_rc_iva);
+                $total_discounts->add_total_amount_discount_institution($e->total_amount_discount_institution);
+                $total_discounts->add_total_discounts($e->total_discounts);
+                $total_discounts->add_payable_liquid($e->payable_liquid);
+
+                $total_contributions->add_quotable($e->quotable);
+                $total_contributions->add_contribution_insurance_company($e->contribution_insurance_company);
+                $total_contributions->add_contribution_professional_risk($e->contribution_professional_risk);
+                $total_contributions->add_contribution_employer_solidary($e->contribution_employer_solidary);
+                $total_contributions->add_contribution_employer_housing($e->contribution_employer_housing);
+                $total_contributions->add_total_contributions($e->total_contributions);
+            }
+        } else {
+            return (object)array(
+                "code" => 404,
+                "error" => true,
+                "message" => "Planilla inexistente",
+                "data" => null
+            );
+        }
+
+        return (object)array(
+            "code" => 200,
+            "error" => false,
+            "message" => "Planilla generada con éxito",
+            "data" => [
+                'total_discounts' => $total_discounts,
+                'total_contributions' => $total_contributions,
+                'employees' => $employees,
+                'procedure' => $procedure,
+                'company' => $company,
+                'title' => (object)array(
+                    'year' => $year,
+                    'logo' => File::get(storage_path('app/public/img/logo_base64.txt')),
+                ),
+            ]
+        );
+    }
+
+    /**
+     * Print payroll reports.
+     *
+     * @param  integer  $year
+     * @param  integer  $month
+     * @param  string  $report_type
+     * @param  string  $report_name
+     * @param  boolean $valid_contracts
+     * @param  integer  $management_entity_id
+     * @param  integer  $position_group_id
+     * @param  integer  $employer_number_id
+     * @return \PDF
+     */
+    public function print(Request $params, $year, $month)
+    {
+        $month = Month::where('id', $month)->select()->first();
+        if (!$month) {
+            return response()->json([
+                "error" => true,
+                "message" => "Mes inexistente",
+                "data" => null,
+            ], 404);
+        }
+
+        $params = $params->all();
+
+        $employer_number = 0;
+        $position_group = 0;
+        $management_entity = 0;
+        $valid_contracts = 0;
+        $report_name = '';
+        $report_type = 'H';
+
+        switch (count($params)) {
+            case 6:
+                $employer_number = request('employer_number');
+            case 5:
+                $position_group = request('position_group');
+            case 4:
+                $management_entity = request('management_entity');
+            case 3:
+                $valid_contracts = request('valid_contracts');
+            case 2:
+                $report_name = request('report_name');
+            case 1:
+                $report_type = strtoupper(request('report_type'));
+                break;
+            default:
+                return response()->json([
+                    'error' => true,
+                    'message' => 'No se encuentra la planilla',
+                    'data' => null,
+                ], 404);
+        }
+
+        $response = $this->getFormattedData($year, $month->id, $valid_contracts, $management_entity, $position_group, $employer_number);
+
+        $response->data['title']->subtitle = '';
+        $response->data['title']->management_entity = '';
+        $response->data['title']->position_group = '';
+        $response->data['title']->employer_number = '';
+        $response->data['title']->report_name = $report_name;
+        $response->data['title']->report_type = $report_type;
+        $response->data['title']->month = $month->name;
+
+        if ($management_entity) {
+            $response->data['title']->management_entity = ManagementEntity::find($management_entity)->name;
+        }
+        if ($position_group) {
+            $position_group = PositionGroup::find($position_group);
+            $response->data['title']->position_group = $position_group->name;
+            $response->data['company']->employer_number = $position_group->employer_number->number;
+        }
+        if ($employer_number) {
+            $employer_number = EmployerNumber::find($employer_number);
+            $response->data['title']->employer_number = $employer_number->number;
+            $response->data['company']->employer_number = $employer_number->number;
+        }
+
+        switch ($report_type) {
+            case 'H':
+                $response->data['title']->name = 'PLANILLA DE HABERES';
+                $response->data['title']->table_header = 'DESCUENTOS DEL SISTEMA DE PENSIONES';
+                break;
+            case 'P':
+                $response->data['title']->name = 'PLANILLA PATRONAL';
+                $response->data['title']->table_header = 'APORTES PATRONALES';
+                break;
+            default:
+                return response()->json([
+                    'error' => true,
+                    'message' => 'No se encuentra la planilla',
+                    'data' => null
+                ]);
+        }
+
+        $file_name= implode(" ", [$response->data['title']->name, $report_name, $year, strtoupper($month->name)]).".pdf";
+
+        // return response()->json($response, $response->code);
+
+        return \PDF::loadView('payroll.print', $response->data)
+            ->setOption('page-width', '216')
+            ->setOption('page-height', '330')
+            ->setOrientation('landscape')
+            ->setOption('encoding', 'utf-8')
+            ->setOption('footer-font-size', 5)
+            ->setOption('footer-center', '[page] de [topage] - Impreso el '.date('m/d/Y H:i'))
+            ->stream($file_name);
     }
 }

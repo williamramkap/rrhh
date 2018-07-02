@@ -10,4 +10,9 @@ class PositionGroup extends Model
     {
         return $this->hasMany(Position::class);
     }
+
+    public function employer_number()
+    {
+        return $this->belongsTo(EmployerNumber::class, 'employer_number_id', 'id');
+    }
 }
