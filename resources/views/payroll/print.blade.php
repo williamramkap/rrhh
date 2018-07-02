@@ -31,7 +31,7 @@
             <span>No. Patronal CNS: {{ $company->employer_number }}</span>
             <span style="padding-left: 5em;"></span>
         @endif
-            <span>{{ $title->form_name }}</span>
+            <span>{{ $title->report_name }}</span>
         </div>
 
         <div class="header-center">
@@ -48,7 +48,7 @@
         <table align="center">
             <thead>
                 <tr>
-                @switch ($title->type)
+                @switch ($title->report_type)
                     @case ('H')
                         @php ($table_header_space1 = 15)
                         @php ($table_header_space2 = 6)
@@ -65,7 +65,7 @@
                     <th width="1%">N°</th>
                     <th width="2%">C.I.</th>
                     <th width="10%">TRABAJADOR</th>
-                @if ($title->type == 'H')
+                @if ($title->report_type == 'H')
                     @if (!$title->management_entity)
                     <th width="1%">CUENTA BANCO UNIÓN</th>
                     @endif
@@ -78,16 +78,16 @@
                     <th width="3%">AREA</th>
                 @endif
                     <th width="4%">FECHA DE INGRESO</th>
-                @if ($title->type == 'H' && !$title->management_entity)
+                @if ($title->report_type == 'H' && !$title->management_entity)
                     <th width="1%">FECHA VENCIMIENTO CONTRATO</th>
                 @endif
                     <th width="1%">DIAS TRABAJADOS</th>
-                @if ($title->type == 'H')
+                @if ($title->report_type == 'H')
                     <th width="2%">HABER BÁSICO</th>
                 @endif
                     <th width="2%">TOTAL GANADO</th>
                     <th width="1%">AFP</th>
-                @if ($title->type == 'H')
+                @if ($title->report_type == 'H')
                     <th width="1%">Renta vejez {{ $procedure->discount_old }}%</th>
                     <th width="1%">Riesgo común {{ $procedure->discount_common_risk }}%</th>
                     <th width="1%">Comisión {{ $procedure->discount_commission }}%</th>
@@ -100,7 +100,7 @@
                     <th width="1%">TOTAL DESCUENTOS</th>
                     <th width="3%">LIQUIDO PAGABLE</th>
                 @endif
-                @if ($title->type =='P')
+                @if ($title->report_type =='P')
                     <th width="1%">CNS {{ $procedure->contribution_insurance_company }}%</th>
                     <th width="1%">Riesgo Profesional {{ $procedure->contribution_professional_risk }}%</th>
                     <th width="1%">Aporte Patronal Solidario {{ $procedure->contribution_employer_solidary }}%</th>
@@ -115,7 +115,7 @@
                     <td>{{ ++$i }}</td>
                     <td>{{ $employee->ci_ext }}</td>
                     <td class="name">{{ $employee->full_name }}</td>
-                @if ($title->type == 'H')
+                @if ($title->report_type == 'H')
                     @if (!$title->management_entity)
                     <td>{{ $employee->account_number }}</td>
                     @endif
@@ -128,16 +128,16 @@
                     <td>{{ $employee->position_group }}</td>
                 @endif
                     <td>{{ $employee->date_start }}</td>
-                @if ($title->type == 'H' && !$title->management_entity)
+                @if ($title->report_type == 'H' && !$title->management_entity)
                     <td>{{ $employee->date_end }}</td>
                 @endif
                     <td>{{ $employee->worked_days }}</td>
-                @if ($title->type == 'H')
+                @if ($title->report_type == 'H')
                     <td>{{ Util::format_number($employee->base_wage) }}</td>
                 @endif
                     <td>{{ Util::format_number($employee->quotable) }}</td>
                     <td>{{ $employee->management_entity }}</td>
-                @if ($title->type == 'H')
+                @if ($title->report_type == 'H')
                     <td>{{ Util::format_number($employee->discount_old) }}</td>
                     <td>{{ Util::format_number($employee->discount_common_risk) }}</td>
                     <td>{{ Util::format_number($employee->discount_commission) }}</td>
@@ -150,7 +150,7 @@
                     <td>{{ Util::format_number($employee->total_discounts) }}</td>
                     <td>{{ Util::format_number($employee->payable_liquid) }}</td>
                 @endif
-                @if ($title->type == 'P')
+                @if ($title->report_type == 'P')
                     <td>{{ Util::format_number($employee->contribution_insurance_company) }}</td>
                     <td>{{ Util::format_number($employee->contribution_professional_risk) }}</td>
                     <td>{{ Util::format_number($employee->contribution_employer_solidary) }}</td>
@@ -160,7 +160,7 @@
                 </tr>
             @endforeach
                 <tr class="total">
-                @switch ($title->type)
+                @switch ($title->report_type)
                     @case ('H')
                         @if ($title->position_group)
                             @php ($table_footer_space1 = 9)
@@ -179,7 +179,7 @@
                         @break
                 @endswitch
                     <td class="footer" colspan="{{ $table_footer_space1 }}">TOTAL PLANILLA</td>
-                @if ($title->type == 'H')
+                @if ($title->report_type == 'H')
                     <td class="footer">{{ Util::format_number($total_discounts->base_wage) }}</td>
                     <td class="footer">{{ Util::format_number($total_discounts->quotable) }}</td>
                     <td class="footer"></td>
@@ -195,7 +195,7 @@
                     <td class="footer">{{ Util::format_number($total_discounts->total_discounts) }}</td>
                     <td class="footer">{{ Util::format_number($total_discounts->payable_liquid) }}</td>
                 @endif
-                @if ($title->type == 'P')
+                @if ($title->report_type == 'P')
                     <td class="footer">{{ Util::format_number($total_contributions->quotable) }}</td>
                     <td class="footer"></td>
                     <td class="footer">{{ Util::format_number($total_contributions->contribution_insurance_company) }}</td>
