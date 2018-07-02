@@ -31,8 +31,22 @@ class PayrollController extends Controller
     public function index()
     {
         $procedures = Procedure::with('month')->orderBy('year', 'asc')->orderBy('month_id','desc')->get();
+
+        $positions = PositionGroup::all()->groupBy('employer_number_id');
+        $position_groups = [];
+
+        foreach($positions as $i => $value) {
+            if (count($value) == 1) {
+                $position_groups[] = $value[0];
+            }
+        }
+
+        $management_entities = ManagementEntity::all();
+
         $data=[
-            'procedures'=> $procedures,
+            'procedures' => $procedures,
+            'position_groups' => $position_groups,
+            'management_entities' => $management_entities,
         ];
         return view("payroll.index", $data);
 
@@ -579,7 +593,7 @@ class PayrollController extends Controller
         })->download('xls');    
     }
 
-    private function getFormattedData($year, $month, $valid_contract, $management_entity, $position_group, $employer_number)
+    private function getFormattedData($year, $month, $valid_contracts, $management_entity, $position_group, $employer_number)
     {
         $procedure = Procedure::where('month_id', $month)->where('year', $year)->select()->first();
 
@@ -590,18 +604,17 @@ class PayrollController extends Controller
 
             $company = Company::select()->first();
 
-            if (!config('app.debug')) {
-                $payrolls = Payroll::where('procedure_id',$procedure->id)->get();
-            } else {
-                $payrolls = Payroll::where('procedure_id',$procedure->id)->take(3)->get();
-            }
+            $payrolls = Payroll::where('procedure_id',$procedure->id)->get();
+            // if (!config('app.debug')) {
+            //     $payrolls = Payroll::where('procedure_id',$procedure->id)->take(3)->get();
+            // }
             foreach ($payrolls as $key => $payroll) {
                 $contract = $payroll->contract;
                 $employee = $contract->employee;
 
                 $e = new EmployeePayroll($payroll, $procedure);
                 
-                if (($valid_contract && !$e->valid_contract) || (($management_entity != 0) && ($e->management_entity_id != $management_entity)) || (($position_group != 0) && ($e->position_group_id != $position_group)) || ($employer_number && ($e->employer_number_id != $employer_number))) {
+                if (($valid_contracts && !$e->valid_contract) || (($management_entity != 0) && ($e->management_entity_id != $management_entity)) || (($position_group != 0) && ($e->position_group_id != $position_group)) || ($employer_number && ($e->employer_number_id != $employer_number))) {
                     $e->setZeroAccounts();
                 } else {
                     $employees[] = $e;
@@ -655,7 +668,20 @@ class PayrollController extends Controller
         );
     }
 
-    public function print($year, $month, $params)
+    /**
+     * Print payroll reports.
+     *
+     * @param  integer  $year
+     * @param  integer  $month
+     * @param  string  $report_type
+     * @param  string  $report_name
+     * @param  boolean $valid_contracts
+     * @param  integer  $management_entity_id
+     * @param  integer  $position_group_id
+     * @param  integer  $employer_number_id
+     * @return \PDF
+     */
+    public function print(Request $params, $year, $month)
     {
         $month = Month::where('id', $month)->select()->first();
         if (!$month) {
@@ -666,28 +692,28 @@ class PayrollController extends Controller
             ], 404);
         }
 
-        $params = explode("/", $params);
-        
+        $params = $params->all();
+
         $employer_number = 0;
         $position_group = 0;
         $management_entity = 0;
-        $valid_contract = 0;
-        $subtype = 1;
-        $type = 'H';
+        $valid_contracts = 0;
+        $report_name = '';
+        $report_type = 'H';
 
         switch (count($params)) {
             case 6:
-                $employer_number = $params[5];
+                $employer_number = request('employer_number');
             case 5:
-                $position_group = $params[4];
+                $position_group = request('position_group');
             case 4:
-                $management_entity = $params[3];
+                $management_entity = request('management_entity');
             case 3:
-                $valid_contract = $params[2];
+                $valid_contracts = request('valid_contracts');
             case 2:
-                $subtype = $params[1];
+                $report_name = request('report_name');
             case 1:
-                $type = strtoupper($params[0]);
+                $report_type = strtoupper(request('report_type'));
                 break;
             default:
                 return response()->json([
@@ -697,34 +723,31 @@ class PayrollController extends Controller
                 ], 404);
         }
 
-        $response = $this->getFormattedData($year, $month->id, $valid_contract, $management_entity, $position_group, $employer_number);
-
-        // return response()->json($response, $response->code);
+        $response = $this->getFormattedData($year, $month->id, $valid_contracts, $management_entity, $position_group, $employer_number);
 
         $response->data['title']->subtitle = '';
-        $response->data['title']->type = $type;
-        $response->data['title']->subtype = $subtype;
+        $response->data['title']->management_entity = '';
+        $response->data['title']->position_group = '';
+        $response->data['title']->employer_number = '';
+        $response->data['title']->report_name = $report_name;
+        $response->data['title']->report_type = $report_type;
         $response->data['title']->month = $month->name;
 
         if ($management_entity) {
-            $management_entity = ManagementEntity::find($management_entity);
-            $response->data['title']->subtitle = implode(' - ', [$response->data['title']->subtitle, $management_entity->name]);
-            $response->data['title']->subtype = implode('-', [$response->data['title']->subtype, $management_entity->id]);
+            $response->data['title']->management_entity = ManagementEntity::find($management_entity)->name;
         }
         if ($position_group) {
             $position_group = PositionGroup::find($position_group);
-            $response->data['title']->subtitle = implode(' - ', [$response->data['title']->subtitle, $position_group->name]);
-            $response->data['title']->subtype = implode('-', [$response->data['title']->subtype, $position_group->id]);
+            $response->data['title']->position_group = $position_group->name;
             $response->data['company']->employer_number = $position_group->employer_number->number;
         }
         if ($employer_number) {
             $employer_number = EmployerNumber::find($employer_number);
-            $response->data['title']->subtitle = implode(' - CNS: ', [$response->data['title']->subtitle, $employer_number->number]);
-            $response->data['title']->subtype = implode('-', [$response->data['title']->subtype, $employer_number->id]);
+            $response->data['title']->employer_number = $employer_number->number;
             $response->data['company']->employer_number = $employer_number->number;
         }
 
-        switch ($type) {
+        switch ($report_type) {
             case 'H':
                 $response->data['title']->name = 'PLANILLA DE HABERES';
                 $response->data['title']->table_header = 'DESCUENTOS DEL SISTEMA DE PENSIONES';
@@ -741,13 +764,17 @@ class PayrollController extends Controller
                 ]);
         }
 
-        $file_name= implode(" ", [$response->data['title']->name, $type.$subtype, $year, strtoupper($month)]).".pdf";
+        $file_name= implode(" ", [$response->data['title']->name, $report_name, $year, strtoupper($month->name)]).".pdf";
+
+        // return response()->json($response, $response->code);
 
         return \PDF::loadView('payroll.print', $response->data)
             ->setOption('page-width', '216')
             ->setOption('page-height', '330')
             ->setOrientation('landscape')
             ->setOption('encoding', 'utf-8')
+            ->setOption('footer-font-size', 5)
+            ->setOption('footer-center', '[page] de [topage] - Impreso el '.date('m/d/Y H:i'))
             ->stream($file_name);
     }
 }

@@ -18,8 +18,8 @@ class CompaniesTableSeeder extends Seeder
                 'tax_id_number' => 234578021,
             ],
         ];
-        foreach ($statuses as $status) {
-            App\City::create($status);
+        foreach ($companies as $company) {
+            App\Company::create($company);
         }
     }
 }
