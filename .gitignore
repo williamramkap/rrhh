@@ -1,6 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
+/public/css/all.css
 public/js/app.js
 public/css/app.css
 /storage/*.key
@@ -16,3 +17,5 @@ yarn.lock
 package-lock.json
 composer.lock
 .env
+storage/debugbar/
+public/css/
