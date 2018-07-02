@@ -36,5 +36,5 @@ class AddToContractsTable extends Migration
             Schema::dropIfExists('cite_rrhh_date');
             Schema::dropIfExists('numer_announcement');
         });
-    }
+    } 
 }
