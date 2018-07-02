@@ -98,6 +98,6 @@
                 }
             }
         });
-    });    
+    });
 </script>
 @endsection
