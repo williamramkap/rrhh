@@ -22,16 +22,16 @@
             margin: 3.5cm 0 0 0;
         }
         .first{
-            margin: 1cm 0 0 0;
+            margin: 2cm 0 0 0;
         }
         .second{
-            margin: 0.9cm 0 0 0;
+            margin: 1.2cm 0 0 0;
         }
         .three{
-            margin: 0.9cm 0 0 0;
+            margin: 1.4cm 0 0 0;
         }
         .four{
-            margin: 0 0 0 0;
+            margin: 0.4cm 0 0 0;
         }
         .camp{ 
             display: table-cell;

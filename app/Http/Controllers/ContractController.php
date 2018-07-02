@@ -135,18 +135,18 @@ class ContractController extends Controller
     { 
         $contract = Contract::where('id',$id)->first();
         
-        $meses = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-        
+        $meses = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];        
         $file_name= "Seguro.pdf";
         $data = [
             'contract' => $contract,
-            'numeroliteral' => \NumeroALetras::convertir($contract->position->charge->base_wage)
+            'numeroliteral' => \NumeroALetras::convertir($contract->position->charge->base_wage),
+            'mae' => Contract::where([['position_id', '=', '1'],['status', '=', 'true'],])->first(),
+            'daa' => Contract::where([['position_id', '=', '53'],['status', '=', 'true'],])->first()
         ];
         $headerHtml = view()->make('partials.head')->render();
-        return \PDF::loadView('contract.print',$data)
+        if ($contract->employee->employee_type_id == 3) {
+            return \PDF::loadView('contract.printConsultor',$data)
             ->setOption('header-html', $headerHtml)
-            //->setOption('page-width', '216')
-            //->setOption('page-height', '356')
             ->setPaper('legal')
             ->setOption('margin-top', 30)
             ->setOption('margin-bottom', 40)
@@ -154,6 +154,17 @@ class ContractController extends Controller
             ->setOption('margin-right', 25)
             ->setOption('encoding', 'utf-8')
             ->stream($file_name);
+        } else {
+            return \PDF::loadView('contract.printEventual',$data)
+            ->setOption('header-html', $headerHtml)
+            ->setPaper('legal')
+            ->setOption('margin-top', 30)
+            ->setOption('margin-bottom', 40)
+            ->setOption('margin-left', 30)
+            ->setOption('margin-right', 25)
+            ->setOption('encoding', 'utf-8')
+            ->stream($file_name);
+        }        
     }
     public function header()
     {

@@ -20,19 +20,19 @@
             margin: 1.5cm 0 0 2cm;
         }
         .first{
-            margin: 4.5cm 0 0 0;
+            margin: 5cm 0 0 0;
         }
         .second{
-            margin: 1.2cm 0 0 0;
+            margin: 1.6cm 0 0 0;
         }
         .three{
-            margin: 0.7cm 0 0 0;
+            margin: 1.2cm 0 0 0;
         }
         .four{
-            margin: 0.5cm 0 0 0;
+            margin: 0.8cm 0 0 0;
         }
         .five{
-            margin: 0 0 0 0;
+            margin: 0.4cm 0 0 0;
         }
         .camp{ 
             display: table-cell;
