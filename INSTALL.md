@@ -53,4 +53,4 @@ npm install
 npm run prod
 ```
 
-*Para continuar el desarrollo se debe ejecutar el comando: `npm run dev`*
+* hola mundoPara continuar el desarrollo se debe ejecutar el comando: `npm run dev`*
