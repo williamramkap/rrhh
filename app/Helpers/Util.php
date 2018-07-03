@@ -137,6 +137,33 @@ class Util
         }
     }
 
+    public static function getMonthEs($value)
+    {
+        $meses = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+        return $meses[(int)$value];
+    }
+
+    private static function convertGroup($n)
+    {
+        $output = '';
+        if ($n == '100') {
+            $output = "CIEN ";
+        } else if ($n[0] !== '0') {
+            $output = self::$CENTENAS[$n[0] - 1];
+        }
+        $k = intval(substr($n,1));
+        if ($k <= 20) {
+            $output .= self::$UNIDADES[$k];
+        } else {
+            if(($k > 30) && ($n[2] !== '0')) {
+                $output .= sprintf('%sY %s', self::$DECENAS[intval($n[1]) - 2], self::$UNIDADES[intval($n[2])]);
+            } else {
+                $output .= sprintf('%s%s', self::$DECENAS[intval($n[1]) - 2], self::$UNIDADES[intval($n[2])]);
+            }
+        }
+        return $output;
+    
+    }
     public static function getDate($date, $format = 'd/m/Y')
     {
         return Carbon::parse($date)->format('d/m/Y');
@@ -185,5 +212,6 @@ class Util
 
     public static function get_percentage($number, $percent){
         return ($number * $percent / 100);
+
     }
 }
